@@ -1,5 +1,6 @@
 package System;
 import IHM.IHM;
+import BDD.API;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ public class IBuySu {
     private static IBuySu system;
     private IBuySu(){
         user = new Utilisateur();
+        API.setConnexion();
     }
 
     public static IBuySu getSystem(){
@@ -42,6 +44,7 @@ public class IBuySu {
         //on connecte l'acheteur automatiquement
         user = new Acheteur(parametres);
         users.add(user);
+        API.addAcheteur((Acheteur)user);
         return "Vous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 
