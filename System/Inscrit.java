@@ -73,6 +73,36 @@ public abstract class Inscrit extends Utilisateur{
         return this.id;
     }
 
+    public String getNom() {
+        // Automatically generated method. Please do not modify this code.
+        return this.nom;
+    }
+
+    public String getPrenom() {
+        // Automatically generated method. Please do not modify this code.
+        return this.prenom;
+    }
+
+    public int getNumeroTel() {
+        // Automatically generated method. Please do not modify this code.
+        return this.numeroTel;
+    }
+
+    public String getPseudo() {
+        // Automatically generated method. Please do not modify this code.
+        return this.pseudo;
+    }
+
+    public String getMail() {
+        // Automatically generated method. Please do not modify this code.
+        return this.mail;
+    }
+
+    public String getMotdepasse() {
+        // Automatically generated method. Please do not modify this code.
+        return this.motdepasse;
+    }
+
     public static String[] getFormulaireInscription() {
         String[] res = {"pseudo", "nom", "prénom", "numéro de teléphone", "mail", "mot de passe", "n°rue", "nom rue", "code postal", "ville", "pays"};
         return res;
