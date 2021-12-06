@@ -11,7 +11,6 @@ public class Vendeur extends Inscrit {
 
     public Vendeur(String[] formulaireRempli, DonneesBancaires dataBank) {
         this(formulaireRempli[0], formulaireRempli[1], formulaireRempli[2], Integer.parseInt(formulaireRempli[3]), formulaireRempli[4], formulaireRempli[5], Integer.parseInt(formulaireRempli[6]), formulaireRempli[7], Integer.parseInt(formulaireRempli[8]), formulaireRempli[9], formulaireRempli[10], dataBank);
-        System.out.println(formulaireRempli[3]);
     }
 
     public void addProduit(Produit p) {

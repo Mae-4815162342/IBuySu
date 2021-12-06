@@ -1,13 +1,13 @@
 package System;
 import java.util.ArrayList;
 import java.util.List;
+import BDD.API;
 
 public abstract class Inscrit extends Utilisateur{
     protected String nom;
     protected String prenom;
     protected int numeroTel;
     protected String mail;
-    protected static int nbInscrit = 0;
     protected final int id;
     protected String pseudo;
     protected Adresse adresse;
@@ -16,9 +16,8 @@ public abstract class Inscrit extends Utilisateur{
     protected ArrayList<Contrat> contrats = new ArrayList<Contrat>();
 
     public Inscrit(String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue, String nomRue, int codePostal, String ville, String pays) {
-        this.nbInscrit++;
         this.pseudo = pseudo;
-        this.id = nbInscrit;
+        this.id = API.getNbInscrit();
         this.nom = nom;
         this.prenom = prenom;
         this.numeroTel = numTel;

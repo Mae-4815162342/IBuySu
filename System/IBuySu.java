@@ -10,13 +10,23 @@ public class IBuySu {
     private List<Utilisateur> users = new ArrayList<>();
     private Utilisateur user;
     private static IBuySu system;
-    private IBuySu(){
+    private IBuySu() throws Exception {
         user = new Utilisateur();
-        API.setConnexion();
+        try {
+            API.setConnexion();
+        } catch(Exception e) {
+            throw e;
+        }
     }
 
     public static IBuySu getSystem(){
-        if(system == null) system = new IBuySu();
+        if(system == null){
+            try {
+                system = new IBuySu();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
         return system;
     }
 
@@ -29,7 +39,14 @@ public class IBuySu {
     }
 
     public void rechercher(){
-        System.out.println("rechercher");
+        //selection du type de recherche
+        String[] menu = user.getMenuRecherche();
+        String choix = IHM.deroulerMenu(menu);
+        switch(choix) {
+            case "Rechercher par mot clef":
+
+            case "Rechercher par catégorie":
+        }
     }
 
     public void acheterObjetEnchere() { System.out.println("acheter objet enchère");}
@@ -64,13 +81,14 @@ public class IBuySu {
 
         //création des objets
         DonneesBancaires dataBank = null;
-        if(typeDonnees == "RIB") dataBank = new RIB(donneesBancaires);
-        else dataBank = new CarteBancaire(donneesBancaires);
-        Vendeur vendeur = new Vendeur(formulaire, dataBank);
+        if(typeDonnees == "RIB") dataBank = new RIB(donneesRemplies);
+        else dataBank = new CarteBancaire(donneesRemplies);
+        Vendeur vendeur = new Vendeur(parametres, dataBank);
 
         //connexion de l'utilisateur
         user = vendeur;
         users.add(user);
+        API.addVendeur((Vendeur)user);
         return "Données bancaires correctes: " + dataBank.toString() + "\nVous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 }

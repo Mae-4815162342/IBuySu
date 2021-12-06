@@ -9,22 +9,26 @@ public class IHM {
     private static IBuySu system;
     private static String[] menuCourant;
 
-    private static void initSystem(){
-        system = IBuySu.getSystem();
+    private static void initSystem() throws Exception{
+        try {
+            system = IBuySu.getSystem();
+        } catch(Exception e) {
+            throw e;
+        }
     }
 
     private static int waitAnswerMenu(){
         System.out.println("Entrez une option:");
         Scanner scan = new Scanner(System.in);
         int answer = -1;
-        while(answer < 0 ) {
+        while(answer < 0 || answer > menuCourant.length) {
             answer = scan.nextInt();
         }
         return answer;
     }
 
-    private static String getMenuUtilisateur() {
-        menuCourant = system.getMenu();
+    private static String getMenuUtilisateur(String[] menu) {
+        setMenuCourant(menu);
         String res = "";
         for(int i = 0 ; i < menuCourant.length; i++){
             res += (i+1) + "/" + menuCourant[i] + "\n";
@@ -32,8 +36,7 @@ public class IHM {
         return res;
     }
 
-    private static void traiterChoix(int index) {
-        String choix = menuCourant[index - 1];
+    private static void traiterChoix(String choix) {
         switch (choix) {
             case "Recherche":
                 system.rechercher();
@@ -64,8 +67,7 @@ public class IHM {
         }
     }
 
-    private static String waitAnswerFormulaire(){
-        Scanner scan = new Scanner(System.in);
+    private static String waitAnswerFormulaire(Scanner scan){
         String res = "";
         while(res.length() == 0) {
             res = scan.nextLine();
@@ -74,11 +76,12 @@ public class IHM {
     }
     public static String[] remplirFormulaire(String titreFormulaire, String[] formulaire) {
         System.out.println(titreFormulaire);
+        Scanner scan = new Scanner(System.in);
         String[] parametres = new String[formulaire.length];
         int i = 0;
         for(String parametre : formulaire) {
             System.out.println("Entrez votre " + parametre + ":");
-            String res = waitAnswerFormulaire();
+            String res = waitAnswerFormulaire(scan);
             parametres[i] = res;
             i++;
         }
@@ -94,18 +97,33 @@ public class IHM {
         return (res == 1) ? "RIB" : "CB";
     }
 
+    public static void setMenuCourant(String[] menu) {
+        menuCourant = menu;
+    }
+
+    public static String deroulerMenu(String[] menu) {
+        setMenuCourant(menu);
+        System.out.println(getMenuUtilisateur(menu));
+        int index = waitAnswerMenu();
+        return menuCourant[index - 1];
+    }
+
     public static void quitter(){
         exit = true;
     }
 
     public static void main(String [] args){
-        initSystem();
         System.out.println("Bienvenue sur IBuySu.com, votre site d'achat-vente en ligne !");
+        System.out.println("Connexion en cours...");
+        try {
+            initSystem();
+        } catch(Exception e) {
+            System.out.println("Echec de la connexion\nFermeture du système");
+            quitter();
+        }
         while(!exit) {
             System.out.println("Que désirez-vous faire ?");
-            System.out.println(getMenuUtilisateur());
-            int choix = waitAnswerMenu();
-            traiterChoix(choix);
+            traiterChoix(deroulerMenu(system.getMenu()));
         }
         System.out.println("A bientôt sur IBuySu.com!");
         return;
