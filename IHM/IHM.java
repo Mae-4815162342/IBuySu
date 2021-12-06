@@ -17,6 +17,12 @@ public class IHM {
         }
     }
 
+    public static String getUserIn(String message) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println(message);
+        return scan.nextLine();
+    }
+
     private static int waitAnswerMenu(){
         System.out.println("Entrez une option:");
         Scanner scan = new Scanner(System.in);
@@ -88,20 +94,12 @@ public class IHM {
         return parametres;
     }
 
-    public static String getTypeDonneesBancaires() {
-        System.out.println("Choisissez un type de données bancaires pour la vérification de vos données :\n1/RIB\n2/Carte Bancaire");
-        int res = -1;
-        while (res !=1 && res != 2) {
-            res = waitAnswerMenu();
-        }
-        return (res == 1) ? "RIB" : "CB";
-    }
-
     public static void setMenuCourant(String[] menu) {
         menuCourant = menu;
     }
 
-    public static String deroulerMenu(String[] menu) {
+    public static String deroulerMenu(String message, String[] menu) {
+        System.out.println(message);
         setMenuCourant(menu);
         System.out.println(getMenuUtilisateur(menu));
         int index = waitAnswerMenu();
@@ -122,8 +120,7 @@ public class IHM {
             quitter();
         }
         while(!exit) {
-            System.out.println("Que désirez-vous faire ?");
-            traiterChoix(deroulerMenu(system.getMenu()));
+            traiterChoix(deroulerMenu("Que désirez-vous faire ?", system.getMenu()));
         }
         System.out.println("A bientôt sur IBuySu.com!");
         return;

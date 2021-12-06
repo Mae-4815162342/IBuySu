@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IBuySu {
-    private List<Categorie> categorie = new ArrayList<Categorie>();
+    private List<Categorie> categories = new ArrayList<Categorie>();
     private List<MotClef> motClef = new ArrayList<>();
     private List<Utilisateur> users = new ArrayList<>();
     private Utilisateur user;
@@ -38,14 +38,64 @@ public class IBuySu {
         System.out.println("Connexion");
     }
 
+    public ArrayList<Produit> rechercherParMotClef(){
+        String recherche = IHM.getUserIn("Entrer un mot clef:");
+        ArrayList<Produit> resultats = new ArrayList<Produit>();
+        for(MotClef mot: this.motClef) {
+            if(mot.compare(recherche)){
+                List<Produit> temp = mot.getProduits();
+                for(Produit p : temp) {
+                    resultats.add(p);
+                }
+            }
+        }
+        return resultats;
+    }
+
+    public String[] getMenuCateg(List<Categorie> categs) {
+        String[] res = new String[categs.size()];
+        for(int i = 0; i < categs.size(); i++) {
+            res[i] = categs.get(i).getNom();
+        }
+        return res;
+    }
+
+    public ArrayList<Produit> rechercherParCategorie(){
+        String choixCateg = IHM.deroulerMenu("Selectionnez une categorie : ", getMenuCateg(categories));
+        Categorie res = null;
+        for(Categorie categ : categories) {
+            if(categ.getNom() == choixCateg) {
+                res = categ;
+                break;
+            }
+        }
+        List<Categorie> sousCateg = res.getSousCategories();
+        if(res.getSousCategories() != null) {
+            String choixSousCateg = IHM.deroulerMenu("Selectionnez une sous-categorie : ", getMenuCateg(sousCateg));
+            for(Categorie categ : sousCateg) {
+                if(categ.getNom() == choixSousCateg) {
+                    res = categ;
+                    break;
+                }
+            }
+        }
+        return res.getProduits();
+    }
+
     public void rechercher(){
         //selection du type de recherche
         String[] menu = user.getMenuRecherche();
-        String choix = IHM.deroulerMenu(menu);
+        String choix = IHM.deroulerMenu("Selectionnez un type de recherche", menu);
+        ArrayList<Produit> res = null;
         switch(choix) {
             case "Rechercher par mot clef":
-
+                res = rechercherParMotClef();
+                break;
             case "Rechercher par catégorie":
+                res = rechercherParCategorie();
+                break;
+            default:
+                return;
         }
     }
 
@@ -71,7 +121,8 @@ public class IBuySu {
         String[] parametres = IHM.remplirFormulaire("Formulaire d'inscription (vendeur)", formulaire);
 
         //remplir les données bancaires
-        String typeDonnees = IHM.getTypeDonneesBancaires();
+        String[] menuTypeDonnees = {"RIB", "CB"};
+        String typeDonnees = IHM.deroulerMenu("Choisissez un type de données bancaires pour la vérification de vos données", menuTypeDonnees);
         String[] donneesBancaires = DonneesBancaires.getFormulaire(typeDonnees);
         String[] donneesRemplies = IHM.remplirFormulaire("Entrez vos données bancaires :", donneesBancaires);
 

@@ -31,6 +31,10 @@ public class Categorie {
         return produits;
     }
 
+    public List<Categorie> getSousCategories() {
+        return sousCategories;
+    }
+
     public String toString() {
         String res = this.nom + " :\n";
         for(Produit p : produits) {
