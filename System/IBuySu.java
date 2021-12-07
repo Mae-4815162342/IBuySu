@@ -35,7 +35,29 @@ public class IBuySu {
     public void acheterObjetEnchere() { System.out.println("acheter objet enchère");}
 
     public void acheterUnObjet() { System.out.println("acheter un objet");}
-
+    
+    public void encherir(int productID, int somme, Inscrit user) {
+        // Créer un objet Enchère en cherchant dans la base de donnée l'enchère avec le même productID
+        // Créer un objet Offres avec sommme et user 
+        // Comparer la somme et le prix actuel 
+            // Si plus grande
+                // Ajouter l'objet Offres dans la liste des Offres de l'enchères 
+                // Mettre à jour le prix actuel de l'Enchère 
+                // Mettre à jour la BDD
+                // Retourner succès 
+            // Sinon 
+                // Retourner échec
+    }
+    public void evaluer(int valeur, String avis, Inscrit user, Inscrit evalue) {
+        // Créer un objet Evaluation avec valeur, avis et user
+        // Parcourir la liste d'évaluation de evalue
+            // Si présence d'une evaluation du même user
+                // Retourner echec 
+            // Sinon 
+                // Ajouter l'objet Evaluation dans la liste des Evaluation de evalue 
+                // Mettre à jour la BDD 
+                // Retourner succès
+    }
     public void evaluerUnUtilisateur() { System.out.println("evaluer un utilisateur");}
 
     public String inscriptionAcheteur(){

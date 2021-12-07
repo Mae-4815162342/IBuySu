@@ -21,4 +21,10 @@ public class Evaluation {
         res += "Evaluation par " + this.auteur + roleAuteur + "de"+ this.destinataire + roleDestinataire + '\n';
         return res+ this.note + "/10\n\"" + this.avis + "\"\n" + this.auteur;
     }
+    public static insert(Evaluation e) {
+        // Se placer sur la table de Evaluations
+        // Ajouter une nouvelle ligne avec les infos de e
+        // Ajouter la clé étrangre de l'utilisateur
+        // Retourne e 
+    }
 }
