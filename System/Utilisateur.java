@@ -12,6 +12,11 @@ public class Utilisateur {
         return menu;
     }
 
+    public String[] getMenuRecherche() {
+        String[] menu = {"Rechercher par mot clef", "Rechercher par catégorie"};
+        return menu;
+    }
+
     public String getAffichageMinimal() { return null; }
 
 }
