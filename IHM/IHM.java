@@ -7,6 +7,7 @@ public class IHM {
     private static boolean exit = false;
     private static IBuySu system;
     private static String[] menuCourant;
+    private static Scanner scan = new Scanner(System.in);
 
     private static void initSystem() throws Exception {
         try {
@@ -17,18 +18,20 @@ public class IHM {
     }
 
     public static String getUserIn(String message) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println(message);
-        return scan.nextLine();
+        System.out.print(message + " ");
+        System.out.flush();
+        return waitAnswer();
     }
 
     private static int waitAnswerMenu() {
-        System.out.println("Entrez une option:");
-        Scanner scan = new Scanner(System.in);
+        System.out.print("Entrez une option: ");
+        System.out.flush();
+
         int answer = -1;
         while (answer < 0 || answer > menuCourant.length) {
             answer = scan.nextInt();
         }
+
         return answer;
     }
 
@@ -36,7 +39,7 @@ public class IHM {
         setMenuCourant(menu);
         String res = "";
         for (int i = 0; i < menuCourant.length; i++) {
-            res += (i + 1) + "/" + menuCourant[i] + "\n";
+            res += (i + 1) + ". " + menuCourant[i] + "\n";
         }
         return res;
     }
@@ -72,7 +75,7 @@ public class IHM {
         }
     }
 
-    private static String waitAnswerFormulaire(Scanner scan) {
+    private static String waitAnswer() {
         String res = "";
         while (res.length() == 0) {
             res = scan.nextLine();
@@ -82,12 +85,12 @@ public class IHM {
 
     public static String[] remplirFormulaire(String titreFormulaire, String[] formulaire) {
         System.out.println(titreFormulaire);
-        Scanner scan = new Scanner(System.in);
         String[] parametres = new String[formulaire.length];
         int i = 0;
         for (String parametre : formulaire) {
-            System.out.println("Entrez votre " + parametre + ":");
-            String res = waitAnswerFormulaire(scan);
+            System.out.print("Entrez votre " + parametre + ": ");
+            System.out.flush();
+            String res = waitAnswer();
             parametres[i] = res;
             i++;
         }
