@@ -8,7 +8,7 @@ import java.util.List;
 public class IBuySu {
     private List<Categorie> categories = new ArrayList<Categorie>();
     private List<MotClef> motClef = new ArrayList<>();
-    private List<Utilisateur> users = new ArrayList<>();
+    private List<Inscrit> users = new ArrayList<>();
     private Utilisateur user;
     private static IBuySu system;
 
@@ -36,8 +36,19 @@ public class IBuySu {
         return user.getMenu();
     }
 
-    public void connexion() {
-        System.out.println("Connexion");
+    public String connexion(){
+        String[] formulaire = Inscrit.getFormulaireConnexion();
+        String[] identifiants = IHM.remplirFormulaire("Formulaire de connexion", formulaire);
+        Inscrit connecting = null;
+        for(Inscrit user: users) {
+            if(user.getMail() == identifiants[0]) {
+                connecting = user;
+            }
+        }
+        if(connecting == null) return "Erreur: le mail ne correspond à aucun utilisateur";
+        if(!connecting.verifMdp(identifiants[1])) return "Erreur: mot de passe incorrect";
+        user = connecting;
+        return "Vous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 
     public ArrayList<Produit> rechercherParMotClef() {
@@ -118,7 +129,7 @@ public class IBuySu {
         String[] parametres = IHM.remplirFormulaire("Formulaire d'inscription (acheteur)", formulaire);
         // on connecte l'acheteur automatiquement
         user = new Acheteur(parametres);
-        users.add(user);
+        users.add((Inscrit) user);
         API.addAcheteur((Acheteur) user);
         return "Vous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
@@ -151,9 +162,8 @@ public class IBuySu {
 
         // connexion de l'utilisateur
         user = vendeur;
-        users.add(user);
+        users.add((Inscrit) user);
         API.addVendeur((Vendeur) user);
-        return "Données bancaires correctes: " + dataBank.toString() + "\nVous êtes connecté en tant que:\n "
-                + user.getAffichageMinimal() + "\n";
+        return "Données bancaires correctes: " + dataBank.toString() + "\nVous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 }

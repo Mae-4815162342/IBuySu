@@ -56,7 +56,7 @@ public class IHM {
                 System.out.println(system.inscriptionAcheteur());
                 break;
             case "Connexion":
-                system.connexion();
+                System.out.println(system.connexion());
                 break;
             case "Participer à une enchère":
                 system.acheterObjetEnchere();

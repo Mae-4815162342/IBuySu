@@ -12,7 +12,7 @@ public abstract class Produit {
     protected String photo;
     protected float prix;
     protected boolean isSold;
-    protected Contrat contrat;
+    protected Contrat contrat = null;
 
     public Produit(String titre, String desc, Vendeur v, String photo, float prix, Categorie c) {
         this.titre = titre;
