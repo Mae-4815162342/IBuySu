@@ -58,6 +58,9 @@ public class IHM {
             case "Connexion":
                 System.out.println(system.connexion());
                 break;
+            case "Déconnexion":
+                System.out.println(system.deconnexion());
+                break;
             case "Participer à une enchère":
                 system.acheterObjetEnchere();
                 break;

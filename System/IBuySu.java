@@ -51,7 +51,12 @@ public class IBuySu {
         return "Vous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 
-    public ArrayList<Produit> rechercherParMotClef() {
+    public String deconnexion() {
+        user = new Utilisateur();
+        return "Vous êtes déconnecté";
+    }
+
+    public ArrayList<Produit> rechercherParMotClef(){
         String recherche = IHM.getUserIn("Entrer un mot clef:");
         ArrayList<Produit> resultats = new ArrayList<Produit>();
         for (MotClef mot : this.motClef) {
