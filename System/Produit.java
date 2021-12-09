@@ -1,4 +1,5 @@
 package System;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public abstract class Produit {
     protected boolean isSold;
     protected Contrat contrat;
 
-    public Produit(String titre, String desc, Vendeur v, String photo, float prix, Categorie c){
+    public Produit(String titre, String desc, Vendeur v, String photo, float prix, Categorie c) {
         this.titre = titre;
         this.description = desc;
         this.vendeur = v;
@@ -27,14 +28,14 @@ public abstract class Produit {
         motClefs.add(m);
     }
 
-    //méthode de notification des vendeurs/acheteurs (Design Pattern?)
+    // méthode de notification des vendeurs/acheteurs (Design Pattern?)
 
     public String toString() {
-        String res = this.description + '\n' + this.photo + '\n' ;
+        String res = this.description + '\n' + this.photo + '\n';
         res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + "€\n";
         res += "Categorie : " + categorie.getNom() + "\n" + "Mot-clefs : ";
-        if(motClefs.size() == 0) {
-            res+= "Aucun mot-clef";
+        if (motClefs.size() == 0) {
+            res += "Aucun mot-clef";
         } else {
             for (MotClef mot : motClefs) {
                 res += mot.getNom() + "\t";

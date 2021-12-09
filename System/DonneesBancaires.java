@@ -5,12 +5,12 @@ public abstract class DonneesBancaires {
     protected String titulaire;
 
     public static String[] getFormulaire(String type) {
-        switch(type) {
+        switch (type) {
             case "RIB":
-                String[] rib = {"nom", "prénom", "banque", "iban", "bic"};
+                String[] rib = { "nom", "prénom", "banque", "iban", "bic" };
                 return rib;
             case "CB":
-                String[] cb = {"nom", "prénom", "banque", "date d'expiration", "cvc", "numero de carte"};
+                String[] cb = { "nom", "prénom", "banque", "date d'expiration", "cvc", "numero de carte" };
                 return cb;
         }
         return null;
@@ -20,7 +20,7 @@ public abstract class DonneesBancaires {
         return formulaireBanque[0] == formulaireVendeur[1] && formulaireBanque[1] == formulaireVendeur[2];
     }
 
-    public String toString(){
+    public String toString() {
         return this.titulaire + "\n(" + this.banque + ')';
     }
 }

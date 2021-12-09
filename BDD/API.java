@@ -1,8 +1,7 @@
 package BDD;
+
 import java.sql.*;
 import System.*;
-import com.mysql.cj.protocol.Resultset;
-import javax.xml.transform.Result;
 
 public class API {
     private static Connection con;
@@ -18,7 +17,9 @@ public class API {
     public static Connection connexion() throws Exception {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/i_buy_su?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false","ibuysubdd", "ibuysubdd");
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://db4free.net:3306/i_buy_su?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
+                    "ibuysubdd", "ibuysubdd");
             System.out.println("Connexion avec la base de données établie");
         } catch (SQLException e) {
             throw e;
@@ -37,7 +38,7 @@ public class API {
         requete += "'" + a.getMotdepasse() + "')";
 
         try {
-            if(con == null) {
+            if (con == null) {
                 con = connexion();
             }
             Statement stmt = con.createStatement();
@@ -57,7 +58,7 @@ public class API {
         requete += "'" + v.getMail() + "',";
         requete += "'" + v.getMotdepasse() + "')";
         try {
-            if(con == null) {
+            if (con == null) {
                 con = connexion();
             }
             Statement stmt = con.createStatement();
@@ -69,7 +70,7 @@ public class API {
 
     public static int getNbInscrit() {
         try {
-            if(con == null) {
+            if (con == null) {
                 con = connexion();
             }
             Statement stmt = con.createStatement();
