@@ -32,6 +32,11 @@ public abstract class Inscrit extends Utilisateur {
         return mdp == motdepasse;
     }
 
+    public static String[] getFormulaireConnexion() {
+        String[] res = {"mail", "mot de passe"};
+        return res;
+    }
+
     public void addContrat(Contrat c) {
         contrats.add(c);
     }
@@ -52,7 +57,7 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     public String[] getMenu() {
-        String[] menu = { "Recherche", "Evaluer un utilisateur", "Quitter" };
+        String[] menu = {"Recherche", "Evaluer un utilisateur", "Deconnexion", "Quitter"};
         return menu;
     }
 
