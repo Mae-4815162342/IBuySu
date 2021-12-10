@@ -1,4 +1,5 @@
 package System;
+
 import IHM.IHM;
 import BDD.API;
 import java.util.ArrayList;
@@ -63,8 +64,14 @@ public class IBuySu {
         IBuySu.system = system;
     }
 
-    public static IBuySu getSystem(){
-        if(system == null) system = new IBuySu();
+    public static IBuySu getSystem() {
+        if (system == null) {
+            try {
+                system = new IBuySu();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return system;
     }
 
@@ -72,57 +79,100 @@ public class IBuySu {
         return user.getMenu();
     }
 
-    public void connexion(){
-        System.out.println("Connexion");
-    }
-
-    public void rechercher(){
-        System.out.println("rechercher");
-    }
-
-    public void acheterObjetEnchere() { System.out.println("acheter objet enchère");}
-
-    public void acheterUnObjet() { System.out.println("acheter un objet");}
-    
-    public Offre encherir(int productID, Float somme, Acheteur user) {
-
-        // Créer un objet Enchère en cherchant dans la base de donnée l'enchère avec le même productID
-        int prix = API.getMeilleurPrix(productID);
-        // Créer un objet Offres avec sommme et user 
-        Offre offer = new Offre(somme);
-        if(prix < offer.getSomme()){
-            /* bid.addOffre(offer);
-            bid.setMeilleurPrix(offer.getSomme());
-            bid.setMeilleurAcheteur(user); */
-            API.addOffre(productID, user, somme);
-            API.updateEnchere(bid);
-            return offer;
+    public String connexion(){
+        String[] formulaire = Inscrit.getFormulaireConnexion();
+        String[] identifiants = IHM.remplirFormulaire("Formulaire de connexion", formulaire);
+        Inscrit connecting = null;
+        for(Inscrit user: users) {
+            if(user.getMail() == identifiants[0]) {
+                connecting = user;
+            }
         }
-        else{
-            return null;
-        }
-        // Comparer la somme et le prix actuel 
-            // Si plus grande
-                // Ajouter l'objet Offres dans la liste des Offres de l'enchères 
-                // Mettre à jour le prix actuel de l'Enchère 
-                // Mettre à jour la BDD
-                // Retourner succès 
-            // Sinon 
-                // Retourner échec
+        if(connecting == null) return "Erreur: le mail ne correspond à aucun utilisateur";
+        if(!connecting.verifMdp(identifiants[1])) return "Erreur: mot de passe incorrect";
+        user = connecting;
+        return "Vous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
-    public void evaluer(int valeur, String avis, Inscrit user, Inscrit evalue) {
-        // Créer un objet Evaluation avec valeur, avis et user
-        // Parcourir la liste d'évaluation de evalue
-            // Si présence d'une evaluation du même user
-                // Retourner echec 
-            // Sinon 
-                // Ajouter l'objet Evaluation dans la liste des Evaluation de evalue 
-                // Mettre à jour la BDD 
-                // Retourner succès
-    }
-    public void evaluerUnInscrit() { System.out.println("evaluer un Inscrit");}
 
-    public String inscriptionAcheteur(){
+    public String deconnexion() {
+        user = new Utilisateur();
+        return "Vous êtes déconnecté";
+    }
+
+    public ArrayList<Produit> rechercherParMotClef(){
+        String recherche = IHM.getUserIn("Entrer un mot clef:");
+        ArrayList<Produit> resultats = new ArrayList<Produit>();
+        for (MotClef mot : this.motClef) {
+            if (mot.compare(recherche)) {
+                List<Produit> temp = mot.getProduits();
+                for (Produit p : temp) {
+                    resultats.add(p);
+                }
+            }
+        }
+        return resultats;
+    }
+
+    public String[] getMenuCateg(List<Categorie> categs) {
+        String[] res = new String[categs.size()];
+        for (int i = 0; i < categs.size(); i++) {
+            res[i] = categs.get(i).getNom();
+        }
+        return res;
+    }
+
+    public ArrayList<Produit> rechercherParCategorie() {
+        String choixCateg = IHM.deroulerMenu("Selectionnez une categorie : ", getMenuCateg(categories));
+        Categorie res = null;
+        for (Categorie categ : categories) {
+            if (categ.getNom() == choixCateg) {
+                res = categ;
+                break;
+            }
+        }
+        List<Categorie> sousCateg = res.getSousCategories();
+        if (res.getSousCategories() != null) {
+            String choixSousCateg = IHM.deroulerMenu("Selectionnez une sous-categorie : ", getMenuCateg(sousCateg));
+            for (Categorie categ : sousCateg) {
+                if (categ.getNom() == choixSousCateg) {
+                    res = categ;
+                    break;
+                }
+            }
+        }
+        return res.getProduits();
+    }
+
+    public void rechercher() {
+        // selection du type de recherche
+        String[] menu = user.getMenuRecherche();
+        String choix = IHM.deroulerMenu("Selectionnez un type de recherche", menu);
+        ArrayList<Produit> res = null;
+        switch (choix) {
+            case "Rechercher par mot clef":
+                res = rechercherParMotClef();
+                break;
+            case "Rechercher par catégorie":
+                res = rechercherParCategorie();
+                break;
+            default:
+                return;
+        }
+    }
+
+    public void acheterObjetEnchere() {
+        System.out.println("acheter objet enchère");
+    }
+
+    public void acheterUnObjet() {
+        System.out.println("acheter un objet");
+    }
+
+    public void evaluerUnUtilisateur() {
+        System.out.println("evaluer un utilisateur");
+    }
+
+    public String inscriptionAcheteur() {
         String[] formulaire = Acheteur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire("Formulaire d'inscription (acheteur)", formulaire);
         //on connecte l'acheteur automatiquement
@@ -132,29 +182,36 @@ public class IBuySu {
         return "Vous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 
-    public String inscriptionVendeur(){
-        //remplir les données du vendeur
+    public String inscriptionVendeur() {
+        // remplir les données du vendeur
         String[] formulaire = Vendeur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire("Formulaire d'inscription (vendeur)", formulaire);
 
-        //remplir les données bancaires
-        String typeDonnees = IHM.getTypeDonneesBancaires();
+        // remplir les données bancaires
+        String[] menuTypeDonnees = { "RIB", "CB" };
+        String typeDonnees = IHM.deroulerMenu(
+                "Choisissez un type de données bancaires pour la vérification de vos données", menuTypeDonnees);
         String[] donneesBancaires = DonneesBancaires.getFormulaire(typeDonnees);
         String[] donneesRemplies = IHM.remplirFormulaire("Entrez vos données bancaires :", donneesBancaires);
 
-        //vérification : si ce ne sont pas les mêmes noms et prénoms, échec, sinon les Données et le Vendeur sont créés
+        // vérification : si ce ne sont pas les mêmes noms et prénoms, échec, sinon les
+        // Données et le Vendeur sont créés
         Boolean donneesOK = DonneesBancaires.verifierVendeur(formulaire, donneesBancaires);
-        if(!donneesOK) return "Echec : les données bancaires ne correspondent pas au vendeur";
+        if (!donneesOK)
+            return "Echec : les données bancaires ne correspondent pas au vendeur";
 
-        //création des objets
+        // création des objets
         DonneesBancaires dataBank = null;
-        if(typeDonnees == "RIB") dataBank = new RIB(donneesBancaires);
-        else dataBank = new CarteBancaire(donneesBancaires);
-        Vendeur vendeur = new Vendeur(formulaire, dataBank);
-        
-        //connexion de l'Inscrit
+        if (typeDonnees == "RIB")
+            dataBank = new RIB(donneesRemplies);
+        else
+            dataBank = new CarteBancaire(donneesRemplies);
+        Vendeur vendeur = new Vendeur(parametres, dataBank);
+
+        // connexion de l'utilisateur
         user = vendeur;
-        users.add(user);
+        users.add((Inscrit) user);
+        API.addVendeur((Vendeur) user);
         return "Données bancaires correctes: " + dataBank.toString() + "\nVous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 }

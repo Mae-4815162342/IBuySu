@@ -23,7 +23,8 @@ public class Offre {
         this.somme = somme;
     }
 
-    /* public String toString(){
+
+    public String toString() {
         return acheteur.getAffichageMinimal() + " fait une offre de " + somme + "€ pour acheter " + enchere.getTitre();
-    } */
+    } 
 }

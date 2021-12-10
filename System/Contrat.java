@@ -7,7 +7,7 @@ public class Contrat {
     private float prix_final;
     private boolean isConcluded;
 
-    public Contrat(Acheteur acheteur, Vendeur vendeur, Produit produit, float prix){
+    public Contrat(Acheteur acheteur, Vendeur vendeur, Produit produit, float prix) {
         this.vendeur = vendeur;
         vendeur.addContrat(this);
         this.acheteur = acheteur;
@@ -18,11 +18,11 @@ public class Contrat {
         produit.setContrat(this);
     }
 
-    public void concludeContrat(){
+    public void concludeContrat() {
         this.isConcluded = true;
     }
 
-    public boolean getIsConcluded(){
+    public boolean getIsConcluded() {
         return this.isConcluded;
     }
 

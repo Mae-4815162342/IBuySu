@@ -1,4 +1,5 @@
 package BDD;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +9,23 @@ import System.*;
 public class API {
     private static Connection con;
 
-    public static void setConnexion() {
-        con = connexion();
+    public static void setConnexion() throws Exception {
+        try {
+            con = connexion();
+        } catch (Exception e) {
+            throw e;
+        }
     }
-    public static Connection connexion(){
+
+  public static Connection connexion() throws Exception {
         Connection con = null;
         try {
-            con = DriverManager.getConnection("jdbc:mysql://db4free.net:3306/i_buy_su?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false","ibuysubdd", "ibuysubdd");
+            con = DriverManager.getConnection(
+                    "jdbc:mysql://db4free.net:3306/i_buy_su?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
+                    "ibuysubdd", "ibuysubdd");
             System.out.println("Connexion avec la base de données établie");
         } catch (SQLException e) {
-            System.out.println(e);
+            throw e;
         }
         return con;
     }
@@ -98,15 +106,55 @@ public class API {
         requete += a.getNumeroTel() + ",";
         requete += "'" + a.getMail() + "',";
         requete += "'" + a.getMotdepasse() + "')";
+
         try {
-            if(con == null) {
+            if (con == null) {
                 con = connexion();
             }
             Statement stmt = con.createStatement();
             stmt.executeUpdate(requete);
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void addVendeur(Vendeur v) {
+        String requete = "INSERT Vendeur (id, nom, prenom, pseudo, numeroTel, mail, motdepasse) VALUES (";
+        requete += v.getId() + ",";
+        requete += "'" + v.getNom() + "',";
+        requete += "'" + v.getPrenom() + "',";
+        requete += "'" + v.getPseudo() + "',";
+        requete += v.getNumeroTel() + ",";
+        requete += "'" + v.getMail() + "',";
+        requete += "'" + v.getMotdepasse() + "')";
+        try {
+            if (con == null) {
+                con = connexion();
+            }
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate(requete);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getNbInscrit() {
+        try {
+            if (con == null) {
+                con = connexion();
+            }
+            Statement stmt = con.createStatement();
+            ResultSet vendeurs = stmt.executeQuery("SELECT COUNT(*) FROM Vendeur");
+            vendeurs.next();
+            int nbVendeurs = vendeurs.getRow();
+            ResultSet acheteurs = stmt.executeQuery("SELECT COUNT(*) FROM Acheteur");
+            acheteurs.next();
+            int nbAcheteurs = acheteurs.getRow();
+            return nbAcheteurs + nbVendeurs;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
     public static void insertEvaluation(Evaluation eval, Inscrit u1, Inscrit i2) {
         // Se placer sur la table de Evaluations

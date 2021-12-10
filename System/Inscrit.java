@@ -1,24 +1,25 @@
 package System;
+
 import java.util.ArrayList;
 import java.util.List;
+import BDD.API;
 
-public abstract class Inscrit extends Utilisateur{
+public abstract class Inscrit extends Utilisateur {
     protected String nom;
     protected String prenom;
     protected int numeroTel;
     protected String mail;
-    protected static int nbInscrit = 0;
     protected final int id;
     protected String pseudo;
     protected Adresse adresse;
     protected String motdepasse;
-    protected List<Evaluation> evaluations = new ArrayList<Evaluation> ();
+    protected List<Evaluation> evaluations = new ArrayList<Evaluation>();
     protected ArrayList<Contrat> contrats = new ArrayList<Contrat>();
 
-    public Inscrit(String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue, String nomRue, int codePostal, String ville, String pays) {
-        this.nbInscrit++;
+    public Inscrit(String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
+            String nomRue, int codePostal, String ville, String pays) {
         this.pseudo = pseudo;
-        this.id = nbInscrit;
+        this.id = API.getNbInscrit();
         this.nom = nom;
         this.prenom = prenom;
         this.numeroTel = numTel;
@@ -31,14 +32,19 @@ public abstract class Inscrit extends Utilisateur{
         return mdp == motdepasse;
     }
 
+    public static String[] getFormulaireConnexion() {
+        String[] res = {"mail", "mot de passe"};
+        return res;
+    }
+
     public void addContrat(Contrat c) {
         contrats.add(c);
     }
 
     public ArrayList<Contrat> getClosedContracts() {
         ArrayList<Contrat> res = new ArrayList<Contrat>();
-        for(Contrat contrat : contrats) {
-            if(contrat.getIsConcluded()) {
+        for (Contrat contrat : contrats) {
+            if (contrat.getIsConcluded()) {
                 res.add(contrat);
             }
         }
@@ -51,21 +57,24 @@ public abstract class Inscrit extends Utilisateur{
     }
 
     public String[] getMenu() {
-        String[] menu = {"Recherche", "Evaluer un utilisateur", "Quitter"};
+        String[] menu = {"Recherche", "Evaluer un utilisateur", "Deconnexion", "Quitter"};
         return menu;
     }
 
     @Override
-    //cette méthode retourne les données publiques de l'utilisateur, c'est-à-dire son identifiant et son pseudonyme
+    // cette méthode retourne les données publiques de l'utilisateur, c'est-à-dire
+    // son identifiant et son pseudonyme
     public String getAffichageMinimal() {
         return pseudo + " (id:" + id + ")";
     }
 
-    //affichage complet, qui ne peut être vu que par l'inscrit lui-même (les coordonnées partagées lors des ventes
-    //sont gérées dans les sous-classes Acheteur et Vendeur)
+    // affichage complet, qui ne peut être vu que par l'inscrit lui-même (les
+    // coordonnées partagées lors des ventes
+    // sont gérées dans les sous-classes Acheteur et Vendeur)
     // !!! le mot de passe n'est JAMAIS affiché
     public String toString() {
-        return this.getAffichageMinimal() + '\n' + nom + ' ' + prenom + '\n' + mail + ' ' + numeroTel + '\n' + adresse.toString();
+        return this.getAffichageMinimal() + '\n' + nom + ' ' + prenom + '\n' + mail + ' ' + numeroTel + '\n'
+                + adresse.toString();
     }
 
     public int getId() {
@@ -104,7 +113,8 @@ public abstract class Inscrit extends Utilisateur{
     }
 
     public static String[] getFormulaireInscription() {
-        String[] res = {"pseudo", "nom", "prénom", "numéro de teléphone", "mail", "mot de passe", "n°rue", "nom rue", "code postal", "ville", "pays"};
+        String[] res = { "pseudo", "nom", "prénom", "numéro de teléphone", "mail", "mot de passe", "n°rue", "nom rue",
+                "code postal", "ville", "pays" };
         return res;
     }
 

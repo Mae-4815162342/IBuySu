@@ -14,13 +14,15 @@ public class CarteBancaire extends DonneesBancaires {
     }
 
     public CarteBancaire(String[] formulaireRempli) {
-        this(formulaireRempli[0] + ' ' + formulaireRempli[1], formulaireRempli[2], formulaireRempli[3], Integer.parseInt(formulaireRempli[4]), formulaireRempli[5]);
+        this(formulaireRempli[0] + ' ' + formulaireRempli[1], formulaireRempli[2], formulaireRempli[3],
+                Integer.parseInt(formulaireRempli[4]), formulaireRempli[5]);
     }
 
-    //on n'affiche jamais le cvc et la date d'expiration, qui sont confidentiels. On affiche uniquement les quatre
-    //dernier chiffre du numéro.
+    // on n'affiche jamais le cvc et la date d'expiration, qui sont confidentiels.
+    // On affiche uniquement les quatre
+    // dernier chiffre du numéro.
     public String toString() {
-        return super.toString() + "\nCarte n° : **** **** **** " + numeroCarte.substring(numeroCarte.length() - 4, numeroCarte.length());
+        return super.toString() + "\nCarte n° : **** **** **** "
+                + numeroCarte.substring(numeroCarte.length() - 4, numeroCarte.length());
     }
 }
-

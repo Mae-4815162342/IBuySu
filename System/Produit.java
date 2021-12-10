@@ -1,4 +1,5 @@
 package System;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,14 +26,14 @@ public class Produit {
         motClefs.add(m);
     }
 
-    //méthode de notification des vendeurs/acheteurs (Design Pattern?)
+    // méthode de notification des vendeurs/acheteurs (Design Pattern?)
 
     public String toString() {
-        String res = this.description + '\n' + this.photo + '\n' ;
+        String res = this.description + '\n' + this.photo + '\n';
         res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + "€\n";
         res += "Categorie : " + categorie.getNom() + "\n" + "Mot-clefs : ";
-        if(motClefs.size() == 0) {
-            res+= "Aucun mot-clef";
+        if (motClefs.size() == 0) {
+            res += "Aucun mot-clef";
         } else {
             for (MotClef mot : motClefs) {
                 res += mot.getNom() + "\t";

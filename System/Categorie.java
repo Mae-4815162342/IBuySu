@@ -1,11 +1,12 @@
 package System;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Categorie {
     private final String nom;
     private List<Categorie> sousCategories;
-    private ArrayList<Produit> produits = new ArrayList<Produit> ();
+    private ArrayList<Produit> produits = new ArrayList<Produit>();
 
     public Categorie(String nom) {
         this.nom = nom;
@@ -13,7 +14,7 @@ public class Categorie {
     }
 
     public void addSousCategorie(Categorie c) {
-        if(sousCategories == null) {
+        if (sousCategories == null) {
             sousCategories = new ArrayList<Categorie>();
         }
         sousCategories.add(c);
@@ -31,13 +32,17 @@ public class Categorie {
         return produits;
     }
 
+    public List<Categorie> getSousCategories() {
+        return sousCategories;
+    }
+
     public String toString() {
         String res = this.nom + " :\n";
-        for(Produit p : produits) {
+        for (Produit p : produits) {
             res += p.toString();
         }
-        if(sousCategories != null) {
-            for(Categorie c : sousCategories) {
+        if (sousCategories != null) {
+            for (Categorie c : sousCategories) {
                 res += c.toString();
             }
         }

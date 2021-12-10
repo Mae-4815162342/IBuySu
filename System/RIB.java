@@ -1,6 +1,5 @@
 package System;
 
-
 public class RIB extends DonneesBancaires {
     private String IBAN;
     private String BIC;
@@ -13,7 +12,8 @@ public class RIB extends DonneesBancaires {
     }
 
     public RIB(String[] formulaireRempli) {
-        this(formulaireRempli[0] + ' ' + formulaireRempli[1], formulaireRempli[2], formulaireRempli[3], formulaireRempli[4]);
+        this(formulaireRempli[0] + ' ' + formulaireRempli[1], formulaireRempli[2], formulaireRempli[3],
+                formulaireRempli[4]);
     }
 
     public String toString() {
