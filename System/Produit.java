@@ -3,7 +3,7 @@ package System;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Produit {
+public class Produit {
     protected String titre;
     protected String description;
     protected List<MotClef> motClefs = new ArrayList<MotClef>();

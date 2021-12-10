@@ -5,11 +5,15 @@ import java.util.List;
 
 public class MotClef {
     private String nom;
-    private ArrayList<Produit> produits = new ArrayList<Produit>();
+    private List<Produit> produits = new ArrayList<Produit>();
 
     public MotClef(String mot, Produit p) {
         this.nom = mot;
         produits.add(p);
+    }
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
     }
 
     // méthode de comparaison de mot clef: lors de la recherche, le système compare

@@ -12,10 +12,35 @@ public class IBuySu {
     private Utilisateur user;
     private static IBuySu system;
 
+    public List<MotClef> getMotClef() {
+        return motClef;
+    }
+
+    public void setMotClef(List<MotClef> motClef) {
+        this.motClef = motClef;
+    }
+
+    public List<Inscrit> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Inscrit> users) {
+        this.users = users;
+    }
+
+    public List<Categorie> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Categorie> categories) {
+        this.categories = categories;
+    }
+
     private IBuySu() throws Exception {
         user = new Utilisateur();
         try {
             API.setConnexion();
+            API.fetchUsers(this);
         } catch (Exception e) {
             throw e;
         }
@@ -78,7 +103,7 @@ public class IBuySu {
         return res;
     }
 
-    public ArrayList<Produit> rechercherParCategorie() {
+    public List<Produit> rechercherParCategorie() {
         String choixCateg = IHM.deroulerMenu("Selectionnez une categorie : ", getMenuCateg(categories));
         Categorie res = null;
         for (Categorie categ : categories) {
@@ -87,6 +112,7 @@ public class IBuySu {
                 break;
             }
         }
+        API.fetchSousCategorie(res);
         List<Categorie> sousCateg = res.getSousCategories();
         if (res.getSousCategories() != null) {
             String choixSousCateg = IHM.deroulerMenu("Selectionnez une sous-categorie : ", getMenuCateg(sousCateg));
@@ -97,6 +123,7 @@ public class IBuySu {
                 }
             }
         }
+        API.fetchProductByCategorie(res);
         return res.getProduits();
     }
 
@@ -104,12 +131,14 @@ public class IBuySu {
         // selection du type de recherche
         String[] menu = user.getMenuRecherche();
         String choix = IHM.deroulerMenu("Selectionnez un type de recherche", menu);
-        ArrayList<Produit> res = null;
+        List<Produit> res = null;
         switch (choix) {
             case "Rechercher par mot clef":
+                API.fetchMotClef(this);
                 res = rechercherParMotClef();
                 break;
             case "Rechercher par catégorie":
+                API.fetchCategories(this);
                 res = rechercherParCategorie();
                 break;
             default:

@@ -6,12 +6,32 @@ import java.util.List;
 public class Enchere extends Produit {
     private int duree;
     private float meilleurPrix;
+    private boolean estRecu;
+    private boolean estVendu;
     private Acheteur meilleurAcheteur;
     private List<Offre> offres = new ArrayList<Offre>();
 
-    public Enchere(int duree, String titre, String desc, Vendeur v, String photo, int prix, Categorie c) {
+    public Enchere(int duree, String titre, String desc, Vendeur v, String photo, int prix, Categorie c, boolean isSold, boolean isReceived) {
         super(titre, desc, v, photo, prix, c);
         this.duree = duree;
+        estRecu = isReceived;
+        estVendu = isSold;
+    }
+
+    public boolean isEstRecu() {
+        return estRecu;
+    }
+
+    public void setEstRecu(boolean estRecu) {
+        this.estRecu = estRecu;
+    }
+
+    public boolean isEstVendu() {
+        return estVendu;
+    }
+
+    public void setEstVendu(boolean estVendu) {
+        this.estVendu = estVendu;
     }
 
     public void addOffre(Offre offre) {

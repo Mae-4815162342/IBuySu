@@ -6,11 +6,20 @@ import java.util.List;
 public class Categorie {
     private final String nom;
     private List<Categorie> sousCategories;
-    private ArrayList<Produit> produits = new ArrayList<Produit>();
+    private List<Produit> produits = new ArrayList<Produit>();
+
+    public void setProduits(List<Produit> produits) {
+        this.produits = produits;
+    }
+
+    public void setSousCategories(List<Categorie> sousCategories) {
+        this.sousCategories = sousCategories;
+    }
 
     public Categorie(String nom) {
         this.nom = nom;
         sousCategories = null;
+        produits = null;
     }
 
     public void addSousCategorie(Categorie c) {
@@ -28,7 +37,7 @@ public class Categorie {
         produits.remove(p);
     }
 
-    public ArrayList<Produit> getProduits() {
+    public List<Produit> getProduits() {
         return produits;
     }
 

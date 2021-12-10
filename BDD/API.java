@@ -1,6 +1,9 @@
 package BDD;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import System.*;
 
 public class API {
@@ -47,7 +50,103 @@ public class API {
             e.printStackTrace();
         }
     }
-
+    public static void fetchUsers(IBuySu system){
+        try{
+            List<Inscrit> users = new ArrayList<Inscrit>();
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select * from Acheteur");
+            while(res.next()){
+                users.add(new Acheteur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"), null, -1, null, -1,null, null));
+            }
+            Statement stmt1 = con.createStatement();
+            res = stmt1.executeQuery("select * from vendeur");
+            while(res.next()){
+                users.add(new Vendeur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"), null, -1, null, -1,null,null, null));
+            }
+            system.setUsers(users);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void fetchCategories(IBuySu system){
+        try{
+            List<Categorie> cate = new ArrayList<Categorie>();
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select * from Categorie where parent_categorie=null");
+            while(res.next()){
+                cate.add(new Categorie(res.getString("nom")));
+            }
+            system.setCategories(cate);;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void fetchSousCategorie(Categorie cat){
+        try{
+            List<Categorie> sub = new ArrayList<Categorie>();
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select * from Categorie where parent_categorie="+cat.getNom());
+            while(res.next()){
+                sub.add(new Categorie(res.getString("nom")));
+            }
+            cat.setSousCategories(sub);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void fetchProductByCategorie(Categorie cat){
+        try{
+            List<Produit> prod = new ArrayList<Produit>();
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select * from Enchere where categorie="+cat.getNom());
+            while(res.next()){
+                byte isSold = res.getByte("estVendu");
+                byte isReceived = res.getByte("estRecu");
+                prod.add(new Enchere(res.getInt("duree_enchere"),res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), cat, isSold!=0, isReceived!=0));
+            }
+            Statement stmt1 = con.createStatement();
+            res = stmt1.executeQuery("select * from Vente_directe where categorie="+cat.getNom());
+            while(res.next()){
+                prod.add(new Produit(res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), cat));
+            }
+            cat.setProduits(prod);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void fetchProductByMotcle(MotClef motcle){
+        try{
+            List<Produit> prod = new ArrayList<Produit>();
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select * from Enchere e,Motcle_Produit mp where mp.motcle="+motcle.getNom()+" and mp.enchere=e.id");
+            while(res.next()){
+                byte isSold = res.getByte("estVendu");
+                byte isReceived = res.getByte("estRecu");
+                prod.add(new Enchere(res.getInt("duree_enchere"),res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), new Categorie(res.getString("categorie")), isSold!=0, isReceived!=0));
+            }
+            Statement stmt1 = con.createStatement();
+            res = stmt1.executeQuery("select * from Vente_directe vd,Motcle_Produit mp where mp.motcle="+motcle.getNom()+" and mp.enchere=vd.id");
+            while(res.next()){
+                prod.add(new Produit(res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), new Categorie(res.getString("categorie"))));
+            }
+            motcle.setProduits(prod);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+    public static void fetchMotClef(IBuySu system){
+        try{
+            List<MotClef> motcles = new ArrayList<MotClef>();
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select * from Motcle");
+            while(res.next()){
+                motcles.add(new MotClef(res.getString("nom"),null));
+            }
+            system.setMotClef(motcles);;
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
     public static void addVendeur(Vendeur v) {
         String requete = "INSERT Vendeur (id, nom, prenom, pseudo, numeroTel, mail, motdepasse) VALUES (";
         requete += v.getId() + ",";
