@@ -95,7 +95,7 @@ public class Produit {
     }
 
     public static String[] getFormulaire() {
-        String[] res = {"titre", "description", "vendeur", "photo", "prix"}
+        String[] res = {"titre", "description", "vendeur", "photo", "prix"};
         return res;
     }
 }

@@ -240,7 +240,7 @@ public class IBuySu {
     
     public void creerUnVente() { 
         //remplir les données de vente
-        String[] formulaire = Produit.getFormulaire()
+        String[] formulaire = Produit.getFormulaire();
         String[] parametres = IHM.remplirFormulaire("Formulaire de creation de vente", formulaire);
 
         //demander à l'utilisateur si c'est une vente directe où vente aux enchères

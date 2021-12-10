@@ -82,7 +82,7 @@ public class Enchere extends Produit {
     }
 
     public static String[] getFormulaire() {
-        String[] res = {"durée", "titre", "description", "vendeur", "photo", "prix"}
+        String[] res = {"durée", "titre", "description", "vendeur", "photo", "prix"};
         return res;
     }
 
