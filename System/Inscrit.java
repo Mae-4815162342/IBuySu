@@ -112,6 +112,11 @@ public abstract class Inscrit extends Utilisateur {
         return this.motdepasse;
     }
 
+    public Adresse getAdresse() {
+        // Automatically generated method. Please do not modify this code.
+        return this.adresse;
+    }
+
     public static String[] getFormulaireInscription() {
         String[] res = { "pseudo", "nom", "prénom", "numéro de teléphone", "mail", "mot de passe", "n°rue", "nom rue",
                 "code postal", "ville", "pays" };
