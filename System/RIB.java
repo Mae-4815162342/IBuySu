@@ -17,6 +17,6 @@ public class RIB extends DonneesBancaires {
     }
 
     public String toString() {
-        return super.toString() + "\nIBAN : " + IBAN + "\nBIC : " + BIC;
+        return super.toString() + " IBAN : " + IBAN + " BIC : " + BIC;
     }
 }

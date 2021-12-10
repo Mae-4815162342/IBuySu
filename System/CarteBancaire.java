@@ -22,7 +22,7 @@ public class CarteBancaire extends DonneesBancaires {
     // On affiche uniquement les quatre
     // dernier chiffre du numéro.
     public String toString() {
-        return super.toString() + "\nCarte n° : **** **** **** "
+        return super.toString() + " Carte n° : **** **** **** "
                 + numeroCarte.substring(numeroCarte.length() - 4, numeroCarte.length());
     }
 }

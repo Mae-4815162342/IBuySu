@@ -42,7 +42,7 @@ public class MotClef {
     }
 
     public ArrayList<Produit> getProduits() {
-        return produits;
+        return (ArrayList<Produit>) produits;
     }
 
     public String getNom() {

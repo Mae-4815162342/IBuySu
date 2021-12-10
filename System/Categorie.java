@@ -47,9 +47,11 @@ public class Categorie {
 
     public String toString() {
         String res = this.nom + " :\n";
-        for (Produit p : produits) {
-            res += p.toString();
-        }
+        if (produits == null) res += "Aucun produit dans cette catégorie";
+        else
+            for (Produit p : produits) {
+                res += p.toString();
+            }
         if (sousCategories != null) {
             for (Categorie c : sousCategories) {
                 res += c.toString();

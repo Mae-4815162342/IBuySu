@@ -21,6 +21,6 @@ public abstract class DonneesBancaires {
     }
 
     public String toString() {
-        return this.titulaire + "\n(" + this.banque + ')';
+        return this.titulaire + "(" + this.banque + ')';
     }
 }
