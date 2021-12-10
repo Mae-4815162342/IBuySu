@@ -5,7 +5,46 @@ public class Evaluation {
     private String avis;
     private Inscrit auteur;
     private Inscrit destinataire;
-    private String titreProduit;
+
+    public int getNote() {
+        return note;
+    }
+
+    public void setNote(int note) {
+        this.note = note;
+    }
+
+    public String getAvis() {
+        return avis;
+    }
+
+    public void setAvis(String avis) {
+        this.avis = avis;
+    }
+
+    public Inscrit getAuteur() {
+        return auteur;
+    }
+
+    public void setAuteur(Inscrit auteur) {
+        this.auteur = auteur;
+    }
+
+    public Inscrit getDestinataire() {
+        return destinataire;
+    }
+
+    public void setDestinataire(Inscrit destinataire) {
+        this.destinataire = destinataire;
+    }
+
+    public String getTitreProduit() {
+        return titreProduit;
+    }
+
+    public void setTitreProduit(String titreProduit) {
+        this.titreProduit = titreProduit;
+    }
 
     public Evaluation(String titreProduit, int note, String avis, Inscrit auteur, Inscrit destinataire) {
         this.note = note;

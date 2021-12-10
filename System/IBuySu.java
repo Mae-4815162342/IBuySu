@@ -5,20 +5,63 @@ import BDD.API;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IBuySu {
-    private List<Categorie> categories = new ArrayList<Categorie>();
-    private List<MotClef> motClef = new ArrayList<>();
-    private List<Inscrit> users = new ArrayList<>();
-    private Utilisateur user;
-    private static IBuySu system;
+import com.mysql.cj.result.FloatValueFactory;
 
-    private IBuySu() throws Exception {
-        user = new Utilisateur();
-        try {
-            API.setConnexion();
-        } catch (Exception e) {
-            throw e;
-        }
+public class IBuySu {
+    private List<Categorie> categorie = new ArrayList<Categorie>();
+    private List<MotClef> motClef = new ArrayList<MotClef>();
+    private List<Inscrit> users = new ArrayList<Inscrit>();
+    private List<Produit> products = new ArrayList<Produit>();
+    private Inscrit user;
+    private static IBuySu system;
+    private IBuySu(){
+        //user = new Inscrit();
+        API.setConnexion();
+        API.fetchData(this);
+    }
+
+    public List<Categorie> getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(List<Categorie> categorie) {
+        this.categorie = categorie;
+    }
+
+    public List<MotClef> getMotClef() {
+        return motClef;
+    }
+
+    public void setMotClef(List<MotClef> motClef) {
+        this.motClef = motClef;
+    }
+
+    public List<Inscrit> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Inscrit> users) {
+        this.users = users;
+    }
+
+    public List<Produit> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Produit> products) {
+        this.products = products;
+    }
+
+    public Inscrit getUser() {
+        return user;
+    }
+
+    public void setUser(Inscrit user) {
+        this.user = user;
+    }
+
+    public static void setSystem(IBuySu system) {
+        IBuySu.system = system;
     }
 
     public static IBuySu getSystem() {
@@ -132,10 +175,10 @@ public class IBuySu {
     public String inscriptionAcheteur() {
         String[] formulaire = Acheteur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire("Formulaire d'inscription (acheteur)", formulaire);
-        // on connecte l'acheteur automatiquement
-        user = new Acheteur(parametres);
-        users.add((Inscrit) user);
-        API.addAcheteur((Acheteur) user);
+        //on connecte l'acheteur automatiquement
+        Acheteur user = new Acheteur(parametres);
+        users.add(user);
+        API.addAcheteur(user);
         return "Vous êtes connecté en tant que:\n " + user.getAffichageMinimal() + "\n";
     }
 
