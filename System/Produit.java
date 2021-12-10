@@ -2,25 +2,23 @@ package System;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Produit {
+public class Produit {
     protected String titre;
     protected String description;
     protected List<MotClef> motClefs = new ArrayList<MotClef>();
-    protected Categorie categorie;
     protected Vendeur vendeur;
-    protected String photo;
     protected float prix;
-    protected boolean isSold;
+    protected boolean estVendu;
+    protected boolean estReçu;
     protected Contrat contrat;
 
-    public Produit(String titre, String desc, Vendeur v, String photo, float prix, Categorie c){
+    public Produit(String titre, String desc, Vendeur v, float prix, boolean estVendu, boolean estReçu){
         this.titre = titre;
         this.description = desc;
         this.vendeur = v;
-        this.photo = photo;
         this.prix = prix;
-        this.categorie = c;
-        this.isSold = false;
+        this.estVendu = estVendu;
+        this.estReçu = estReçu;
     }
 
     public void addMotClef(MotClef m) {

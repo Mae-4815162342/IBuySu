@@ -8,8 +8,8 @@ public class Enchere extends Produit {
     private Acheteur meilleurAcheteur;
     private List<Offre> offres = new ArrayList<Offre>();
 
-    public Enchere(int duree,String titre, String desc, Vendeur v, String photo, int prix, Categorie c){
-        super(titre, desc, v, photo, prix, c);
+    public Enchere(int duree,String titre, String desc, Vendeur v, int prix, boolean estVendu, boolean estReçu){
+        super(titre, desc, v, prix, estVendu, estReçu);
         this.duree = duree;
     }
 
@@ -20,20 +20,37 @@ public class Enchere extends Produit {
         }
         offres.add(offre);
     }
+    public float getMeilleurPrix() {
+        // Automatically generated method. Please do not modify this code.
+        return this.meilleurPrix;
+    }
 
-    private int getDuree() {
+    public void setMeilleurPrix(final float value) {
+        // Automatically generated method. Please do not modify this code.
+        this.meilleurPrix = value;
+    }
+    public Acheteur getMeilleurAcheteur() {
+        // Automatically generated method. Please do not modify this code.
+        return this.meilleurAcheteur;
+    }
+
+    public void setMeilleurAcheteur(final Acheteur ach) {
+        // Automatically generated method. Please do not modify this code.
+        this.meilleurAcheteur = ach;
+    }
+    public int getDuree() {
         // Automatically generated method. Please do not modify this code.
         return this.duree;
     }
 
-    private void setDuree(final int value) {
+    public void setDuree(final int value) {
         // Automatically generated method. Please do not modify this code.
         this.duree = value;
     }
 
     public String toString() {
         String res = "Enchère(encore " + this.duree + " jours)\n";
-        res += super.description + '\n' + super.photo + '\n' ;
+        res += super.description + '\n';
         res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + "€";
         res += "(prix de départ des enchères)\nEnchère la plus haute : " + this.meilleurPrix + "€\n";
         res += "Categorie : " + categorie.getNom() + "\n" + "Mot-clefs : ";
