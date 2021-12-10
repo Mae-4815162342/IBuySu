@@ -206,4 +206,68 @@ public class IBuySu {
         return "\u001b[32mDonnées bancaires correctes : " + dataBank.toString()
             + "\nVous êtes connecté en tant que :\n  " + user.getAffichageMinimal() + "\u001b[0m\n";
     }
+
+    public Categorie getCategorie(){
+        String choixCateg = IHM.deroulerMenu("Selectionnez une categorie pour votre Produit:: ", getMenuCateg(categories));
+        Categorie res = null;
+        for(Categorie categ : categories) {
+            if(categ.getNom() == choixCateg) {
+                res = categ;
+                break;
+            }
+        }
+        List<Categorie> sousCateg = res.getSousCategories();
+        if(res.getSousCategories() != null) {
+            String choixSousCateg = IHM.deroulerMenu("Selectionnez une sous-categorie pour votre Produit: ", getMenuCateg(sousCateg));
+            for(Categorie categ : sousCateg) {
+                if(categ.getNom() == choixSousCateg) {
+                    res = categ;
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+
+    public void addOrCreatMotClef(Produit p){
+        String recherche = IHM.getUserIn("Entrer un mot clef:");
+        for(MotClef mot: this.motClef) {
+            if(!mot.compare(recherche)){
+                new MotClef(recherche, p);
+            }
+        }
+    }
+    
+    public void creerUnVente() { 
+        //remplir les données de vente
+        String[] formulaire = Produit.getFormulaire()
+        String[] parametres = IHM.remplirFormulaire("Formulaire de creation de vente", formulaire);
+
+        //demander à l'utilisateur si c'est une vente directe où vente aux enchères
+        String[] menuTypeDonnees = {"Vente Directe", "Vente Aux Enchères"};
+        String typeDonnees = IHM.deroulerMenu("Choisissez un type de vente que vous voulez effectuer", menuTypeDonnees);
+        
+        //demander le categorie à l'utilisateur
+        Categorie categorieProduit = getCategorie();
+        Produit produit;
+        if(user instanceof Vendeur)
+        {
+            //création des objets
+            if(typeDonnees == "Vente Aux Enchères")
+            {
+                String[] formulaireEnchere = Enchere.getFormulaire();
+                String[] donneesVenteEnchere = IHM.remplirFormulaire("Formulaire de creation de vente aux enchères", formulaireEnchere);
+                produit = new Enchere(donneesVenteEnchere, (Vendeur)user, categorieProduit);
+            // Vente Directe
+            }else{ //may be check typeDonnes
+                String[] formulaireDirecte = Produit.getFormulaire();
+                String[] donneesVenteDirecte = IHM.remplirFormulaire("Formulaire de creation de vente aux enchères", formulaireDirecte);
+                produit = new Produit(donneesVenteDirecte, (Vendeur)user, categorieProduit);
+            }
+            categorieProduit.addProduit(produit);
+            addOrCreatMotClef(produit);
+
+        }
+    }
+
 }

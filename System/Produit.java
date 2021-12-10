@@ -24,6 +24,10 @@ public class Produit {
         this.isSold = false;
     }
 
+    public Produit(String[] formulaireRempli, Vendeur v, Categorie c){
+        this(formulaireRempli[0], formulaireRempli[1], v, formulaireRempli[2], Float.parseFloat(formulaireRempli[3]), c);
+    }
+
     public void addMotClef(MotClef m) {
         motClefs.add(m);
     }
@@ -88,5 +92,10 @@ public class Produit {
     public void setContrat(Contrat contrat) {
         // Automatically generated method. Please do not modify this code.
         this.contrat = contrat;
+    }
+
+    public static String[] getFormulaire() {
+        String[] res = {"titre", "description", "vendeur", "photo", "prix"}
+        return res;
     }
 }
