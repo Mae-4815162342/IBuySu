@@ -1,5 +1,6 @@
 package System;
 
+import IHM.PromptUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,14 +57,14 @@ public class Enchere extends Produit {
         String res = "Enchère (encore " + this.duree + " jours)\n";
         res += super.description + '\n' + super.photo + '\n';
         res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + "€";
-        res += "(prix de départ des enchères)\n\u001b[35mEnchère la plus haute :\u001b[0m \u001b[1m" + this.meilleurPrix + "€\u001b[0m\n";
-        res += "\u001b[35mCategorie :\u001b[0m " + categorie.getNom()
-            + "\n\u001b[35mMot-clefs :\u001b[0m ";
+        res += PromptUtils.b(PromptUtils.mag("(prix de départ des enchères)\nEnchère la plus haute : " + this.meilleurPrix + "€\n"));
+        res += PromptUtils.mag("Categorie : ") + categorie.getNom()
+            + PromptUtils.mag("\nMot-clefs : ");
         if (motClefs.size() == 0) {
-            res += "\u001b[31mAucun mot-clef\u001b[0m";
+            res += PromptUtils.red("Aucun mot-clef");
         } else {
             for (MotClef mot : motClefs) {
-                res += "\u001b[1m" + mot.getNom() + "\u001b[0m\t";
+                res += PromptUtils.b("" + mot.getNom() + "\t");
             }
         }
         return res;
