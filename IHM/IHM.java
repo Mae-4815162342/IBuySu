@@ -24,7 +24,7 @@ public class IHM {
     }
 
     private static int waitAnswerMenu() {
-        System.out.print("Entrez une option: ");
+        System.out.print("\u001b[33mEntrez une option:\u001b[0m ");
         System.out.flush();
 
         int answer = -1;
@@ -91,7 +91,7 @@ public class IHM {
         String[] parametres = new String[formulaire.length];
         int i = 0;
         for (String parametre : formulaire) {
-            System.out.print("Entrez votre " + parametre + ": ");
+            System.out.print("\u001b[33mEntrez votre " + parametre + ":\u001b[0m ");
             System.out.flush();
             String res = waitAnswer();
             parametres[i] = res;
@@ -117,18 +117,18 @@ public class IHM {
     }
 
     public static void main(String[] args) {
-        System.out.println("Bienvenue sur IBuySu.com, votre site d'achat-vente en ligne !");
-        System.out.println("Connexion en cours...");
+        System.out.println("\u001b[1mBienvenue sur IBuySu.com, votre site d'achat-vente en ligne !\u001b[0m");
+        System.out.println("\u001b[33mConnexion en cours...\u001b[0m");
         try {
             initSystem();
         } catch (Exception e) {
-            System.out.println("Echec de la connexion\nFermeture du système");
+            System.out.println("\u001b[31mEchec de la connexion\nFermeture du système\u001b[0m");
             quitter();
         }
         while (!exit) {
-            traiterChoix(deroulerMenu("Que désirez-vous faire ?", system.getMenu()));
+            traiterChoix(deroulerMenu("\u001b[33mQue désirez-vous faire ?\u001b[0m", system.getMenu()));
         }
-        System.out.println("A bientôt sur IBuySu.com!");
+        System.out.println("\u001b[1mA bientôt sur IBuySu.com!\u001b[0m");
         return;
     }
 }

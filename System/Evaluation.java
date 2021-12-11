@@ -15,7 +15,7 @@ public class Evaluation {
     }
 
     public String toString() {
-        String res = "Produit : " + this.titreProduit + '\n';
+        String res = "\u001b[35mProduit :\u001b[0m " + this.titreProduit + '\n';
         String roleAuteur = (auteur instanceof Acheteur) ? "(acheteur)" : "(vendeur)";
         String roleDestinataire = (auteur instanceof Acheteur) ? "(acheteur)" : "(vendeur)";
         res += "Evaluation par " + this.auteur + roleAuteur + "de" + this.destinataire + roleDestinataire + '\n';

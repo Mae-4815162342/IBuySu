@@ -47,7 +47,7 @@ public class Categorie {
 
     public String toString() {
         String res = this.nom + " :\n";
-        if (produits == null) res += "Aucun produit dans cette catégorie";
+        if (produits == null) res += "\u001b[31mAucun produit dans cette catégorie\u001b[0m";
         else
             for (Produit p : produits) {
                 res += p.toString();

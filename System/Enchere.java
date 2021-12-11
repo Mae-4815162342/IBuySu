@@ -53,16 +53,17 @@ public class Enchere extends Produit {
     }
 
     public String toString() {
-        String res = "Enchère(encore " + this.duree + " jours)\n";
+        String res = "Enchère (encore " + this.duree + " jours)\n";
         res += super.description + '\n' + super.photo + '\n';
         res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + "€";
-        res += "(prix de départ des enchères)\nEnchère la plus haute : " + this.meilleurPrix + "€\n";
-        res += "Categorie : " + categorie.getNom() + "\n" + "Mot-clefs : ";
+        res += "(prix de départ des enchères)\n\u001b[35mEnchère la plus haute :\u001b[0m \u001b[1m" + this.meilleurPrix + "€\u001b[0m\n";
+        res += "\u001b[35mCategorie :\u001b[0m " + categorie.getNom()
+            + "\n\u001b[35mMot-clefs :\u001b[0m ";
         if (motClefs.size() == 0) {
-            res += "Aucun mot-clef";
+            res += "\u001b[31mAucun mot-clef\u001b[0m";
         } else {
             for (MotClef mot : motClefs) {
-                res += mot.getNom() + "\t";
+                res += "\u001b[1m" + mot.getNom() + "\u001b[0m\t";
             }
         }
         return res;
