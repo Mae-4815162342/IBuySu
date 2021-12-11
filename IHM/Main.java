@@ -1,6 +1,7 @@
 package IHM;
 
 import System.IBuySu;
+import System.Inscrit;
 
 public class Main {
     private static boolean exiting = false;
@@ -9,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println(PromptUtils.b("Bienvenue sur IBuySu.com, votre site d'achat-vente en ligne !"));
         System.out.println(PromptUtils.yel("Connexion en cours..."));
-        
+
         try {
             system = IBuySu.getSystem();
         } catch (Exception e) {
@@ -40,10 +41,18 @@ public class Main {
                 system.inscriptionAcheteur();
                 break;
             case "Connexion":
-                system.connexion();
+                String[] formulaire = Inscrit.getFormulaireConnexion();
+                String[] identifiants = IHM.remplirFormulaire(PromptUtils.b("Formulaire de connexion"), formulaire);
+                if (system.connect(identifiants))
+                    PromptUtils.printSuccess("Vous êtes connecté en tant que : " + system.getUser().getAffichageMinimal());
+                else
+                    PromptUtils.printError("Identifiants incorrects");
                 break;
             case "Déconnexion":
-                system.deconnexion();
+                if (system.deconnexion())
+                    PromptUtils.printSuccess("Vous êtes déconnecté");
+                else
+                    PromptUtils.printError("Impossible de se déconnecter");
                 break;
             case "Participer à une enchère":
                 system.acheterObjetEnchere();

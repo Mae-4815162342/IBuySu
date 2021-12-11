@@ -6,7 +6,7 @@ public class IHM {
     private static Scanner scan = new Scanner(System.in);
 
     public static String getUserIn(String message) {
-        System.out.print(message + " ");
+        System.out.print(message + ": ");
         System.out.flush();
         return waitAnswer();
     }

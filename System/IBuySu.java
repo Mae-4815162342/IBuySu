@@ -29,6 +29,10 @@ public class IBuySu {
         this.users = users;
     }
 
+    public Utilisateur getUser() {
+        return user;
+    }
+
     public List<Categorie> getCategories() {
         return categories;
     }
@@ -62,37 +66,28 @@ public class IBuySu {
         return user.getMenu();
     }
 
-    public void connexion() {
-        String[] formulaire = Inscrit.getFormulaireConnexion();
-        String[] identifiants = IHM.remplirFormulaire(PromptUtils.b("Formulaire de connexion"), formulaire);
+    public boolean connect(String[] identifiants) {
         Inscrit connecting = null;
-        for (Inscrit user: users) {
+        for (Inscrit user : users) {
             if(user.getMail().equalsIgnoreCase(identifiants[0])) {
                 connecting = user;
             }
         }
 
-        if (connecting == null) {
-            PromptUtils.printError("Le mail ne correspond à aucun utilisateur");
-            return;
-        }
-
-        if (!connecting.verifMdp(identifiants[1])) {
-            PromptUtils.printError("Mot de passe incorrect");
-            return;
-        }
+        if (connecting == null || !connecting.verifMdp(identifiants[1]))
+            return false;
 
         user = connecting;
-        PromptUtils.printSuccess("Vous êtes connecté en tant que : " + user.getAffichageMinimal());
+        return true;
     }
 
-    public void deconnexion() {
+    public boolean deconnexion() {
         user = new Utilisateur();
-        PromptUtils.printSuccess("Vous êtes déconnecté");
+        return true;
     }
 
-    public ArrayList<Produit> rechercherParMotClef(){
-        String recherche = IHM.getUserIn(PromptUtils.yel("Entrer un mot-clef : "));
+    public ArrayList<Produit> rechercherParMotClef() {
+        String recherche = IHM.getUserIn(PromptUtils.yel("Entrez un mot-clef"));
         ArrayList<Produit> resultats = new ArrayList<Produit>();
         for (MotClef mot : this.motClef) {
             if (mot.compare(recherche)) {
@@ -114,7 +109,7 @@ public class IBuySu {
     }
 
     public List<Produit> rechercherParCategorie() {
-        String choixCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une categorie :"), getMenuCateg(categories));
+        String choixCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une categorie"), getMenuCateg(categories));
         Categorie res = null;
         for (Categorie categ : categories) {
             if (categ.getNom() == choixCateg) {
@@ -125,7 +120,7 @@ public class IBuySu {
         API.fetchSousCategorie(res);
         List<Categorie> sousCateg = res.getSousCategories();
         if (res.getSousCategories() != null) {
-            String choixSousCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une sous-categorie :"), getMenuCateg(sousCateg));
+            String choixSousCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une sous-categorie"), getMenuCateg(sousCateg));
             for (Categorie categ : sousCateg) {
                 if (categ.getNom() == choixSousCateg) {
                     res = categ;
