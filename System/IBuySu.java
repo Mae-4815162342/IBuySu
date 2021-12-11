@@ -66,24 +66,24 @@ public class IBuySu {
         return user.getMenu();
     }
 
-    public boolean connect(String[] identifiants) {
+    public String connexion(){
+        String[] formulaire = Inscrit.getFormulaireConnexion();
+        String[] identifiants = IHM.remplirFormulaire(PromptUtils.b("\u001b[33mFormulaire de connexion"), formulaire);
         Inscrit connecting = null;
-        for (Inscrit user : users) {
+        for(Inscrit user: users) {
             if(user.getMail().equalsIgnoreCase(identifiants[0])) {
                 connecting = user;
             }
         }
-
-        if (connecting == null || !connecting.verifMdp(identifiants[1]))
-            return false;
-
+        if(connecting == null) return PromptUtils.red("Erreur: le mail ne correspond à aucun utilisateur");
+        if(!connecting.verifMdp(identifiants[1])) return PromptUtils.red("Erreur: mot de passe incorrect");
         user = connecting;
-        return true;
+        return PromptUtils.grn("Vous êtes connecté en tant que : " + user.getAffichageMinimal() + "\n");
     }
 
-    public boolean deconnexion() {
+    public String deconnexion() {
         user = new Utilisateur();
-        return true;
+        return PromptUtils.yel("Vous êtes déconnecté");
     }
 
     public ArrayList<Produit> rechercherParMotClef() {
@@ -163,17 +163,17 @@ public class IBuySu {
         System.out.println("evaluer un utilisateur");
     }
 
-    public void inscriptionAcheteur() {
+    public String inscriptionAcheteur() {
         String[] formulaire = Acheteur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire(PromptUtils.b("Formulaire d'inscription (acheteur)"), formulaire);
         // on connecte l'acheteur automatiquement
         Acheteur user = new Acheteur(parametres);
         users.add(user);
         API.addAcheteur( user);
-        PromptUtils.printSuccess("Vous êtes connecté en tant que:\n  " + user.getAffichageMinimal());
+        return PromptUtils.grn("Vous êtes connecté en tant que:\n  " + user.getAffichageMinimal() + "\n");
     }
 
-    public void inscriptionVendeur() {
+    public String inscriptionVendeur() {
         // remplir les données du vendeur
         String[] formulaire = Vendeur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire(PromptUtils.b("Formulaire d'inscription (vendeur)"), formulaire);
@@ -187,11 +187,9 @@ public class IBuySu {
 
         // vérification : si ce ne sont pas les mêmes noms et prénoms, échec, sinon les
         // Données et le Vendeur sont créés
-        boolean donneesOK = DonneesBancaires.verifierVendeur(formulaire, donneesBancaires);
-        if (!donneesOK) {
-            PromptUtils.printError("Echec : les données bancaires ne correspondent pas au vendeur");
-            return;
-        }
+        Boolean donneesOK = DonneesBancaires.verifierVendeur(formulaire, donneesBancaires);
+        if (!donneesOK)
+            return PromptUtils.red("Echec : les données bancaires ne correspondent pas au vendeur");
 
         // création des objets
         DonneesBancaires dataBank = null;
@@ -205,8 +203,7 @@ public class IBuySu {
         user = vendeur;
         users.add((Inscrit) user);
         API.addVendeur((Vendeur) user);
-
-        PromptUtils.printSuccess("Données bancaires correctes : " + dataBank.toString());
-        PromptUtils.printSuccess("Vous êtes connecté en tant que :\n  " + user.getAffichageMinimal());
+        return "\u001b[32mDonnées bancaires correctes : " + dataBank.toString()
+            + "\nVous êtes connecté en tant que :\n  " + user.getAffichageMinimal() + "\u001b[0m\n";
     }
 }

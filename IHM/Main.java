@@ -35,24 +35,16 @@ public class Main {
                 system.rechercher();
                 break;
             case "Inscription Vendeur":
-                system.inscriptionVendeur();
+                System.out.println(system.inscriptionVendeur());
                 break;
             case "Inscription Acheteur":
-                system.inscriptionAcheteur();
+                System.out.println(system.inscriptionAcheteur());
                 break;
             case "Connexion":
-                String[] formulaire = Inscrit.getFormulaireConnexion();
-                String[] identifiants = IHM.remplirFormulaire(PromptUtils.b("Formulaire de connexion"), formulaire);
-                if (system.connect(identifiants))
-                    PromptUtils.printSuccess("Vous êtes connecté en tant que : " + system.getUser().getAffichageMinimal());
-                else
-                    PromptUtils.printError("Identifiants incorrects");
+                System.out.println(system.connexion());
                 break;
             case "Déconnexion":
-                if (system.deconnexion())
-                    PromptUtils.printSuccess("Vous êtes déconnecté");
-                else
-                    PromptUtils.printError("Impossible de se déconnecter");
+                System.out.println(system.deconnexion());
                 break;
             case "Participer à une enchère":
                 system.acheterObjetEnchere();
