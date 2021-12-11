@@ -1,5 +1,6 @@
 package System;
 
+import IHM.PromptUtils;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class Categorie {
 
     public String toString() {
         String res = this.nom + " :\n";
-        if (produits == null) res += "\u001b[31mAucun produit dans cette catégorie\u001b[0m";
+        if (produits == null) res += PromptUtils.red("Aucun produit dans cette catégorie");
         else
             for (Produit p : produits) {
                 res += p.toString();

@@ -1,5 +1,7 @@
 package System;
 
+import IHM.PromptUtils;
+
 public class Evaluation {
     private int note;
     private String avis;
@@ -15,7 +17,7 @@ public class Evaluation {
     }
 
     public String toString() {
-        String res = "\u001b[35mProduit :\u001b[0m " + this.titreProduit + '\n';
+        String res = PromptUtils.mag("Produit : ") + this.titreProduit + '\n';
         String roleAuteur = (auteur instanceof Acheteur) ? "(acheteur)" : "(vendeur)";
         String roleDestinataire = (auteur instanceof Acheteur) ? "(acheteur)" : "(vendeur)";
         res += "Evaluation par " + this.auteur + roleAuteur + "de" + this.destinataire + roleDestinataire + '\n';

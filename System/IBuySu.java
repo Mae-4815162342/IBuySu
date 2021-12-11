@@ -1,6 +1,7 @@
 package System;
 
 import IHM.IHM;
+import IHM.PromptUtils;
 import BDD.API;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,10 @@ public class IBuySu {
 
     public void setUsers(List<Inscrit> users) {
         this.users = users;
+    }
+
+    public Utilisateur getUser() {
+        return user;
     }
 
     public List<Categorie> getCategories() {
@@ -63,26 +68,26 @@ public class IBuySu {
 
     public String connexion(){
         String[] formulaire = Inscrit.getFormulaireConnexion();
-        String[] identifiants = IHM.remplirFormulaire("\u001b[1m\u001b[33mFormulaire de connexion\u001b[0m", formulaire);
+        String[] identifiants = IHM.remplirFormulaire(PromptUtils.b("\u001b[33mFormulaire de connexion"), formulaire);
         Inscrit connecting = null;
         for(Inscrit user: users) {
             if(user.getMail().equalsIgnoreCase(identifiants[0])) {
                 connecting = user;
             }
         }
-        if(connecting == null) return "\u001b[31mErreur: le mail ne correspond à aucun utilisateur\u001b[0m";
-        if(!connecting.verifMdp(identifiants[1])) return "\u001b[31mErreur: mot de passe incorrect\u001b[0m";
+        if(connecting == null) return PromptUtils.red("Erreur: le mail ne correspond à aucun utilisateur");
+        if(!connecting.verifMdp(identifiants[1])) return PromptUtils.red("Erreur: mot de passe incorrect");
         user = connecting;
-        return "\u001b[32mVous êtes connecté en tant que : " + user.getAffichageMinimal() + "\u001b[0m\n";
+        return PromptUtils.grn("Vous êtes connecté en tant que : " + user.getAffichageMinimal() + "\n");
     }
 
     public String deconnexion() {
         user = new Utilisateur();
-        return "\u001b[33mVous êtes déconnecté\u001b[0m";
+        return PromptUtils.yel("Vous êtes déconnecté");
     }
 
-    public ArrayList<Produit> rechercherParMotClef(){
-        String recherche = IHM.getUserIn("\u001b[33mEntrer un mot-clef :\u001b[0m ");
+    public ArrayList<Produit> rechercherParMotClef() {
+        String recherche = IHM.getUserIn(PromptUtils.yel("Entrez un mot-clef"));
         ArrayList<Produit> resultats = new ArrayList<Produit>();
         for (MotClef mot : this.motClef) {
             if (mot.compare(recherche)) {
@@ -104,7 +109,7 @@ public class IBuySu {
     }
 
     public List<Produit> rechercherParCategorie() {
-        String choixCateg = IHM.deroulerMenu("\u001b[33mSelectionnez une categorie :\u001b[0m", getMenuCateg(categories));
+        String choixCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une categorie"), getMenuCateg(categories));
         Categorie res = null;
         for (Categorie categ : categories) {
             if (categ.getNom() == choixCateg) {
@@ -115,7 +120,7 @@ public class IBuySu {
         API.fetchSousCategorie(res);
         List<Categorie> sousCateg = res.getSousCategories();
         if (res.getSousCategories() != null) {
-            String choixSousCateg = IHM.deroulerMenu("\u001b[33mSelectionnez une sous-categorie :\u001b[0m", getMenuCateg(sousCateg));
+            String choixSousCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une sous-categorie"), getMenuCateg(sousCateg));
             for (Categorie categ : sousCateg) {
                 if (categ.getNom() == choixSousCateg) {
                     res = categ;
@@ -130,7 +135,7 @@ public class IBuySu {
     public void rechercher() {
         // selection du type de recherche
         String[] menu = user.getMenuRecherche();
-        String choix = IHM.deroulerMenu("\u001b[33mSelectionnez un type de recherche :\u001b[0m", menu);
+        String choix = IHM.deroulerMenu(PromptUtils.yel("Selectionnez un type de recherche :"), menu);
         List<Produit> res = null;
         switch (choix) {
             case "Rechercher par mot clef":
@@ -160,31 +165,31 @@ public class IBuySu {
 
     public String inscriptionAcheteur() {
         String[] formulaire = Acheteur.getFormulaireInscription();
-        String[] parametres = IHM.remplirFormulaire("\u001b[1mFormulaire d'inscription\u001b[0m (acheteur)", formulaire);
+        String[] parametres = IHM.remplirFormulaire(PromptUtils.b("Formulaire d'inscription (acheteur)"), formulaire);
         // on connecte l'acheteur automatiquement
         Acheteur user = new Acheteur(parametres);
         users.add(user);
         API.addAcheteur( user);
-        return "\u001b[32mVous êtes connecté en tant que:\n  " + user.getAffichageMinimal() + "\u001b[0m\n";
+        return PromptUtils.grn("Vous êtes connecté en tant que:\n  " + user.getAffichageMinimal() + "\n");
     }
 
     public String inscriptionVendeur() {
         // remplir les données du vendeur
         String[] formulaire = Vendeur.getFormulaireInscription();
-        String[] parametres = IHM.remplirFormulaire("\u001b[1mFormulaire d'inscription\u001b[0m (vendeur)", formulaire);
+        String[] parametres = IHM.remplirFormulaire(PromptUtils.b("Formulaire d'inscription (vendeur)"), formulaire);
 
         // remplir les données bancaires
         String[] menuTypeDonnees = { "RIB", "CB" };
         String typeDonnees = IHM.deroulerMenu(
-                "\u001b[33mChoisissez un type de données bancaires pour la vérification de vos données\u001b[0m", menuTypeDonnees);
+                PromptUtils.yel("Choisissez un type de données bancaires pour la vérification de vos données"), menuTypeDonnees);
         String[] donneesBancaires = DonneesBancaires.getFormulaire(typeDonnees);
-        String[] donneesRemplies = IHM.remplirFormulaire("\u001b[33mEntrez vos données bancaires :\u001b[0m", donneesBancaires);
+        String[] donneesRemplies = IHM.remplirFormulaire(PromptUtils.yel("Entrez vos données bancaires :"), donneesBancaires);
 
         // vérification : si ce ne sont pas les mêmes noms et prénoms, échec, sinon les
         // Données et le Vendeur sont créés
         Boolean donneesOK = DonneesBancaires.verifierVendeur(formulaire, donneesBancaires);
         if (!donneesOK)
-            return "\u001b[31mEchec : les données bancaires ne correspondent pas au vendeur\u001b[0m";
+            return PromptUtils.red("Echec : les données bancaires ne correspondent pas au vendeur");
 
         // création des objets
         DonneesBancaires dataBank = null;
