@@ -29,7 +29,7 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     public boolean verifMdp(String mdp) {
-        return mdp == motdepasse;
+        return mdp.equals(motdepasse);
     }
 
     public static String[] getFormulaireConnexion() {

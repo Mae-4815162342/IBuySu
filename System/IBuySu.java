@@ -66,7 +66,7 @@ public class IBuySu {
         String[] identifiants = IHM.remplirFormulaire("\u001b[1m\u001b[33mFormulaire de connexion\u001b[0m", formulaire);
         Inscrit connecting = null;
         for(Inscrit user: users) {
-            if(user.getMail() == identifiants[0]) {
+            if(user.getMail().equalsIgnoreCase(identifiants[0])) {
                 connecting = user;
             }
         }
@@ -162,9 +162,9 @@ public class IBuySu {
         String[] formulaire = Acheteur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire("\u001b[1mFormulaire d'inscription\u001b[0m (acheteur)", formulaire);
         // on connecte l'acheteur automatiquement
-        user = new Acheteur(parametres);
-        users.add((Inscrit) user);
-        API.addAcheteur((Acheteur) user);
+        Acheteur user = new Acheteur(parametres);
+        users.add(user);
+        API.addAcheteur( user);
         return "\u001b[32mVous êtes connecté en tant que:\n  " + user.getAffichageMinimal() + "\u001b[0m\n";
     }
 

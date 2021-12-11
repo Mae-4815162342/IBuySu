@@ -31,8 +31,7 @@ public class API {
     }
 
     public static void addAcheteur(Acheteur a) {
-        String requete = "INSERT Acheteur (id, nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse) VALUES (";
-        requete += a.getId() + ",";
+        String requete = "INSERT into Acheteur (nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse) VALUES(";
         requete += "'" + a.getNom() + "',";
         requete += "'" + a.getPrenom() + "',";
         requete += "'" + a.getPseudo() + "',";
@@ -45,6 +44,7 @@ public class API {
             if (con == null) {
                 con = connexion();
             }
+            System.out.println(requete);
             Statement stmt = con.createStatement();
             stmt.executeUpdate(requete);
         } catch (Exception e) {
@@ -57,12 +57,12 @@ public class API {
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery("select * from Acheteur");
             while(res.next()){
-                users.add(new Acheteur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"), null, -1, null, -1,null, null));
+                users.add(new Acheteur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null, null));
             }
             Statement stmt1 = con.createStatement();
             res = stmt1.executeQuery("select * from Vendeur");
             while(res.next()){
-                users.add(new Vendeur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"), null, -1, null, -1,null,null, null));
+                users.add(new Vendeur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null,null, null));
             }
             system.setUsers(users);
         } catch (SQLException e){
@@ -149,8 +149,7 @@ public class API {
         }
     }
     public static void addVendeur(Vendeur v) {
-        String requete = "INSERT Vendeur (id, nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse, donnees_banquaires) VALUES (";
-        requete += v.getId() + ",";
+        String requete = "INSERT into Vendeur (nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse, donnees_banquaires) VALUES(";
         requete += "'" + v.getNom() + "',";
         requete += "'" + v.getPrenom() + "',";
         requete += "'" + v.getPseudo() + "',";
