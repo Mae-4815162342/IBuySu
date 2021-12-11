@@ -47,7 +47,7 @@ public class IHM {
     private static void traiterChoix(String choix) {
         switch (choix) {
             case "Recherche":
-                system.rechercher();
+                System.out.println(system.rechercher());
                 break;
             case "Inscription Vendeur":
                 System.out.println(system.inscriptionVendeur());
@@ -58,17 +58,24 @@ public class IHM {
             case "Connexion":
                 System.out.println(system.connexion());
                 break;
-            case "Déconnexion":
+            case "Deconnexion":
                 System.out.println(system.deconnexion());
                 break;
             case "Participer à une enchère":
                 system.acheterObjetEnchere();
                 break;
             case "Acheter un objet":
-                system.acheterUnObjet();
+                //system.acheterUnObjet();
                 break;
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();
+                break;
+            //TODO
+            case "Gérer mes ventes":
+                System.out.println(system.gererMesVentes());
+                break;
+            //TODO
+            case "Créer une vente":
                 break;
             case "Quitter":
                 quitter();
