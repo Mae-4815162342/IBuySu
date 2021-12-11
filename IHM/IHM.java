@@ -65,7 +65,7 @@ public class IHM {
                 system.acheterObjetEnchere();
                 break;
             case "Acheter un objet":
-                //system.acheterUnObjet();
+                //TODO : system.acheterUnObjet(); ?
                 break;
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();

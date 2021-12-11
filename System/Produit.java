@@ -89,4 +89,6 @@ public class Produit {
         // Automatically generated method. Please do not modify this code.
         this.contrat = contrat;
     }
+
+    public Vendeur getVendeur(){return vendeur;}
 }

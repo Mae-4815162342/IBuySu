@@ -185,7 +185,7 @@ public class IBuySu {
                 System.out.println("Nous n'avons pas compris votre demande");
                 buyOrBack(p);
         }
-        return "Achat effectué";
+        return "Achat pris en compte";
     }
 
     public void acheterObjetEnchere() {
@@ -193,7 +193,13 @@ public class IBuySu {
     }
 
     public void acheterUnObjet(Produit p) {
-        System.out.println("acheter un objet");
+        //TODO : voir s'il faut changer dans la BDD
+        if(!(user instanceof Acheteur)) return;  //condition enlevable si cette methode est mise en private
+
+        Contrat contrat = new Contrat((Acheteur) user, p.getVendeur(), p, p.getPrix_de_depart());
+        p.setContrat(contrat);
+
+        System.out.println("En attente de la confirmation du vendeur.");
     }
 
     public void evaluerUnUtilisateur() {
