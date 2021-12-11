@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.plaf.ProgressBarUI;
-
 public class IBuySu {
     private List<Categorie> categories = new ArrayList<Categorie>();
     private List<MotClef> motClef = new ArrayList<>();

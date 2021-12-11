@@ -70,7 +70,6 @@ public class IHM {
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();
                 break;
-            //TODO
             case "Gérer mes ventes":
                 System.out.println(system.gererMesVentes());
                 break;
