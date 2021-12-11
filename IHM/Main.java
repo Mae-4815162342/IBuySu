@@ -1,7 +1,6 @@
 package IHM;
 
 import System.IBuySu;
-import System.Inscrit;
 
 public class Main {
     private static boolean exiting = false;
@@ -50,10 +49,17 @@ public class Main {
                 system.acheterObjetEnchere();
                 break;
             case "Acheter un objet":
-                system.acheterUnObjet();
+                //system.acheterUnObjet();
                 break;
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();
+                break;
+            //TODO
+            case "Gérer mes ventes":
+                System.out.println(system.gererMesVentes());
+                break;
+            //TODO
+            case "Créer une vente":
                 break;
             case "Quitter":
                 exit();
