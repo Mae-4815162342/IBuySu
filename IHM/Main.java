@@ -34,16 +34,16 @@ public class Main {
                 system.rechercher();
                 break;
             case "Inscription Vendeur":
-                System.out.println(system.inscriptionVendeur());
+                system.inscriptionVendeur();
                 break;
             case "Inscription Acheteur":
-                System.out.println(system.inscriptionAcheteur());
+                system.inscriptionAcheteur();
                 break;
             case "Connexion":
-                System.out.println(system.connexion());
+                system.connexion();
                 break;
             case "Déconnexion":
-                System.out.println(system.deconnexion());
+                system.deconnexion();
                 break;
             case "Participer à une enchère":
                 system.acheterObjetEnchere();
