@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "IHM.Main",
+            "projectName": "IBuySu_ee2c2b34"
+        },
+        {
+            "type": "java",
             "name": "Launch IHM",
             "request": "launch",
             "mainClass": "IHM.IHM",
