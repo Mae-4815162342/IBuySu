@@ -2,8 +2,11 @@ package System;
 
 import java.util.ArrayList;
 import java.util.List;
+import BDD.*;
 
 public class Produit {
+    protected int id;
+    protected static int nbProd = API.fetchNbProduct();
     protected String titre;
     protected String description;
     protected List<MotClef> motClefs = new ArrayList<MotClef>();
@@ -12,9 +15,12 @@ public class Produit {
     protected String photo;
     protected float prix;
     protected boolean isSold;
+    protected boolean isReceived;
     protected Contrat contrat = null;
 
     public Produit(String titre, String desc, Vendeur v, String photo, float prix, Categorie c) {
+        nbProd ++;
+        this.id = nbProd;
         this.titre = titre;
         this.description = desc;
         this.vendeur = v;
@@ -22,6 +28,19 @@ public class Produit {
         this.prix = prix;
         this.categorie = c;
         this.isSold = false;
+        this.isReceived = false;
+    }
+
+    public Produit(int id, String titre, String desc, Vendeur v, String photo, float prix, Categorie c) {
+        this.id = id;
+        this.titre = titre;
+        this.description = desc;
+        this.vendeur = v;
+        this.photo = photo;
+        this.prix = prix;
+        this.categorie = c;
+        this.isSold = false;
+        this.isReceived = false;
     }
 
     public Produit(String[] formulaireRempli, Vendeur v, Categorie c){
@@ -32,11 +51,10 @@ public class Produit {
         motClefs.add(m);
     }
 
-    // méthode de notification des vendeurs/acheteurs (Design Pattern?)
 
     public String toString() {
-        String res = this.description + '\n' + this.photo + '\n';
-        res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + "€\n";
+        String res = this.titre + "\n" + this.description + '\n' + this.photo + '\n';
+        res += "Vendu par " + ((this.vendeur != null) ? this.vendeur.getAffichageMinimal() : "anonyme") + " a " + this.prix + "€\n";
         res += "Categorie : " + categorie.getNom() + "\n" + "Mot-clefs : ";
         if (motClefs.size() == 0) {
             res += "Aucun mot-clef";
@@ -101,5 +119,21 @@ public class Produit {
     }
 
     public Vendeur getVendeur(){return vendeur;}
+
+    public boolean getEstVendu() {
+        return isSold;
+    }
+
+    public boolean getEstRecu() {
+        return isReceived;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public int getId() {
+        return id;
+    }
 
 }

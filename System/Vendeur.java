@@ -12,6 +12,12 @@ public class Vendeur extends Inscrit {
         this.donneesBanque = bankData;
     }
 
+    public Vendeur(int id, String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
+                   String nomRue, int codePostal, String ville, String pays, DonneesBancaires bankData) {
+        super(id, pseudo, nom, prenom, numTel, mail, mdp, numRue, nomRue, codePostal, ville, pays);
+        this.donneesBanque = bankData;
+    }
+
     public Vendeur(String[] formulaireRempli, DonneesBancaires dataBank) {
         this(formulaireRempli[0], formulaireRempli[1], formulaireRempli[2], Integer.parseInt(formulaireRempli[3]),
                 formulaireRempli[4], formulaireRempli[5], Integer.parseInt(formulaireRempli[6]), formulaireRempli[7],

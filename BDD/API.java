@@ -31,7 +31,8 @@ public class API {
     }
 
     public static void addAcheteur(Acheteur a) {
-        String requete = "INSERT into Acheteur (nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse) VALUES(";
+        String requete = "INSERT into Acheteur (ID, nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse) VALUES(";
+        requete += a.getId() + ",";
         requete += "'" + a.getNom() + "',";
         requete += "'" + a.getPrenom() + "',";
         requete += "'" + a.getPseudo() + "',";
@@ -39,30 +40,69 @@ public class API {
         requete += "'" + a.getMail() + "',";
         requete += "'" + a.getMotdepasse() + "',";
         requete += "'" + a.getAdresse().toString() + "')";
-
         try {
             if (con == null) {
                 con = connexion();
             }
-            System.out.println(requete);
             Statement stmt = con.createStatement();
             stmt.executeUpdate(requete);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public static void addMotClef(MotClef mot, Produit p) {
+        try {
+            if (con == null) {
+                con = connexion();
+            }
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("Insert into Motcle Values ('" + mot.getNom() + "','" + p.getId() + "')");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void addProduit(IBuySu system, Produit p) {
+        String requete = "";
+        if(p instanceof Enchere) {
+            requete = "INSERT into Enchere (id, titre, description, prix_de_depart, estVendu, estRecu, vendeur, categorie, photo) VALUES(";
+        } else {
+            requete = "INSERT into Vente_directe (id, titre, description, prix_de_depart, estVendu, estRecu, vendeur, categorie, photo) VALUES(";
+        }
+        requete += p.getId() + ",";
+        requete += "'" + p.getTitre() + "',";
+        requete += "'" + p.getDescription() + "',";
+        requete += p.getPrix_de_depart() + ",";
+        requete += p.getEstVendu() + ",";
+        requete += p.getEstRecu() + ",";
+        requete += p.getVendeur().getId() + ",";
+        requete += "'" + p.getCategorie().getNom() + "',";
+        requete += "'" + p.getPhoto() + "')";
+        try {
+            if (con == null) {
+                con = connexion();
+            }
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate(requete);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public static void fetchUsers(IBuySu system){
         try{
             List<Inscrit> users = new ArrayList<Inscrit>();
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery("select * from Acheteur");
             while(res.next()){
-                users.add(new Acheteur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null, null));
+                users.add(new Acheteur(res.getInt("id"), res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null, null));
             }
             Statement stmt1 = con.createStatement();
             res = stmt1.executeQuery("select * from Vendeur");
             while(res.next()){
-                users.add(new Vendeur(res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null,null, null));
+                users.add(new Vendeur(res.getInt("id"), res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null,null, null));
             }
             system.setUsers(users);
         } catch (SQLException e){
@@ -95,7 +135,7 @@ public class API {
             e.printStackTrace();
         }
     }
-    public static void fetchProductByCategorie(Categorie cat){
+    public static void fetchProductByCategorie(IBuySu system, Categorie cat){
         try{
             List<Produit> prod = new ArrayList<Produit>();
             Statement stmt = con.createStatement();
@@ -103,12 +143,12 @@ public class API {
             while(res.next()){
                 byte isSold = res.getByte("estVendu");
                 byte isReceived = res.getByte("estRecu");
-                prod.add(new Enchere(res.getInt("duree_enchere"),res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), cat, isSold!=0, isReceived!=0));
+                prod.add(new Enchere(res.getInt("duree_enchere"),res.getString("titre"),res.getString("description"), (Vendeur) system.getUserById(res.getInt("vendeur")), res.getString("photo"), res.getInt("prix_de_depart"), cat, isSold!=0, isReceived!=0));
             }
             Statement stmt1 = con.createStatement();
             res = stmt1.executeQuery("select * from Vente_directe where categorie='"+cat.getNom()+"'");
             while(res.next()){
-                prod.add(new Produit(res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), cat));
+                prod.add(new Produit(res.getString("titre"),res.getString("description"), (Vendeur) system.getUserById(res.getInt("vendeur")), res.getString("photo"), res.getInt("prix_de_depart"), cat));
             }
             cat.setProduits(prod);
         } catch (SQLException e){
@@ -119,16 +159,16 @@ public class API {
         try{
             List<Produit> prod = new ArrayList<Produit>();
             Statement stmt = con.createStatement();
-            ResultSet res = stmt.executeQuery("select * from Enchere e,Motcle_Produit mp where mp.motcle='"+motcle.getNom()+"' and mp.enchere=e.id");
+            ResultSet res = stmt.executeQuery("select * from Enchere e,Motcle mp where mp.nom='"+motcle.getNom()+"' and mp.produit=e.id");
             while(res.next()){
                 byte isSold = res.getByte("estVendu");
                 byte isReceived = res.getByte("estRecu");
                 prod.add(new Enchere(res.getInt("duree_enchere"),res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), new Categorie(res.getString("categorie")), isSold!=0, isReceived!=0));
             }
             Statement stmt1 = con.createStatement();
-            res = stmt1.executeQuery("select * from Vente_directe vd,Motcle_Produit mp where mp.motcle='"+motcle.getNom()+"' and mp.enchere=vd.id");
+            res = stmt1.executeQuery("select * from Vente_directe vd,Motcle mp where mp.nom='"+motcle.getNom()+"' and mp.produit=vd.id");
             while(res.next()){
-                prod.add(new Produit(res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), new Categorie(res.getString("categorie"))));
+                prod.add(new Produit(res.getInt("id"), res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), new Categorie(res.getString("categorie"))));
             }
             motcle.setProduits(prod);
         } catch (SQLException e){
@@ -141,7 +181,8 @@ public class API {
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery("select * from Motcle");
             while(res.next()){
-                motcles.add(new MotClef(res.getString("nom"),null));
+                MotClef mot = new MotClef(res.getString("nom"),null);
+                motcles.add(mot);
             }
             system.setMotClef(motcles);;
         } catch (SQLException e){
@@ -149,7 +190,8 @@ public class API {
         }
     }
     public static void addVendeur(Vendeur v) {
-        String requete = "INSERT into Vendeur (nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse, donnees_banquaires) VALUES(";
+        String requete = "INSERT into Vendeur (ID, nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse, donnees_banquaires) VALUES(";
+        requete += v.getId() + ",";
         requete += "'" + v.getNom() + "',";
         requete += "'" + v.getPrenom() + "',";
         requete += "'" + v.getPseudo() + "',";
@@ -169,6 +211,25 @@ public class API {
         }
     }
 
+    public static int fetchNbProduct() {
+        try {
+            if (con == null) {
+                con = connexion();
+            }
+            Statement stmt = con.createStatement();
+            ResultSet  enchere = stmt.executeQuery("SELECT COUNT(*) FROM Enchere");
+            enchere.next();
+            int nbEnchere = enchere.getInt("COUNT(*)");
+            ResultSet directe = stmt.executeQuery("SELECT COUNT(*) FROM Vente_directe");
+            directe.next();
+            int nbDirecte = directe.getInt("COUNT(*)");
+            return nbDirecte + nbEnchere;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public static int getNbInscrit() {
         try {
             if (con == null) {
@@ -177,10 +238,10 @@ public class API {
             Statement stmt = con.createStatement();
             ResultSet vendeurs = stmt.executeQuery("SELECT COUNT(*) FROM Vendeur");
             vendeurs.next();
-            int nbVendeurs = vendeurs.getRow();
+            int nbVendeurs = vendeurs.getInt("COUNT(*)");
             ResultSet acheteurs = stmt.executeQuery("SELECT COUNT(*) FROM Acheteur");
             acheteurs.next();
-            int nbAcheteurs = acheteurs.getRow();
+            int nbAcheteurs = acheteurs.getInt("COUNT(*)");
             return nbAcheteurs + nbVendeurs;
         } catch (Exception e) {
             e.printStackTrace();

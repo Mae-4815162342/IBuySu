@@ -70,12 +70,7 @@ public class IBuySu {
     public String connexion(){
         String[] formulaire = Inscrit.getFormulaireConnexion();
         String[] identifiants = IHM.remplirFormulaire(PromptUtils.b("\u001b[33mFormulaire de connexion"), formulaire);
-        Inscrit connecting = null;
-        for(Inscrit user: users) {
-            if(user.getMail().equalsIgnoreCase(identifiants[0])) {
-                connecting = user;
-            }
-        }
+        Inscrit connecting = getUser(identifiants[0]);
         if(connecting == null) return PromptUtils.red("Erreur: le mail ne correspond à aucun utilisateur");
         if(!connecting.verifMdp(identifiants[1])) return PromptUtils.red("Erreur: mot de passe incorrect");
         user = connecting;
@@ -91,9 +86,10 @@ public class IBuySu {
         String recherche = IHM.getUserIn(PromptUtils.yel("Entrez un mot-clef"));
         ArrayList<Produit> resultats = new ArrayList<Produit>();
         for (MotClef mot : this.motClef) {
-            if (mot.compare(recherche)) {
-                List<Produit> temp = mot.getProduits();
-                for (Produit p : temp) {
+            if (mot.getNom() == recherche) {
+                API.fetchProductByMotcle(mot);
+                for (Produit p : mot.getProduits()) {
+                    System.out.println(p);
                     resultats.add(p);
                 }
             }
@@ -110,27 +106,26 @@ public class IBuySu {
     }
 
     public List<Produit> rechercherParCategorie() {
-        String choixCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une categorie"), getMenuCateg(categories));
-        Categorie res = null;
-        for (Categorie categ : categories) {
-            if (categ.getNom() == choixCateg) {
-                res = categ;
-                break;
-            }
-        }
-        API.fetchSousCategorie(res);
-        List<Categorie> sousCateg = res.getSousCategories();
-        if (res.getSousCategories() != null) {
-            String choixSousCateg = IHM.deroulerMenu(PromptUtils.yel("Selectionnez une sous-categorie"), getMenuCateg(sousCateg));
-            for (Categorie categ : sousCateg) {
-                if (categ.getNom() == choixSousCateg) {
-                    res = categ;
-                    break;
-                }
-            }
-        }
-        API.fetchProductByCategorie(res);
+        Categorie res = getChoiceCategorie();
+        API.fetchProductByCategorie(this, res);
         return res.getProduits();
+    }
+
+    public Inscrit getUserById(int id) {
+        API.fetchUsers(this);
+        for(Inscrit user : users) {
+            if(user.getId() == id) return user;
+        }
+        return null;
+    }
+
+    public Inscrit getUser(String mail) {
+        for(Inscrit user: users) {
+            if(user.getMail().equalsIgnoreCase(mail)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     private String[] displayListOfProduct(List<Produit> products){
@@ -215,9 +210,10 @@ public class IBuySu {
         String[] formulaire = Acheteur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire(PromptUtils.b("Formulaire d'inscription (acheteur)"), formulaire);
         // on connecte l'acheteur automatiquement
-        Acheteur user = new Acheteur(parametres);
-        users.add(user);
-        API.addAcheteur( user);
+        Acheteur acheteur = new Acheteur(parametres);
+        this.user = acheteur;
+        users.add((Inscrit) user);
+        API.addAcheteur((Acheteur) user);
         return PromptUtils.grn("Vous êtes connecté en tant que:\n  " + user.getAffichageMinimal() + "\n");
     }
 
@@ -248,17 +244,16 @@ public class IBuySu {
         Vendeur vendeur = new Vendeur(parametres, dataBank);
 
         // connexion de l'utilisateur
-        user = vendeur;
+        this.user = vendeur;
         users.add((Inscrit) user);
-        System.out.println("Vendeur ajouté : "+user.toString());
         API.addVendeur((Vendeur) user);
         return "\u001b[32mDonnées bancaires correctes : " + dataBank.toString()
             + "\nVous êtes connecté en tant que :\n  " + user.getAffichageMinimal() + "\u001b[0m\n";
     }
 
-    public Categorie getCategorie(){
+    public Categorie getChoiceCategorie(){
         API.fetchCategories(this);
-        String choixCateg = IHM.deroulerMenu("Selectionnez une categorie pour votre Produit:: ", getMenuCateg(categories));
+        String choixCateg = IHM.deroulerMenu("Selectionnez une categorie: ", getMenuCateg(categories));
         Categorie res = null;
         for(Categorie categ : categories) {
             if(categ.getNom() == choixCateg) {
@@ -268,8 +263,8 @@ public class IBuySu {
         }
         API.fetchSousCategorie(res);
         List<Categorie> sousCateg = res.getSousCategories();
-        if(res.getSousCategories() != null) {
-            String choixSousCateg = IHM.deroulerMenu("Selectionnez une sous-categorie pour votre Produit: ", getMenuCateg(sousCateg));
+        if(sousCateg.size() > 0) {
+            String choixSousCateg = IHM.deroulerMenu("Selectionnez une sous-categorie:", getMenuCateg(sousCateg));
             for(Categorie categ : sousCateg) {
                 if(categ.getNom() == choixSousCateg) {
                     res = categ;
@@ -296,11 +291,19 @@ public class IBuySu {
 
     public void addOrCreatMotClef(Produit p){
         String recherche = IHM.getUserIn("Entrer un mot clef");
+        MotClef res = null;
         for(MotClef mot: this.motClef) {
-            if(!mot.compare(recherche)){
-                new MotClef(recherche, p);
+            if(mot.getNom() == recherche){
+                res = mot;
             }
         }
+        if(res != null) {
+            res.addProduit(p);
+        } else {
+            res = new MotClef(recherche, p);
+        }
+        API.addMotClef(res, p);
+        p.addMotClef(res);
     }
     
     public void creerUnVente() { 
@@ -309,7 +312,7 @@ public class IBuySu {
         String typeDonnees = IHM.deroulerMenu("Choisissez un type de vente que vous voulez effectuer", menuTypeDonnees);
         
         //demander le categorie à l'utilisateur
-        Categorie categorieProduit = getCategorie();
+        Categorie categorieProduit = getChoiceCategorie();
         Produit produit;
         if(user instanceof Vendeur)
         {
@@ -325,11 +328,11 @@ public class IBuySu {
                 String[] donneesVenteDirecte = IHM.remplirFormulaire("Formulaire de creation de vente directe", formulaireDirecte);
                 produit = new Produit(donneesVenteDirecte, (Vendeur)user, categorieProduit);
             }
-            // Ne marche pas
+            API.addProduit(this, produit);
             categorieProduit.addProduit(produit);
             addOrCreatMotClef(produit);
-
         }
+    }
 
     public String gererMesVentes(){
         if(!(user instanceof Vendeur)){return "Vous n'êtes pas inscrit ou connecté en tant que vendeur.\nReconnectez-vous.";}

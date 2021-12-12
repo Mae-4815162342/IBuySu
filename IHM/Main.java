@@ -56,6 +56,7 @@ public class Main {
                 break;
             case "Créer une vente":
                 system.creerUnVente();
+                break;
             case "Gérer mes ventes":
                 System.out.println(system.gererMesVentes());
                 break;
@@ -63,6 +64,7 @@ public class Main {
                 exit();
                 break;
             default:
+                System.out.println("Fonctionnalité non implémentée");
                 break;
         }
     }
