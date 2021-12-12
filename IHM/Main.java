@@ -54,12 +54,10 @@ public class Main {
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();
                 break;
-            //TODO
+            case "Créer une vente":
+                system.creerUnVente();
             case "Gérer mes ventes":
                 System.out.println(system.gererMesVentes());
-                break;
-            //TODO
-            case "Créer une vente":
                 break;
             case "Quitter":
                 exit();

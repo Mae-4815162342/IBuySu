@@ -122,5 +122,4 @@ public abstract class Inscrit extends Utilisateur {
                 "code postal", "ville", "pays" };
         return res;
     }
-
 }

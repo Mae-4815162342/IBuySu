@@ -12,7 +12,14 @@ public class Enchere extends Produit {
     private Acheteur meilleurAcheteur;
     private List<Offre> offres = new ArrayList<Offre>();
 
-    public Enchere(int duree, String titre, String desc, Vendeur v, String photo, int prix, Categorie c, boolean isSold, boolean isReceived) {
+    public Enchere(int duree, String titre, String desc, Vendeur v, String photo, float prix, Categorie c) {
+        super(titre, desc, v, photo, prix, c);
+        this.duree = duree;
+        estRecu = false;
+        estVendu = false;
+    }
+
+    public Enchere(int duree, String titre, String desc, Vendeur v, String photo, float prix, Categorie c, boolean isSold, boolean isReceived) {
         super(titre, desc, v, photo, prix, c);
         this.duree = duree;
         estRecu = isReceived;
@@ -33,6 +40,10 @@ public class Enchere extends Produit {
 
     public void setEstVendu(boolean estVendu) {
         this.estVendu = estVendu;
+    }
+
+    public Enchere(String[] formulaireRempli, Vendeur v, Categorie c){
+        this(Integer.parseInt(formulaireRempli[0]), formulaireRempli[1], formulaireRempli[2], v, formulaireRempli[3], Float.parseFloat(formulaireRempli[4]), c);
     }
 
     public void addOffre(Offre offre) {
@@ -67,6 +78,11 @@ public class Enchere extends Produit {
                 res += PromptUtils.b("" + mot.getNom() + "\t");
             }
         }
+        return res;
+    }
+
+    public static String[] getFormulaire() {
+        String[] res = {"durée", "titre", "description", "photo", "prix"};
         return res;
     }
 

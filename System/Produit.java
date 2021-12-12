@@ -24,6 +24,10 @@ public class Produit {
         this.isSold = false;
     }
 
+    public Produit(String[] formulaireRempli, Vendeur v, Categorie c){
+        this(formulaireRempli[0], formulaireRempli[1], v, formulaireRempli[2], Float.parseFloat(formulaireRempli[3]), c);
+    }
+
     public void addMotClef(MotClef m) {
         motClefs.add(m);
     }
@@ -90,5 +94,12 @@ public class Produit {
         this.contrat = contrat;
     }
 
+
+    public static String[] getFormulaire() {
+        String[] res = {"titre", "description", "photo", "prix"};
+        return res;
+    }
+
     public Vendeur getVendeur(){return vendeur;}
+
 }
