@@ -232,7 +232,7 @@ public class IBuySu {
     }
 
     public void addOrCreatMotClef(Produit p){
-        String recherche = IHM.getUserIn("Entrer un mot clef:");
+        String recherche = IHM.getUserIn("Entrer un mot clef");
         for(MotClef mot: this.motClef) {
             if(!mot.compare(recherche)){
                 new MotClef(recherche, p);

@@ -43,7 +43,7 @@ public class Enchere extends Produit {
     }
 
     public Enchere(String[] formulaireRempli, Vendeur v, Categorie c){
-        this(Integer.parseInt(formulaireRempli[0]), formulaireRempli[1], formulaireRempli[2], v, formulaireRempli[4], Float.parseFloat(formulaireRempli[5]), c);
+        this(Integer.parseInt(formulaireRempli[0]), formulaireRempli[1], formulaireRempli[2], v, formulaireRempli[3], Float.parseFloat(formulaireRempli[4]), c);
     }
 
     public void addOffre(Offre offre) {
