@@ -19,7 +19,19 @@ public abstract class Inscrit extends Utilisateur {
     public Inscrit(String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
             String nomRue, int codePostal, String ville, String pays) {
         this.pseudo = pseudo;
-        this.id = API.getNbInscrit();
+        this.id = API.getNbInscrit() + 1;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.numeroTel = numTel;
+        this.mail = mail;
+        this.adresse = new Adresse(numRue, nomRue, codePostal, ville, pays);
+        this.motdepasse = mdp;
+    }
+
+    public Inscrit(int id, String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
+                   String nomRue, int codePostal, String ville, String pays) {
+        this.pseudo = pseudo;
+        this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.numeroTel = numTel;
@@ -57,7 +69,7 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     public String[] getMenu() {
-        String[] menu = {"Recherche", "Evaluer un utilisateur", "Déconnexion", "Quitter"};
+        String[] menu = {"Recherche", "Déconnexion", "Quitter"};
         return menu;
     }
 

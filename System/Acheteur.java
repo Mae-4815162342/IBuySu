@@ -11,6 +11,11 @@ public class Acheteur extends Inscrit {
         super(pseudo, nom, prenom, numTel, mail, mdp, numRue, nomRue, codePostal, ville, pays);
     }
 
+    public Acheteur(int id, String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
+                    String nomRue, int codePostal, String ville, String pays) {
+        super(id, pseudo, nom, prenom, numTel, mail, mdp, numRue, nomRue, codePostal, ville, pays);
+    }
+
     public Acheteur(String[] formulaireRempli) {
         this(formulaireRempli[0], formulaireRempli[1], formulaireRempli[2], Integer.parseInt(formulaireRempli[3]),
                 formulaireRempli[4], formulaireRempli[5], Integer.parseInt(formulaireRempli[6]), formulaireRempli[7],
@@ -25,7 +30,7 @@ public class Acheteur extends Inscrit {
 
     @Override
     public String[] getMenu() {
-        String[] menu = { "Participer à une enchère", "Acheter un objet" };
+        String[] menu = { "Gerer mes achats" };
         String[] menuUser = super.getMenu();
         int menuLen = menu.length;
         int menuUserLen = menuUser.length;
