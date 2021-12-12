@@ -57,7 +57,7 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     public String[] getMenu() {
-        String[] menu = {"Recherche", "Evaluer un utilisateur", "Deconnexion", "Quitter"};
+        String[] menu = {"Recherche", "Evaluer un utilisateur", "Déconnexion", "Quitter"};
         return menu;
     }
 
