@@ -55,6 +55,9 @@ public class Main {
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();
                 break;
+            case "Créer une vente":
+                system.creerUnVente();
+                break;
             case "Quitter":
                 exit();
                 break;

@@ -263,7 +263,7 @@ public class IBuySu {
                 produit = new Produit(donneesVenteDirecte, (Vendeur)user, categorieProduit);
             }
             // Ne marche pas
-            // categorieProduit.addProduit(produit);
+            categorieProduit.addProduit(produit);
             addOrCreatMotClef(produit);
 
         }
