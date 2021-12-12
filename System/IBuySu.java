@@ -208,6 +208,7 @@ public class IBuySu {
     }
 
     public Categorie getCategorie(){
+        API.fetchCategories(this);
         String choixCateg = IHM.deroulerMenu("Selectionnez une categorie pour votre Produit:: ", getMenuCateg(categories));
         Categorie res = null;
         for(Categorie categ : categories) {
@@ -216,6 +217,7 @@ public class IBuySu {
                 break;
             }
         }
+        API.fetchSousCategorie(res);
         List<Categorie> sousCateg = res.getSousCategories();
         if(res.getSousCategories() != null) {
             String choixSousCateg = IHM.deroulerMenu("Selectionnez une sous-categorie pour votre Produit: ", getMenuCateg(sousCateg));
@@ -239,10 +241,6 @@ public class IBuySu {
     }
     
     public void creerUnVente() { 
-        //remplir les données de vente
-        String[] formulaire = Produit.getFormulaire();
-        String[] parametres = IHM.remplirFormulaire("Formulaire de creation de vente", formulaire);
-
         //demander à l'utilisateur si c'est une vente directe où vente aux enchères
         String[] menuTypeDonnees = {"Vente Directe", "Vente Aux Enchères"};
         String typeDonnees = IHM.deroulerMenu("Choisissez un type de vente que vous voulez effectuer", menuTypeDonnees);
@@ -261,10 +259,11 @@ public class IBuySu {
             // Vente Directe
             }else{ //may be check typeDonnes
                 String[] formulaireDirecte = Produit.getFormulaire();
-                String[] donneesVenteDirecte = IHM.remplirFormulaire("Formulaire de creation de vente aux enchères", formulaireDirecte);
+                String[] donneesVenteDirecte = IHM.remplirFormulaire("Formulaire de creation de vente directe", formulaireDirecte);
                 produit = new Produit(donneesVenteDirecte, (Vendeur)user, categorieProduit);
             }
-            categorieProduit.addProduit(produit);
+            // Ne marche pas
+            // categorieProduit.addProduit(produit);
             addOrCreatMotClef(produit);
 
         }
