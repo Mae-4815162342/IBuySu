@@ -31,7 +31,7 @@ public class Main {
     public static void traiterChoix(String choix) {
         switch (choix) {
             case "Recherche":
-                system.rechercher();
+                System.out.println(system.rechercher());
                 break;
             case "Inscription Vendeur":
                 System.out.println(system.inscriptionVendeur());
