@@ -4,6 +4,7 @@ import IHM.IHM;
 import IHM.PromptUtils;
 import BDD.API;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class IBuySu {
@@ -132,7 +133,18 @@ public class IBuySu {
         return res.getProduits();
     }
 
-    public void rechercher() {
+    private String[] displayListOfProduct(List<Produit> products){
+        if(products == null || products.size()==0) return null;
+        String[] res = new String[products.size()];
+        int i=0;
+        for(Produit product : products){
+            res[i]= product.toString();
+            i++;
+        }
+        return res;
+    }
+
+    public String rechercher() {
         // selection du type de recherche
         String[] menu = user.getMenuRecherche();
         String choix = IHM.deroulerMenu(PromptUtils.yel("Selectionnez un type de recherche :"), menu);
@@ -147,16 +159,52 @@ public class IBuySu {
                 res = rechercherParCategorie();
                 break;
             default:
-                return;
+                return "Nous n'avons pas compris votre demande\n";
         }
+        String[] researchList = displayListOfProduct(res);
+        if(researchList == null) return "Aucun produit n'a été trouvé\n";
+        String selectedOption = IHM.deroulerMenu("Choisissez un produit :", researchList);
+        int index = Arrays.asList(researchList).indexOf(selectedOption);
+        Produit selectedProduct = res.get(index);
+       
+        return buyOrBack(selectedProduct);
+    }
+
+    private String buyOrBack(Produit p){
+        // Acheter ou retourner à l'Accueil
+        String s = "Vous voulez acheter "+ p.getTitre() +" ou retourner à l'accueil ?";
+        String[] buyMenu = {"Acheter","Retourner à l'accueil"};
+        switch (IHM.deroulerMenu(s, buyMenu)){
+            case "Acheter":
+                if(user instanceof Acheteur){
+                    System.out.println("Achat en cours");
+                    acheterUnObjet(p);
+                }
+                else{
+                    return "Vous n'êtes pas inscrit ou connecté en tant qu'acheteur.\nReconnectez-vous.";
+                }
+                break;
+            case "Retourner à l'accueil":
+                return "Retour à l'accueil.";
+            default:
+                System.out.println("Nous n'avons pas compris votre demande");
+                buyOrBack(p);
+        }
+        return "Achat pris en compte";
     }
 
     public void acheterObjetEnchere() {
         System.out.println("acheter objet enchère");
     }
 
-    public void acheterUnObjet() {
-        System.out.println("acheter un objet");
+    public void acheterUnObjet(Produit p) {
+        //TODO : voir s'il faut changer dans la BDD
+        if(!(user instanceof Acheteur)) return;  //condition enlevable si cette methode est mise en private
+
+        Contrat contrat = new Contrat((Acheteur) user, p.getVendeur(), p, p.getPrix_de_depart());
+        p.setContrat(contrat);
+
+        System.out.println("En attente de la confirmation du vendeur.");
     }
 
     public void evaluerUnUtilisateur() {
@@ -202,6 +250,7 @@ public class IBuySu {
         // connexion de l'utilisateur
         user = vendeur;
         users.add((Inscrit) user);
+        System.out.println("Vendeur ajouté : "+user.toString());
         API.addVendeur((Vendeur) user);
         return "\u001b[32mDonnées bancaires correctes : " + dataBank.toString()
             + "\nVous êtes connecté en tant que :\n  " + user.getAffichageMinimal() + "\u001b[0m\n";
@@ -227,6 +276,20 @@ public class IBuySu {
                     break;
                 }
             }
+        }
+        return res;
+    }
+
+    private String[] dislpayVendeurAnnonces(Vendeur vendeur){
+        String[] res = new String[vendeur.annonces.size()];
+        int i=0;
+        for(Produit annonce : vendeur.annonces){
+            if(annonce.contrat != null){
+                if(annonce.contrat.getIsConcluded()) res[i]="\t\tVendu"+annonce.toString()+"\n";
+                else res[i]="\t\tOffre de vente"+annonce.toString()+"\n";
+            }
+            else res[i]= annonce.toString()+"\n";
+            i++;
         }
         return res;
     }
@@ -266,6 +329,58 @@ public class IBuySu {
             categorieProduit.addProduit(produit);
             addOrCreatMotClef(produit);
 
+        }
+
+    public String gererMesVentes(){
+        if(!(user instanceof Vendeur)){return "Vous n'êtes pas inscrit ou connecté en tant que vendeur.\nReconnectez-vous.";}
+        //TOCOMPLETE
+
+        Vendeur myUser = (Vendeur) user;
+        if(myUser.annonces.isEmpty()) return "\nVous n'avez aucune annonce\n";
+        //System.out.println("");
+        String[] vendeurAnnonces = dislpayVendeurAnnonces(myUser);
+        String choixAnnonce = IHM.deroulerMenu("\nVos annonces :\n", vendeurAnnonces);
+        int index = Arrays.asList(vendeurAnnonces).indexOf(choixAnnonce);
+        Produit selectedProduct = myUser.annonces.get(index);
+
+        if(selectedProduct.contrat == null){
+            System.out.println(selectedProduct.toString()+"\nProduit toujours en vente\n");
+        }
+        else{
+            accepterRefuserVente(selectedProduct);
+        }
+
+        String[] s = {"retour","accueil"};
+        switch(IHM.deroulerMenu("\n", s)){
+            case "retour":
+                gererMesVentes();
+                break;
+            default :
+                break;
+        }
+
+        return "";
+    }
+
+    private void accepterRefuserVente(Produit produit){
+        System.out.println(produit.contrat.toString());
+        if(!produit.contrat.getIsConcluded()){
+            String[] s = {"Valider la vente","Refuser la vente", "Reflechir"};
+            switch(IHM.deroulerMenu("\n", s)){
+                case "Valider la vente":
+                    produit.contrat.concludeContrat();
+                    produit.conclureVente(produit.contrat.getAcheteur());
+                    System.out.println("Contrat conclu !");
+                    //TODO : Informer l'Acheteur
+                    break;
+                case "Refuser la vente":
+                    gererMesVentes();
+                    break;
+                case "Reflechir":
+                    break;
+                default :
+                    break;
+            }
         }
     }
 

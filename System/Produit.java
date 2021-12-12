@@ -94,8 +94,12 @@ public class Produit {
         this.contrat = contrat;
     }
 
+
     public static String[] getFormulaire() {
         String[] res = {"titre", "description", "photo", "prix"};
         return res;
     }
+
+    public Vendeur getVendeur(){return vendeur;}
+
 }

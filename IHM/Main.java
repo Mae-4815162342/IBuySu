@@ -1,7 +1,6 @@
 package IHM;
 
 import System.IBuySu;
-import System.Inscrit;
 
 public class Main {
     private static boolean exiting = false;
@@ -32,7 +31,7 @@ public class Main {
     public static void traiterChoix(String choix) {
         switch (choix) {
             case "Recherche":
-                system.rechercher();
+                System.out.println(system.rechercher());
                 break;
             case "Inscription Vendeur":
                 System.out.println(system.inscriptionVendeur());
@@ -50,13 +49,15 @@ public class Main {
                 system.acheterObjetEnchere();
                 break;
             case "Acheter un objet":
-                system.acheterUnObjet();
+                //system.acheterUnObjet();
                 break;
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();
                 break;
             case "Créer une vente":
                 system.creerUnVente();
+            case "Gérer mes ventes":
+                System.out.println(system.gererMesVentes());
                 break;
             case "Quitter":
                 exit();
