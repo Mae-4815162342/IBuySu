@@ -3,19 +3,22 @@ MERCI D’AVOIR INSTALLE IBUYSU.COM !
 1.	Lancer IBuySu
 IBuySu.com est un système d’achat/vente codé principalement en Java et disposant d’une base de données assurant la pérennité de son contenu. Les données de l’application sont mises à jour régulièrement lors des interactions avec l’utilisateur, notamment à la création de compte ou de produits. Il est donc nécessaire de lancer le programme sous la bonne configuration, afin de s’assurer que ces appels déterminants à la base de données puissent s’effectuer. 
 Le fonctionnement de la base de données repose sur l’installation correcte du driver Connector/J de MySQL. Les fichiers .jar du driver se trouvent dans le fichier ./lib du projet. Il faut les ajouter au path de votre IDE. Idéalement, le programme est lancé sous Intellij, qui permet d’effectuer cette installation rapidement en quelques étapes :
--> Allez dans le menu File puis Project Structure
-->	Une page s’ouvre, allez dans l’onglet Librairies
-->	Cliquez sur +, puis sélectionner From Maven
-->	Dans la barre de recherche qui s’ouvre, entrez la ligne suivante : 
+- Allez dans le menu File puis Project Structure
+-	Une page s’ouvre, allez dans l’onglet Librairies
+- Cliquez sur +, puis sélectionner From Maven
+-	Dans la barre de recherche qui s’ouvre, entrez la ligne suivante : 
+
 mysql:mysql-connector-java:8.0.11
-->	Appuyez sur OK
-->	Avant de fermer la fenêtre, cliquez sur Apply
+
+-	Appuyez sur OK
+-	Avant de fermer la fenêtre, cliquez sur Apply
 Une fois cette installation effectuée, vous pouvez lancer IBuySu.com. Dans le dossier ./IHM se trouve une classe Main, qui contient le main du programme. C’est elle qu’il faut exécuter. 
 /!\  La base de données ne fonctionne pas sur les réseaux publiques tels qu’eduroam ou eduspot. Préférez un réseau wifi ou 4G/5G privé.
 2.	Utiliser IBuySu
 IBuySu.com propose plusieurs fonctionnalités telles que décrites dans la documentation. Ci-dessous les déroulements actuellement possibles (certaines fonctionnalités n’ont pas pu être implémentées et sont précisées dans la suite du mode d’emploi). 
 a)	Au lancement de l’application
 Vous arrivez sur le menu Utilisateur non connecté (c.f. illustration ci-dessous). 
+
 ![image](https://user-images.githubusercontent.com/72083970/145729614-7600f41b-7719-45e8-8ab1-dfc0c97c6e6f.png)
 
  
@@ -37,6 +40,7 @@ En outre, une fois inscrit, vous êtes connecté automatiquement.
 b)	En tant qu’Acheteur
 
 Lorsque vous êtes connecté en tant qu’Acheteur, vous avez accès aux fonctionnalités suivantes :
+
 ![image](https://user-images.githubusercontent.com/72083970/145729621-37024bdc-6543-4171-a778-84a6059f318d.png)
 
  
@@ -56,6 +60,7 @@ Vous pouvez :
 
 c)	En tant que Vendeur
 A la connexion en tant que Vendeur vous sont proposées les options suivantes :
+
  ![image](https://user-images.githubusercontent.com/72083970/145729636-6ca8f34b-d0a2-467d-b24c-03d39fc38154.png)
 
 •	Gérer mes ventes (partiellement implémentée) : affiche vos ventes en cours, ainsi que les propositions d’achat. Vous pouvez les accepter ou les refuser. De plus, lorsqu’une vente a été conclue, c’est ici que vous pourrez valider vos contrats. 
