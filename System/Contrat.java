@@ -26,4 +26,18 @@ public class Contrat {
         return this.isConcluded;
     }
 
+    public Acheteur getAcheteur(){
+        return acheteur;
+    }
+
+    public Vendeur getVendeur(){
+        return vendeur;
+    }
+
+    public String toString(){
+        String s = "Vendeur : "+vendeur.getNom()+" "+vendeur.getPrenom()+"\nAcheteur : "+acheteur.getNom()+" "+acheteur.getPrenom()+"\nProduit : "+produit.toString()+"\nPrix de l'acheteur : "+prix_final+"\n";
+        if(isConcluded) return "CONTRAT CONCLU\n" + s;
+        return "CONTRAT EN COURS\n" + s;
+    }
+
 }
