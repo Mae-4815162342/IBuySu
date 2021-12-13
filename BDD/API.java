@@ -212,7 +212,7 @@ public class API {
             e.printStackTrace();
         }
     }
-    public void fetchProductsBySeller(Vendeur v){
+    public static void fetchProductsBySeller(Vendeur v){
         try{
             Statement stmt = con.createStatement();
             ResultSet res = stmt.executeQuery("select * from Enchere where id="+ v.getId());
