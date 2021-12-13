@@ -102,7 +102,9 @@ public class API {
             Statement stmt1 = con.createStatement();
             res = stmt1.executeQuery("select * from Vendeur");
             while(res.next()){
-                users.add(new Vendeur(res.getInt("id"), res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null,null, null));
+                Vendeur v= new Vendeur(res.getInt("id"), res.getString("pseudo"), res.getString("nom"), res.getString("prenom"), res.getInt("numeroTel"), res.getString("mail"),  res.getString("motdepasse"), -1, null, -1,null,null, null);
+                fetchProductsBySeller(v);
+                users.add(v);
             }
             system.setUsers(users);
         } catch (SQLException e){
@@ -210,7 +212,24 @@ public class API {
             e.printStackTrace();
         }
     }
-
+    public void fetchProductsBySeller(Vendeur v){
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet res = stmt.executeQuery("select * from Enchere where id="+ v.getId());
+            while(res.next()){
+                byte isSold = res.getByte("estVendu");
+                byte isReceived = res.getByte("estRecu");
+                v.addProduit(new Enchere(res.getInt("duree_enchere"),res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), new Categorie(res.getString("categorie")), isSold!=0, isReceived!=0));
+            }
+            Statement stmt1 = con.createStatement();
+            res = stmt1.executeQuery("select * from Vente_directe where id="+v.getId());
+            while(res.next()){
+                v.addProduit(new Produit(res.getInt("id"), res.getString("titre"),res.getString("description"), null, res.getString("photo"), res.getInt("prix_de_depart"), new Categorie(res.getString("categorie"))));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
     public static int fetchNbProduct() {
         try {
             if (con == null) {
