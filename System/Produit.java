@@ -107,6 +107,13 @@ public class Produit {
         return contrat;
     }
 
+    //TODO : Ajout de la méthode refuserVente()
+    public Contrat refuserVente() {
+        Contrat previousContract = this.contrat;
+        this.contrat = null;
+        return previousContract;
+    }
+
     public void setContrat(Contrat contrat) {
         // Automatically generated method. Please do not modify this code.
         this.contrat = contrat;

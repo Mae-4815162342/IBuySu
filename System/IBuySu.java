@@ -74,6 +74,7 @@ public class IBuySu {
         if(connecting == null) return PromptUtils.red("Erreur: le mail ne correspond à aucun utilisateur");
         if(!connecting.verifMdp(identifiants[1])) return PromptUtils.red("Erreur: mot de passe incorrect");
         user = connecting;
+        //TODO : if (user instanceof Vendeur){ Vendeur v = (Vendeur) user; v.annonces = GetInAPIUserAnonces ;} -- Pareil pour Acheteur avec offres
         return PromptUtils.grn("Vous êtes connecté en tant que : " + user.getAffichageMinimal() + "\n");
     }
 
@@ -193,7 +194,7 @@ public class IBuySu {
     }
 
     public void acheterUnObjet(Produit p) {
-        //TODO : voir s'il faut changer dans la BDD
+        //TODO : voir s'il faut changer le produit dans la BDD
         if(!(user instanceof Acheteur)) return;  //condition enlevable si cette methode est mise en private
 
         Contrat contrat = new Contrat((Acheteur) user, p.getVendeur(), p, p.getPrix_de_depart());
@@ -331,6 +332,8 @@ public class IBuySu {
             API.addProduit(this, produit);
             categorieProduit.addProduit(produit);
             addOrCreatMotClef(produit);
+            Vendeur v = (Vendeur) user;
+            v.addProduit(produit);
         }
     }
 
@@ -371,12 +374,14 @@ public class IBuySu {
             String[] s = {"Valider la vente","Refuser la vente", "Reflechir"};
             switch(IHM.deroulerMenu("\n", s)){
                 case "Valider la vente":
-                    produit.contrat.concludeContrat();
                     produit.conclureVente(produit.contrat.getAcheteur());
+                    produit.contrat.concludeContrat();
                     System.out.println("Contrat conclu !");
                     //TODO : Informer l'Acheteur
                     break;
                 case "Refuser la vente":
+                    produit.refuserVente();
+                    System.out.println("Vente refusée. En attente de nouvelles offres.\n");
                     gererMesVentes();
                     break;
                 case "Reflechir":
@@ -384,6 +389,9 @@ public class IBuySu {
                 default :
                     break;
             }
+        }
+        else{
+            System.out.println("Vente déjà conclue");
         }
     }
 
