@@ -1,5 +1,8 @@
 package System;
 
+/**
+ * Contrat Acheteur-Vendeur certifiant la transation d'un produit.
+ */
 public class Contrat {
     private Vendeur vendeur;
     private Acheteur acheteur;
@@ -7,6 +10,14 @@ public class Contrat {
     private float prix_final;
     private boolean isConcluded;
 
+    /**
+     * Crée un contrat Acheteur-Vendeur.
+     * 
+     * @param acheteur Acheteur.
+     * @param vendeur  Vendeur.
+     * @param produit  Produit en cours d'échange.
+     * @param prix     Prix du produit.
+     */
     public Contrat(Acheteur acheteur, Vendeur vendeur, Produit produit, float prix) {
         this.vendeur = vendeur;
         vendeur.addContrat(this);
@@ -18,25 +29,41 @@ public class Contrat {
         produit.setContrat(this);
     }
 
+    /**
+     * Conclut le contrat.
+     */
     public void concludeContrat() {
         this.isConcluded = true;
     }
 
+    /**
+     * Si le contrat est conclu ou non.
+     */
     public boolean getIsConcluded() {
         return this.isConcluded;
     }
 
-    public Acheteur getAcheteur(){
+    /**
+     * Acheteur sur le contrat.
+     */
+    public Acheteur getAcheteur() {
         return acheteur;
     }
 
-    public Vendeur getVendeur(){
+    /**
+     * Vendeur sur le contrat.
+     */
+    public Vendeur getVendeur() {
         return vendeur;
     }
 
-    public String toString(){
-        String s = "Vendeur : "+vendeur.getNom()+" "+vendeur.getPrenom()+"\nAcheteur : "+acheteur.getNom()+" "+acheteur.getPrenom()+"\nProduit : "+produit.toString()+"\nPrix de l'acheteur : "+prix_final+"\n";
-        if(isConcluded) return "CONTRAT CONCLU\n" + s;
+    @Override
+    public String toString() {
+        String s = "Vendeur : " + vendeur.getNom() + " " + vendeur.getPrenom() + "\nAcheteur : " + acheteur.getNom()
+                + " " + acheteur.getPrenom() + "\nProduit : " + produit.toString() + "\nPrix de l'acheteur : "
+                + prix_final + "\n";
+        if (isConcluded)
+            return "CONTRAT CONCLU\n" + s;
         return "CONTRAT EN COURS\n" + s;
     }
 
