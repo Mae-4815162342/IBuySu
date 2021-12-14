@@ -1,0 +1,16 @@
+Pour faire fonctionner la base de données, il est nécessaire d'installer le driver Connector/J de MySQL (le
+fichier .jar se trouve normalement dans ./lib de ce projet), puis de l'ajouter au path de votre IDE.
+
+Pour Intellij:
+
+aller dans File => Project Structure => Libraries
+Cliquer sur le + , puis selectionner From Maven, entrer dans la barre de recherche la ligne suivante:
+mysql:mysql-connector-java:8.0.11
+
+Ensuite cliquer sur OK, puis sur Apply avant de fermer la fenêtre.
+
+
+Pour l'instant les tables initialisées dans la base de données le sont à titre d'exemple et ne sont en aucun cas
+définitives.
+A terme, le fichier SQL concernant la création de la base devra être exécuté lors de la release finale de l'application
+puis plus jamais.
