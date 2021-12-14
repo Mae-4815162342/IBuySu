@@ -3,7 +3,7 @@ package IHM;
 import java.util.*;
 
 /**
- * Classe statique contenant des fonctions utilitaires pour tout ce qui est affichage et interface dans la console.
+ * Classe statique contenant des fonctions utilitaires pour tout ce qui est interface et interaction avec l'utilisateur dans la console.
  */
 public class IHM {
     private static Scanner scan = new Scanner(System.in);

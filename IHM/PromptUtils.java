@@ -1,5 +1,8 @@
 package IHM;
 
+/**
+ * Classe statique utilitaire pour de l'affichage console.
+ */
 public class PromptUtils {
     private static final String E = "\u001b[";
     private static final String C = E + "0m";
@@ -15,17 +18,31 @@ public class PromptUtils {
         return c + message + C;
     }
 
+    /** Rend le message gras pour la console. */
     public static String b(String message) { return color(B, message); }
+    /** Rend le message rouge pour la console. */
     public static String red(String message) { return color(RED, message); }
+    /** Rend le message vert pour la console. */
     public static String grn(String message) { return color(GRN, message); }
+    /** Rend le message jaune pour la console. */
     public static String yel(String message) { return color(YEL, message); }
+    /** Rend le message bleu pour la console. */
     public static String blu(String message) { return color(BLU, message); }
+    /** Rend le message magenta pour la console. */
     public static String mag(String message) { return color(MAG, message); }
 
+    /**
+     * Affiche un message d'erreur.
+     * @param message Le message d'erreur.
+     */
     public static void printError(String message) {
         System.err.println(red("Erreur : " + message));
     }
 
+    /**
+     * Affiche un message de succès.
+     * @param message Le message de succès.
+     */
     public static void printSuccess(String message) {
         System.out.println(grn(message));
     }
