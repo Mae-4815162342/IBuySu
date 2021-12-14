@@ -1,5 +1,9 @@
 IBuySu.com : Mode d’emploi
+
 MERCI D’AVOIR INSTALLE IBUYSU.COM !
+
+Le Main se trouve dans /code_source/IHM.
+
 1.	Lancer IBuySu
 IBuySu.com est un système d’achat/vente codé principalement en Java et disposant d’une base de données assurant la pérennité de son contenu. Les données de l’application sont mises à jour régulièrement lors des interactions avec l’utilisateur, notamment à la création de compte ou de produits. Il est donc nécessaire de lancer le programme sous la bonne configuration, afin de s’assurer que ces appels déterminants à la base de données puissent s’effectuer. 
 Le fonctionnement de la base de données repose sur l’installation correcte du driver Connector/J de MySQL. Les fichiers .jar du driver se trouvent dans le fichier ./lib du projet. Il faut les ajouter au path de votre IDE. Idéalement, le programme est lancé sous Intellij, qui permet d’effectuer cette installation rapidement en quelques étapes :
