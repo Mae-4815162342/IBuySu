@@ -14,34 +14,66 @@ public class IBuySu {
     private Utilisateur user;
     private static IBuySu system;
 
+
+    /**
+     * Recupere la liste de mot-clé
+     * @return liste de mot-clé
+     */
     public List<MotClef> getMotClef() {
         return motClef;
     }
 
+    /**
+     * Défini la liste de mot-clé
+     * @param motClef liste de mot-clé
+     */
     public void setMotClef(List<MotClef> motClef) {
         this.motClef = motClef;
     }
 
+    /**
+     * Récupère la liste d'inscrit
+     * @return liste d'inscrit
+     */
     public List<Inscrit> getUsers() {
         return users;
     }
 
+    /**
+     * Défini l'utilisateur
+     */
     public void setUsers(List<Inscrit> users) {
         this.users = users;
     }
 
+    /**
+     * Récupère l'utilisateur
+     * @return Utilisateur
+     */
     public Utilisateur getUser() {
         return user;
     }
 
+    /**
+     * Récupère la liste de catégories
+     * @return liste de catégories
+     */
     public List<Categorie> getCategories() {
         return categories;
     }
 
+    /**
+     * Défini la liste de catégories
+     * @param categories nouvelle liste de catégorie
+     */
     public void setCategories(List<Categorie> categories) {
         this.categories = categories;
     }
 
+    /**
+     * Constructeur de la classe (Singleton)
+     * @throws Exception
+     */
     private IBuySu() throws Exception {
         user = new Utilisateur();
         try {
@@ -52,6 +84,10 @@ public class IBuySu {
         }
     }
 
+    /**
+     * Retourne une instance du systeme IBuySu
+     * @return instance du systeme IBuySu
+     */
     public static IBuySu getSystem() {
         if (system == null) {
             try {
@@ -62,11 +98,19 @@ public class IBuySu {
         }
         return system;
     }
-
+     
+    /**
+     * Retourne le menu principal
+     * @return array string, le menu principal
+     */
     public String[] getMenu() {
         return user.getMenu();
     }
 
+    /**
+     * Connexion d'un utilisateur à partir d'un formulaire
+     * @return message de succès
+     */
     public String connexion(){
         String[] formulaire = Inscrit.getFormulaireConnexion();
         String[] identifiants = IHM.remplirFormulaire(PromptUtils.b("\u001b[33mFormulaire de connexion"), formulaire);
@@ -78,11 +122,19 @@ public class IBuySu {
         return PromptUtils.grn("Vous êtes connecté en tant que : " + user.getAffichageMinimal() + "\n");
     }
 
+    /**
+     * Déconnecte le user
+     * @return message de succès
+     */
     public String deconnexion() {
         user = new Utilisateur();
         return PromptUtils.yel("Vous êtes déconnecté");
     }
 
+    /**
+     * Rechercher un produit en entrant un mot-clé
+     * @return Liste de produit
+     */
     public ArrayList<Produit> rechercherParMotClef() {
         String recherche = IHM.getUserIn(PromptUtils.yel("Entrez un mot-clef"));
         ArrayList<Produit> resultats = new ArrayList<Produit>();
@@ -98,6 +150,11 @@ public class IBuySu {
         return resultats;
     }
 
+    /**
+     * Transforme une liste de Catégorie en Array de String
+     * @param categs liste de catégorie
+     * @return Liste de catégorie en array de string
+     */
     public String[] getMenuCateg(List<Categorie> categs) {
         String[] res = new String[categs.size()];
         for (int i = 0; i < categs.size(); i++) {
@@ -106,12 +163,21 @@ public class IBuySu {
         return res;
     }
 
+    /**
+     * Rechercher tous les produits par catégorie
+     * @return Liste de Produit
+     */
     public List<Produit> rechercherParCategorie() {
         Categorie res = getChoiceCategorie();
         API.fetchProductByCategorie(this, res);
         return res.getProduits();
     }
 
+    /**
+     * Retourne une instance d'un Inscrit correspondant à l'Id en paramètre
+     * @param id id de l'utilisateur
+     * @return retourne un Inscrit s'il existe, sinon null
+     */
     public Inscrit getUserById(int id) {
         API.fetchUsers(this);
         for(Inscrit user : users) {
@@ -120,6 +186,11 @@ public class IBuySu {
         return null;
     }
 
+    /**
+     * Retourne une instance d'un Inscrit correspondant au mail en paramètre
+     * @param mail adresse mail de l'utilisateur
+     * @return un Inscrit s'il existe, sinon null
+     */
     public Inscrit getUser(String mail) {
         for(Inscrit user: users) {
             if(user.getMail().equalsIgnoreCase(mail)) {
@@ -129,6 +200,11 @@ public class IBuySu {
         return null;
     }
 
+    /**
+     * Transforme une liste de Produit en Array de String pour la compatiblilité avec deroulerMenu()
+     * @param products liste de Produits
+     * @return liste de produit au format array de String
+     */
     private String[] displayListOfProduct(List<Produit> products){
         if(products == null || products.size()==0) return null;
         String[] res = new String[products.size()];
@@ -140,6 +216,10 @@ public class IBuySu {
         return res;
     }
 
+    /**
+     * Permet à l'utilisateur de faire une recherche par mot-clé ou catégorie, et d'acheter un des produits
+     * @return retourne un message
+     */
     public String rechercher() {
         // selection du type de recherche
         String[] menu = user.getMenuRecherche();
@@ -166,7 +246,12 @@ public class IBuySu {
         return buyOrBack(selectedProduct);
     }
 
-    private String buyOrBack(Produit p){
+    /**
+     * Acheter ou non un produit si le user et un Acheteur
+     * @param p produit à acheter
+     * @return retourne un message
+     */
+    public String buyOrBack(Produit p){
         // Acheter ou retourner à l'Accueil
         String s = "Vous voulez acheter "+ p.getTitre() +" ou retourner à l'accueil ?";
         String[] buyMenu = {"Acheter","Retourner à l'accueil"};
@@ -193,8 +278,11 @@ public class IBuySu {
         System.out.println("acheter objet enchère");
     }
 
+    /**
+     * créé un contrat et l'attache au produit
+     * @param p produit à acheter
+     */
     public void acheterUnObjet(Produit p) {
-        //TODO : voir s'il faut changer le produit dans la BDD
         if(!(user instanceof Acheteur)) return;  //condition enlevable si cette methode est mise en private
 
         Contrat contrat = new Contrat((Acheteur) user, p.getVendeur(), p, p.getPrix_de_depart());
@@ -207,6 +295,10 @@ public class IBuySu {
         System.out.println("evaluer un utilisateur");
     }
 
+    /**
+     * Créé un Acheteur à partir des données d'un formulaire et l'enregistre dans l'API
+     * @return retourne un message de succès
+     */
     public String inscriptionAcheteur() {
         String[] formulaire = Acheteur.getFormulaireInscription();
         String[] parametres = IHM.remplirFormulaire(PromptUtils.b("Formulaire d'inscription (acheteur)"), formulaire);
@@ -218,6 +310,10 @@ public class IBuySu {
         return PromptUtils.grn("Vous êtes connecté en tant que:\n  " + user.getAffichageMinimal() + "\n");
     }
 
+    /**
+     * Créé un vendeur à partir des données d'un formulaire et l'enregistre dans l'API
+     * @return retourne un message de succès
+     */
     public String inscriptionVendeur() {
         // remplir les données du vendeur
         String[] formulaire = Vendeur.getFormulaireInscription();
@@ -251,7 +347,10 @@ public class IBuySu {
         return "\u001b[32mDonnées bancaires correctes : " + dataBank.toString()
             + "\nVous êtes connecté en tant que :\n  " + user.getAffichageMinimal() + "\u001b[0m\n";
     }
-
+    /**
+     * Permet à l'utilisateur de choisir une categorie et sous-categorie de produit.
+     * @return instance de Categorie choisit par utilisateur
+     */
     public Categorie getChoiceCategorie(){
         API.fetchCategories(this);
         String choixCateg = IHM.deroulerMenu("Selectionnez une categorie: ", getMenuCateg(categories));
@@ -276,6 +375,11 @@ public class IBuySu {
         return res;
     }
 
+    /**
+     * Transforme la liste d'annonces du vendeur en Array de String pour la compatiblilité avec deroulerMenu()
+     * @param vendeur utilisateur vendeur
+     * @return array de string
+     */
     private String[] dislpayVendeurAnnonces(Vendeur vendeur){
         String[] res = new String[vendeur.annonces.size()];
         int i=0;
@@ -289,7 +393,12 @@ public class IBuySu {
         }
         return res;
     }
-
+    /**
+     * Si mot-clé déjà existant,
+     * Rajoute un produit à la liste des produits relié à ce mot-clé 
+     * sinon, crée un nouveau mot-clé, s'il existe pas 
+     * @param p Produit à rajouter à liste 
+     */
     public void addOrCreatMotClef(Produit p){
         String recherche = IHM.getUserIn("Entrer un mot clef");
         MotClef res = null;
@@ -307,6 +416,11 @@ public class IBuySu {
         p.addMotClef(res);
     }
     
+    /**
+     * Renvoie rien. 
+     * Demande un choix entre "Vente directe" et "Vente aux enchères" à l'utilisateur.
+     * Crée une instance d'Enchere ou de Produit (Vente Directe) en fonction du choix.
+     */
     public void creerUnVente() { 
         //demander à l'utilisateur si c'est une vente directe où vente aux enchères
         String[] menuTypeDonnees = {"Vente Directe", "Vente Aux Enchères"};
@@ -317,14 +431,14 @@ public class IBuySu {
         Produit produit;
         if(user instanceof Vendeur)
         {
-            //création des objets
+            //création vente aux enchères
             if(typeDonnees == "Vente Aux Enchères")
             {
                 String[] formulaireEnchere = Enchere.getFormulaire();
                 String[] donneesVenteEnchere = IHM.remplirFormulaire("Formulaire de creation de vente aux enchères", formulaireEnchere);
                 produit = new Enchere(donneesVenteEnchere, (Vendeur)user, categorieProduit);
-            // Vente Directe
-            }else{ //may be check typeDonnes
+            //création vente directe
+            }else{
                 String[] formulaireDirecte = Produit.getFormulaire();
                 String[] donneesVenteDirecte = IHM.remplirFormulaire("Formulaire de creation de vente directe", formulaireDirecte);
                 produit = new Produit(donneesVenteDirecte, (Vendeur)user, categorieProduit);
@@ -337,13 +451,15 @@ public class IBuySu {
         }
     }
 
+    /**
+     * Permet au vendeur de gerer ses annonces et accepter ou refuser les offres de vente
+     * @return retourne un message d'état
+     */
     public String gererMesVentes(){
         if(!(user instanceof Vendeur)){return "Vous n'êtes pas inscrit ou connecté en tant que vendeur.\nReconnectez-vous.";}
-        //TOCOMPLETE
 
         Vendeur myUser = (Vendeur) user;
         if(myUser.annonces.isEmpty()) return "\nVous n'avez aucune annonce\n";
-        //System.out.println("");
         String[] vendeurAnnonces = dislpayVendeurAnnonces(myUser);
         String choixAnnonce = IHM.deroulerMenu("\nVos annonces :\n", vendeurAnnonces);
         int index = Arrays.asList(vendeurAnnonces).indexOf(choixAnnonce);
@@ -368,7 +484,11 @@ public class IBuySu {
         return "";
     }
 
-    private void accepterRefuserVente(Produit produit){
+    /**
+     * Le vendeur accepte ou refuse la vente du produit en paramètre. Il peut également ne pas choisir pour réfléchir un peu plus.
+     * @param produit produit avec un contrat de vente
+     */
+    public void accepterRefuserVente(Produit produit){
         System.out.println(produit.contrat.toString());
         if(!produit.contrat.getIsConcluded()){
             String[] s = {"Valider la vente","Refuser la vente", "Reflechir"};
