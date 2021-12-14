@@ -2,10 +2,17 @@ package IHM;
 
 import System.IBuySu;
 
+/**
+ * Entrée du programme.
+ */
 public class Main {
     private static boolean exiting = false;
     private static IBuySu system;
 
+    /**
+     * Entrée entrale du programme. 
+     * @param args Chose jamais utilisée.
+     */
     public static void main(String[] args) {
         System.out.println(PromptUtils.b("Bienvenue sur IBuySu.com, votre site d'achat-vente en ligne !"));
         System.out.println(PromptUtils.yel("Connexion en cours..."));
@@ -14,7 +21,7 @@ public class Main {
             system = IBuySu.getSystem();
         } catch (Exception e) {
             PromptUtils.printError("Echec de la connexion\nFermeture du système");
-            exit();
+            prepareExit();
         }
 
         while (!exiting) {
@@ -24,10 +31,17 @@ public class Main {
         return;
     }
 
-    public static void exit() {
+    /**
+     * Dit au programme qu'il faut quitter après la fin de l'itération courante.
+     */
+    public static void prepareExit() {
         exiting = true;
     }
 
+    /**
+     * Traite une option de menu sélectionnée.
+     * @param choix
+     */
     public static void traiterChoix(String choix) {
         switch (choix) {
             case "Recherche":
@@ -49,7 +63,7 @@ public class Main {
                 system.acheterObjetEnchere();
                 break;
             case "Acheter un objet":
-                //system.acheterUnObjet();
+                // system.acheterUnObjet();
                 break;
             case "Evaluer un utilisateur":
                 system.evaluerUnUtilisateur();
@@ -61,7 +75,7 @@ public class Main {
                 System.out.println(system.gererMesVentes());
                 break;
             case "Quitter":
-                exit();
+                prepareExit();
                 break;
             default:
                 System.out.println("Fonctionnalité non implémentée");
