@@ -2,41 +2,99 @@ package System;
 
 import java.util.*;
 
+/**
+ * Utilisateur exerçant la vente de produits.
+ */
 public class Vendeur extends Inscrit {
+    /**
+     * Données bancaires du vendeur.
+     */
     public DonneesBancaires donneesBanque;
+    /**
+     * Annonces du vendeur.
+     */
     public ArrayList<Produit> annonces = new ArrayList<>();
 
+    /**
+     * Crée un vendeur.
+     * @param pseudo Pseudo du vendeur.
+     * @param nom Nom du vendeur.
+     * @param prenom Prénom du vendeur.
+     * @param numTel Numéro de télephone du vendeur.
+     * @param mail Mail du vendeur.
+     * @param mdp Mot de passe du vendeur.
+     * @param numRue Numéro de la rue du vendeur.
+     * @param nomRue Nom de la rue du vendeur.
+     * @param codePostal Code postal du vendeur.
+     * @param ville Ville du vendeur.
+     * @param pays Pays du vendeur.
+     * @param bankData Données bancaires du vendeur.
+     */
     public Vendeur(String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
             String nomRue, int codePostal, String ville, String pays, DonneesBancaires bankData) {
         super(pseudo, nom, prenom, numTel, mail, mdp, numRue, nomRue, codePostal, ville, pays);
         this.donneesBanque = bankData;
     }
 
+    /**
+     * Crée un vendeur.
+     * @param id ID du vendeur.
+     * @param pseudo Pseudo du vendeur.
+     * @param nom Nom du vendeur.
+     * @param prenom Prénom du vendeur.
+     * @param numTel Numéro de télephone du vendeur.
+     * @param mail Mail du vendeur.
+     * @param mdp Mot de passe du vendeur.
+     * @param numRue Numéro de la rue du vendeur.
+     * @param nomRue Nom de la rue du vendeur.
+     * @param codePostal Code postal du vendeur.
+     * @param ville Ville du vendeur.
+     * @param pays Pays du vendeur.
+     * @param bankData Données bancaires du vendeur.
+     */
     public Vendeur(int id, String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
                    String nomRue, int codePostal, String ville, String pays, DonneesBancaires bankData) {
         super(id, pseudo, nom, prenom, numTel, mail, mdp, numRue, nomRue, codePostal, ville, pays);
         this.donneesBanque = bankData;
     }
 
+    /**
+     * Crée un vendeur à partir d'un formulaire prérempli par l'utilisateur.
+     * @param formulaireRempli Formulaire prérempli par l'utilisateur.
+     * @param dataBank Données bancaires de l'utilisateur.
+     */
     public Vendeur(String[] formulaireRempli, DonneesBancaires dataBank) {
         this(formulaireRempli[0], formulaireRempli[1], formulaireRempli[2], Integer.parseInt(formulaireRempli[3]),
                 formulaireRempli[4], formulaireRempli[5], Integer.parseInt(formulaireRempli[6]), formulaireRempli[7],
                 Integer.parseInt(formulaireRempli[8]), formulaireRempli[9], formulaireRempli[10], dataBank);
     }
 
+    /**
+     * Permet au vendeur d'ajouter un produit.
+     * @param p
+     */
     public void addProduit(Produit p) {
         annonces.add(p);
     }
 
+    /**
+     * Permet au vendeur de retirer un de ses produits.
+     */
     public void removeProduit(Produit p) {
         annonces.remove(p);
     }
 
+    /**
+     * Récupère les données bancaires du vendeur.
+     */
     public DonneesBancaires getDonneesBanque() {
         // Automatically generated method. Please do not modify this code.
         return this.donneesBanque;
     }
 
+    /**
+     * Récupère le menu du vendeur.
+     */
     @Override
     public String[] getMenu() {
         String[] menu = { "Gérer mes ventes", "Créer une vente" };

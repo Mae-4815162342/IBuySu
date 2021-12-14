@@ -1,22 +1,40 @@
 package System;
 
+/**
+ * Utilisateur de iBuySu.com. N'est pas forcément inscrit.
+ */
 public class Utilisateur {
     private static int id = 0;
 
-    public Utilisateur(){
+    /**
+     * Crée un utilisateur.
+     */
+    public Utilisateur() {
         id++;
     }
 
-    public String[] getMenu(){
-        String[] menu = {"Recherche", "Connexion", "Inscription Acheteur", "Inscription Vendeur", "Quitter"};
+    /**
+     * Récupère le menu de l'utilisateur.
+     */
+    public String[] getMenu() {
+        String[] menu = { "Recherche", "Connexion", "Inscription Acheteur", "Inscription Vendeur", "Quitter" };
         return menu;
     }
 
+    /**
+     * Récupère le menu de recherche pour l'utilisateur.
+     * @return
+     */
     public String[] getMenuRecherche() {
-        String[] menu = {"Rechercher par mot clef", "Rechercher par catégorie"};
+        String[] menu = { "Rechercher par mot clef", "Rechercher par catégorie" };
         return menu;
     }
 
-    public String getAffichageMinimal() { return null; }
+    /**
+     * Récupère l'affichage minimal d'un utilisateur.
+     */
+    public String getAffichageMinimal() {
+        return null;
+    }
 
 }
