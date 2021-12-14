@@ -19,7 +19,7 @@ public class Adresse {
     // afin que le format ne soit pas
     // absurde
     public boolean verif(int codePostal) {
-        return codePostal / 100_000 < 1;
+        return codePostal >= 0 && codePostal < 100_000;
     }
 
     public String toString() {
