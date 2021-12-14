@@ -11,10 +11,10 @@ public class MotClef {
     private List<Produit> produits = new ArrayList<Produit>();
 
     /**
-     * Crée un mot-clef.
+     * Cree un mot-clef.
      * 
      * @param mot Nom du mot-clef.
-     * @param p   Premier produit possédant ce mot-clef.
+     * @param p   Premier produit possedant ce mot-clef.
      */
     public MotClef(String mot, Produit p) {
         this.nom = mot;
@@ -22,14 +22,14 @@ public class MotClef {
     }
 
     /**
-     * Assigne une liste de produits à ce mot-clef.
+     * Assigne une liste de produits a ce mot-clef.
      */
     public void setProduits(List<Produit> produits) {
         this.produits = produits;
     }
 
     /**
-     * Récupère tous les produits possédant ce mot-clef.
+     * Recupere tous les produits possedant ce mot-clef.
      * 
      * @return
      */

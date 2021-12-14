@@ -40,8 +40,8 @@ public class PromptUtils {
     }
 
     /**
-     * Affiche un message de succès.
-     * @param message Le message de succès.
+     * Affiche un message de succes.
+     * @param message Le message de succes.
      */
     public static void printSuccess(String message) {
         System.out.println(grn(message));

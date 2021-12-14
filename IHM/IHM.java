@@ -11,7 +11,7 @@ public class IHM {
     /**
      * Attend une saisie de l'utilisateur.
      * 
-     * @param message Message spécifiant à l'utilisateur ce qu'il doit saisir.
+     * @param message Message specifiant a l'utilisateur ce qu'il doit saisir.
      * @return ce que l'utilisateur a saisit.
      */
     public static String getUserIn(String message) {
@@ -21,10 +21,10 @@ public class IHM {
     }
 
     /**
-     * Prend une liste de Strings comme menu et demande à l'utilisateur de
-     * sélectionner une des entrées.
+     * Prend une liste de Strings comme menu et demande a l'utilisateur de
+     * selectionner une des entrees.
      * 
-     * @param menu Menu - groupe d'entrées individuellement sélectionnables.
+     * @param menu Menu - groupe d'entrees individuellement selectionnables.
      * @return l'index de l'option choisie.
      */
     private static int waitAnswerMenu(String[] menu) {
@@ -40,9 +40,9 @@ public class IHM {
     }
 
     /**
-     * Crée l'affichage d'un menu (sans l'afficher dans la console).
+     * Cree l'affichage d'un menu (sans l'afficher dans la console).
      * 
-     * @param menu Le menu dont il fait créer l'affichage.
+     * @param menu Le menu dont il fait creer l'affichage.
      * @return L'affichage du menu.
      */
     private static String getMenuString(String[] menu) {
@@ -54,8 +54,8 @@ public class IHM {
     }
 
     /**
-     * Attend une réponse textuelle de l'utilisateur.
-     * @return La réponse de l'utilisateur.
+     * Attend une reponse textuelle de l'utilisateur.
+     * @return La reponse de l'utilisateur.
      */
     private static String waitAnswer() {
         String res = "";
@@ -66,10 +66,10 @@ public class IHM {
     }
 
     /**
-     * Demande à l'utilisateur de remplir un formulaire.
-     * @param titreFormulaire Titre du formulaire à remplir.
-     * @param formulaire Formulaire - liste de champs à remplir individuellement. Tous les champs sont remplis avec du texte.
-     * @return Les réponses de l'utilisateur, l'indexe de la réponse correspondant à l'indexe du champ du formulaire.
+     * Demande a l'utilisateur de remplir un formulaire.
+     * @param titreFormulaire Titre du formulaire a remplir.
+     * @param formulaire Formulaire - liste de champs a remplir individuellement. Tous les champs sont remplis avec du texte.
+     * @return Les reponses de l'utilisateur, l'indexe de la reponse correspondant a l'indexe du champ du formulaire.
      */
     public static String[] remplirFormulaire(String titreFormulaire, String[] formulaire) {
         System.out.println(titreFormulaire);
@@ -86,10 +86,10 @@ public class IHM {
     }
 
     /**
-     * Déroule le menu et demande à l'utilisateur de sélectionner une des entrées.
+     * Deroule le menu et demande a l'utilisateur de selectionner une des entrees.
      * @param message Message du menu.
-     * @param menu Menu - groupe d'entrées individuellement sélectionnables.
-     * @return Entrée du menu sélectionnée.
+     * @param menu Menu - groupe d'entrees individuellement selectionnables.
+     * @return Entree du menu selectionnee.
      */
     public static String deroulerMenu(String message, String[] menu) {
         System.out.println(message);

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Catégorie. Permet de trier les produits en circulation.
+ * Categorie. Permet de trier les produits en circulation.
  */
 public class Categorie {
     private final String nom;
@@ -13,7 +13,7 @@ public class Categorie {
     private List<Produit> produits = new ArrayList<Produit>();
 
     /**
-     * Assigne à la Catégorie une liste de Produits.
+     * Assigne a la Categorie une liste de Produits.
      * 
      * @param produits Liste de produits.
      */
@@ -22,18 +22,18 @@ public class Categorie {
     }
 
     /**
-     * Assigne des sous-catégories à cette Catégorie.
+     * Assigne des sous-categories a cette Categorie.
      * 
-     * @param sousCategories Liste de sous-catégories.
+     * @param sousCategories Liste de sous-categories.
      */
     public void setSousCategories(List<Categorie> sousCategories) {
         this.sousCategories = sousCategories;
     }
 
     /**
-     * Crée une Catégorie.
+     * Cree une Categorie.
      * 
-     * @param nom Nom de la Catégorie.
+     * @param nom Nom de la Categorie.
      */
     public Categorie(String nom) {
         this.nom = nom;
@@ -41,9 +41,9 @@ public class Categorie {
     }
 
     /**
-     * Ajoute une sous-catégorie.
+     * Ajoute une sous-categorie.
      * 
-     * @param c Sous-catégorie à ajouter.
+     * @param c Sous-categorie a ajouter.
      */
     public void addSousCategorie(Categorie c) {
         if (sousCategories == null) {
@@ -53,32 +53,32 @@ public class Categorie {
     }
 
     /**
-     * Ajoute un produit à la Catégorie.
+     * Ajoute un produit a la Categorie.
      * 
-     * @param p Produit à ajouter.
+     * @param p Produit a ajouter.
      */
     public void addProduit(Produit p) {
         produits.add(p);
     }
 
     /**
-     * Supprime un produit de la Catégorie.
+     * Supprime un produit de la Categorie.
      * 
-     * @param p Produit à supprimer.
+     * @param p Produit a supprimer.
      */
     public void deleteProduit(Produit p) {
         produits.remove(p);
     }
 
     /**
-     * Liste de produits rangés sous cette Catégorie.
+     * Liste de produits ranges sous cette Categorie.
      */
     public List<Produit> getProduits() {
         return produits;
     }
 
     /**
-     * Sous-catégories de cette Catégorie.
+     * Sous-categories de cette Categorie.
      */
     public List<Categorie> getSousCategories() {
         return sousCategories;
@@ -88,7 +88,7 @@ public class Categorie {
     public String toString() {
         String res = this.nom + " :\n";
         if (produits == null)
-            res += PromptUtils.red("Aucun produit dans cette catégorie");
+            res += PromptUtils.red("Aucun produit dans cette categorie");
         else
             for (Produit p : produits) {
                 res += p.toString();
@@ -102,7 +102,7 @@ public class Categorie {
     }
 
     /**
-     * Nom de la catégorie.
+     * Nom de la categorie.
      */
     public String getNom() {
         // Automatically generated method. Please do not modify this code.

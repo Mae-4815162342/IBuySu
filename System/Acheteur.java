@@ -7,19 +7,19 @@ import java.util.List;
  * Utilisateur pouvant acheter des produits.
  */
 public class Acheteur extends Inscrit {
-    /** Liste d'enchères en circulation. */
+    /** Liste d'encheres en circulation. */
     public List<Enchere> offres = new ArrayList<Enchere>();
 
     /**
-     * Constructeur pour créer un Acheteur.
+     * Constructeur pour creer un Acheteur.
      * 
      * @param pseudo     Pseudo de l'utilisateur.
      * @param nom        Nom de l'utilisateur.
-     * @param prenom     Prénom de l'utilisateur.
-     * @param numTel     Numéro de téléphone de l'utilisateur.
+     * @param prenom     Prenom de l'utilisateur.
+     * @param numTel     Numero de telephone de l'utilisateur.
      * @param mail       Adresse mail de l'utilisateur.
      * @param mdp        Mot de passe de l'utilisateur.
-     * @param numRue     Numéro de rue de l'utilisateur.
+     * @param numRue     Numero de rue de l'utilisateur.
      * @param nomRue     Nom de rue de l'utilisateur.
      * @param codePostal Code postal de l'utilisateur.
      * @param ville      Ville de l'utilisateur.
@@ -31,16 +31,16 @@ public class Acheteur extends Inscrit {
     }
 
     /**
-     * Constructeur pour créer un Acheteur.
+     * Constructeur pour creer un Acheteur.
      * 
      * @param id         ID de l'utilisateur.
      * @param pseudo     Pseudo de l'utilisateur.
      * @param nom        Nom de l'utilisateur.
-     * @param prenom     Prénom de l'utilisateur.
-     * @param numTel     Numéro de téléphone de l'utilisateur.
+     * @param prenom     Prenom de l'utilisateur.
+     * @param numTel     Numero de telephone de l'utilisateur.
      * @param mail       Adresse mail de l'utilisateur.
      * @param mdp        Mot de passe de l'utilisateur.
-     * @param numRue     Numéro de rue de l'utilisateur.
+     * @param numRue     Numero de rue de l'utilisateur.
      * @param nomRue     Nom de rue de l'utilisateur.
      * @param codePostal Code postal de l'utilisateur.
      * @param ville      Ville de l'utilisateur.
@@ -52,7 +52,7 @@ public class Acheteur extends Inscrit {
     }
 
     /**
-     * Constructeur pour créer un Acheteur à l'aide d'un formulaire rempli.
+     * Constructeur pour creer un Acheteur a l'aide d'un formulaire rempli.
      * 
      * @param formulaireRempli Formulaire rempli par l'utilisateur.
      */
@@ -63,10 +63,10 @@ public class Acheteur extends Inscrit {
     }
 
     /**
-     * Fait participer l'Acheteur à une enchère.
+     * Fait participer l'Acheteur a une enchere.
      * 
-     * @param e    L'enchère à laquelle l'Acheteur va participer.
-     * @param prix Le prix que l'acheteur propose pour l'enchère.
+     * @param e    L'enchere a laquelle l'Acheteur va participer.
+     * @param prix Le prix que l'acheteur propose pour l'enchere.
      */
     public void participerEnchere(Enchere e, float prix) {
         Offre offre = new Offre(e, prix, this);
@@ -75,7 +75,7 @@ public class Acheteur extends Inscrit {
     }
 
     /**
-     * Menu des options que l'Acheteur peut sélectionner sur iBuySu.com.
+     * Menu des options que l'Acheteur peut selectionner sur iBuySu.com.
      */
     @Override
     public String[] getMenu() {

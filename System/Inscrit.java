@@ -5,7 +5,7 @@ import java.util.List;
 import BDD.API;
 
 /**
- * Utilisateur possédant un compte dans la base de donnée de iBuySu.com.
+ * Utilisateur possedant un compte dans la base de donnee de iBuySu.com.
  */
 public abstract class Inscrit extends Utilisateur {
     protected String nom;
@@ -20,15 +20,15 @@ public abstract class Inscrit extends Utilisateur {
     protected ArrayList<Contrat> contrats = new ArrayList<Contrat>();
 
     /**
-     * Crée un utilisateur inscrit.
+     * Cree un utilisateur inscrit.
      * 
      * @param pseudo     Pseudo de l'utilisateur inscrit.
      * @param nom        Nom de l'utilisateur inscrit.
-     * @param prenom     Prénom de l'utilisateur inscrit.
-     * @param numTel     Numéro de téléphone de l'utilisateur inscrit.
+     * @param prenom     Prenom de l'utilisateur inscrit.
+     * @param numTel     Numero de telephone de l'utilisateur inscrit.
      * @param mail       Adresse mail de l'utilisateur inscrit.
      * @param mdp        Mot de passe de l'utilisateur inscrit.
-     * @param numRue     Numéro de rue de l'utilisateur inscrit.
+     * @param numRue     Numero de rue de l'utilisateur inscrit.
      * @param nomRue     Nom de rue de l'utilisateur inscrit.
      * @param codePostal Code postal de l'utilisateur inscrit.
      * @param ville      Ville de l'utilisateur inscrit.
@@ -47,16 +47,16 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Crée un utilisateur inscrit.
+     * Cree un utilisateur inscrit.
      * 
      * @param id         ID de l'utilisateur inscrit.
      * @param pseudo     Pseudo de l'utilisateur inscrit.
      * @param nom        Nom de l'utilisateur inscrit.
-     * @param prenom     Prénom de l'utilisateur inscrit.
-     * @param numTel     Numéro de téléphone de l'utilisateur inscrit.
+     * @param prenom     Prenom de l'utilisateur inscrit.
+     * @param numTel     Numero de telephone de l'utilisateur inscrit.
      * @param mail       Adresse mail de l'utilisateur inscrit.
      * @param mdp        Mot de passe de l'utilisateur inscrit.
-     * @param numRue     Numéro de rue de l'utilisateur inscrit.
+     * @param numRue     Numero de rue de l'utilisateur inscrit.
      * @param nomRue     Nom de rue de l'utilisateur inscrit.
      * @param codePostal Code postal de l'utilisateur inscrit.
      * @param ville      Ville de l'utilisateur inscrit.
@@ -75,9 +75,9 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Vérifie que le mot de passe est bien celui de l'utilisateur inscrit.
+     * Verifie que le mot de passe est bien celui de l'utilisateur inscrit.
      * 
-     * @param mdp Mot de passe à vérifier.
+     * @param mdp Mot de passe a verifier.
      * @return si le mot de passe est bien celui de l'utilisateur inscrit.
      */
     public boolean verifMdp(String mdp) {
@@ -85,7 +85,7 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Récupère le formulaire permettant à l'utilisateur de se connecter.
+     * Recupere le formulaire permettant a l'utilisateur de se connecter.
      */
     public static String[] getFormulaireConnexion() {
         String[] res = { "mail", "mot de passe" };
@@ -95,14 +95,14 @@ public abstract class Inscrit extends Utilisateur {
     /**
      * Ajoute un contrat.
      * 
-     * @param c Contrat à ajouter.
+     * @param c Contrat a ajouter.
      */
     public void addContrat(Contrat c) {
         contrats.add(c);
     }
 
     /**
-     * Récupère tous les contrats qui ont été conclus.
+     * Recupere tous les contrats qui ont ete conclus.
      */
     public ArrayList<Contrat> getClosedContracts() {
         ArrayList<Contrat> res = new ArrayList<Contrat>();
@@ -115,12 +115,12 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Permet à l'utilisateur inscrit de créer une évaluation.
+     * Permet a l'utilisateur inscrit de creer une evaluation.
      * 
-     * @param titreProduit Titre du produit à évaluer.
-     * @param note         Note de l'évaluation.
-     * @param description  Description de l'évaluation.
-     * @param destinataire Destinataire de l'évaluation.
+     * @param titreProduit Titre du produit a evaluer.
+     * @param note         Note de l'evaluation.
+     * @param description  Description de l'evaluation.
+     * @param destinataire Destinataire de l'evaluation.
      */
     public void creerEvaluation(String titreProduit, int note, String description, Inscrit destinataire) {
         Evaluation evaluation = new Evaluation(titreProduit, note, description, this, destinataire);
@@ -128,15 +128,15 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Récupère le menu d'un utilisateur inscrit.
+     * Recupere le menu d'un utilisateur inscrit.
      */
     public String[] getMenu() {
-        String[] menu = { "Recherche", "Déconnexion", "Quitter" };
+        String[] menu = { "Recherche", "Deconnexion", "Quitter" };
         return menu;
     }
 
     /**
-     * @return Les données publiques de l'utilisateur, c'est-à-dire son identifiant
+     * @return Les donnees publiques de l'utilisateur, c'est-a-dire son identifiant
      *         et son pseudo.
      */
     @Override
@@ -145,10 +145,10 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Affichage complet, qui ne peut être vu que par l'inscrit lui-même (les
-     * coordonnées partagées lors des ventes sont gérées dans les sous-classes
+     * Affichage complet, qui ne peut etre vu que par l'inscrit lui-meme (les
+     * coordonnees partagees lors des ventes sont gerees dans les sous-classes
      * Acheteur et Vendeur)
-     * !!! Le mot de passe n'est JAMAIS affiché !!!
+     * !!! Le mot de passe n'est JAMAIS affiche !!!
      */
     @Override
     public String toString() {
@@ -173,7 +173,7 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Prénom de l'utilisateur inscrit.
+     * Prenom de l'utilisateur inscrit.
      */
     public String getPrenom() {
         // Automatically generated method. Please do not modify this code.
@@ -181,7 +181,7 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Numéro de téléphone de l'utilisateur inscrit.
+     * Numero de telephone de l'utilisateur inscrit.
      */
     public int getNumeroTel() {
         // Automatically generated method. Please do not modify this code.
@@ -221,10 +221,10 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Formulaire permettant à un utilisateur de s'inscrire sur iBuySu.com.
+     * Formulaire permettant a un utilisateur de s'inscrire sur iBuySu.com.
      */
     public static String[] getFormulaireInscription() {
-        String[] res = { "pseudo", "nom", "prénom", "numéro de teléphone", "mail", "mot de passe", "n°rue", "nom rue",
+        String[] res = { "pseudo", "nom", "prenom", "numero de telephone", "mail", "mot de passe", "n.rue", "nom rue",
                 "code postal", "ville", "pays" };
         return res;
     }

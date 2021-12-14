@@ -3,7 +3,7 @@ package System;
 import IHM.PromptUtils;
 
 /**
- * Évaluation d'un utilisateur.
+ * Evaluation d'un utilisateur.
  */
 public class Evaluation {
     private int note;
@@ -13,13 +13,13 @@ public class Evaluation {
     private String titreProduit;
 
     /**
-     * Crée une évaluation.
+     * Cree une evaluation.
      * 
-     * @param titreProduit Titre de l'évaluation.
-     * @param note         Note de l'évaluation.
-     * @param avis         Avis de l'évaluation.
-     * @param auteur       Auteur de l'évaluation.
-     * @param destinataire Destinataire de l'évaluation.
+     * @param titreProduit Titre de l'evaluation.
+     * @param note         Note de l'evaluation.
+     * @param avis         Avis de l'evaluation.
+     * @param auteur       Auteur de l'evaluation.
+     * @param destinataire Destinataire de l'evaluation.
      */
     public Evaluation(String titreProduit, int note, String avis, Inscrit auteur, Inscrit destinataire) {
         this.note = note;

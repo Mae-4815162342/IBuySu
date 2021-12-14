@@ -7,16 +7,16 @@ import java.util.List;
 import System.*;
 
 /**
- * Classe statique contenant toutes les méthodes pour interagir avec le serveur
+ * Classe statique contenant toutes les methodes pour interagir avec le serveur
  * de iBuySu.com.
  */
 public class API {
     private static Connection con;
 
     /**
-     * Crée une connexion au serveur.
+     * Cree une connexion au serveur.
      * 
-     * @throws Exception Lorsque la connexion échoue notamment.
+     * @throws Exception Lorsque la connexion echoue notamment.
      */
     public static void setConnexion() throws Exception {
         try {
@@ -27,9 +27,9 @@ public class API {
     }
 
     /**
-     * Crée une connexion au serveur.
+     * Cree une connexion au serveur.
      * 
-     * @throws Exception Lorsque la connexion échoue notamment.
+     * @throws Exception Lorsque la connexion echoue notamment.
      */
     public static Connection connexion() throws Exception {
         Connection con = null;
@@ -37,7 +37,7 @@ public class API {
             con = DriverManager.getConnection(
                     "jdbc:mysql://db4free.net:3306/i_buy_su?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false",
                     "ibuysubdd", "ibuysubdd");
-            System.out.println("Connexion avec la base de données établie");
+            System.out.println("Connexion avec la base de donnees etablie");
         } catch (SQLException e) {
             throw e;
         }
@@ -45,9 +45,9 @@ public class API {
     }
 
     /**
-     * Ajoute un acheteur dans la base de données.
+     * Ajoute un acheteur dans la base de donnees.
      * 
-     * @param a L'acheteur à ajouter.
+     * @param a L'acheteur a ajouter.
      */
     public static void addAcheteur(Acheteur a) {
         String requete = "INSERT into Acheteur (ID, nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse) VALUES(";
@@ -71,10 +71,10 @@ public class API {
     }
 
     /**
-     * Ajoute un mot-clef pour un produit donné.
+     * Ajoute un mot-clef pour un produit donne.
      * 
-     * @param mot Le mot-clef à ajouter.
-     * @param p   Le produit dont mettre à jour les mots-clefs.
+     * @param mot Le mot-clef a ajouter.
+     * @param p   Le produit dont mettre a jour les mots-clefs.
      */
     public static void addMotClef(MotClef mot, Produit p) {
         try {
@@ -89,10 +89,10 @@ public class API {
     }
 
     /**
-     * Ajoute un produit à la base de données.
+     * Ajoute un produit a la base de donnees.
      * 
-     * @param system Le système de iBuySu.com.
-     * @param p      Le produit à ajouter.
+     * @param system Le systeme de iBuySu.com.
+     * @param p      Le produit a ajouter.
      */
     public static void addProduit(IBuySu system, Produit p) {
         String requete = "";
@@ -122,9 +122,9 @@ public class API {
     }
 
     /**
-     * Récupère et met en cache les utilisateurs depuis la base de donnée.
+     * Recupere et met en cache les utilisateurs depuis la base de donnee.
      * 
-     * @param system Le système de iBuySu.com.
+     * @param system Le systeme de iBuySu.com.
      */
     public static void fetchUsers(IBuySu system) {
         try {
@@ -152,9 +152,9 @@ public class API {
     }
 
     /**
-     * Récupère et met en cache les catégories depuis la base de donnée.
+     * Recupere et met en cache les categories depuis la base de donnee.
      * 
-     * @param system Le système de iBuySu.com.
+     * @param system Le systeme de iBuySu.com.
      */
     public static void fetchCategories(IBuySu system) {
         try {
@@ -171,10 +171,10 @@ public class API {
     }
 
     /**
-     * Récupère et met en cache les sous-catégories d'une catégorie depuis la base
-     * de donnée.
+     * Recupere et met en cache les sous-categories d'une categorie depuis la base
+     * de donnee.
      * 
-     * @param cat La catégorie dont récupérer les sous-catégories.
+     * @param cat La categorie dont recuperer les sous-categories.
      */
     public static void fetchSousCategorie(Categorie cat) {
         try {
@@ -191,10 +191,10 @@ public class API {
     }
 
     /**
-     * Récupère tous les produits appartenant à une catégorie.
+     * Recupere tous les produits appartenant a une categorie.
      * 
-     * @param system Le système de iBuySu.com.
-     * @param cat    La catégorie depuis laquelle on récupère les produits.
+     * @param system Le systeme de iBuySu.com.
+     * @param cat    La categorie depuis laquelle on recupere les produits.
      */
     public static void fetchProductByCategorie(IBuySu system, Categorie cat) {
         try {
@@ -222,8 +222,8 @@ public class API {
     }
 
     /**
-     * Récupère tous les produits possédant un certain mot-clef.
-     * @param motcle Le mot-clef à utiliser pour la recherche.
+     * Recupere tous les produits possedant un certain mot-clef.
+     * @param motcle Le mot-clef a utiliser pour la recherche.
      */
     public static void fetchProductByMotcle(MotClef motcle) {
         try {
@@ -253,8 +253,8 @@ public class API {
     }
 
     /**
-     * Récupère tous les mots-clefs depuis la base de données.
-     * @param system Le système de iBuySu.com.
+     * Recupere tous les mots-clefs depuis la base de donnees.
+     * @param system Le systeme de iBuySu.com.
      */
     public static void fetchMotClef(IBuySu system) {
         try {
@@ -272,8 +272,8 @@ public class API {
     }
 
     /**
-     * Ajoute un vendeur à la base de données.
-     * @param v Le vendeur à ajouter.
+     * Ajoute un vendeur a la base de donnees.
+     * @param v Le vendeur a ajouter.
      */
     public static void addVendeur(Vendeur v) {
         String requete = "INSERT into Vendeur (ID, nom, prenom, pseudo, numeroTel, mail, motdepasse, adresse, donnees_banquaires) VALUES(";
@@ -298,8 +298,8 @@ public class API {
     }
 
     /**
-     * Récupère tous les produits qu'un vendeur vend.
-     * @param v Le vendeur duquel récuperer les produits.
+     * Recupere tous les produits qu'un vendeur vend.
+     * @param v Le vendeur duquel recuperer les produits.
      */
     public static void fetchProductsBySeller(Vendeur v) {
         try {
@@ -325,7 +325,7 @@ public class API {
     }
 
     /**
-     * Récupère le nombre total de produits, directs ou en enchère.
+     * Recupere le nombre total de produits, directs ou en enchere.
      * @return Le nombre total de produits en vente.
      */
     public static int fetchNbProduct() {
@@ -348,7 +348,7 @@ public class API {
     }
 
     /**
-     * Récupère le nombre total d'inscrits, vendeurs ou acheteurs.
+     * Recupere le nombre total d'inscrits, vendeurs ou acheteurs.
      * @return Le nombre total d'inscrits.
      */
     public static int getNbInscrit() {

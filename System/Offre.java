@@ -1,7 +1,7 @@
 package System;
 
 /**
- * Offre d'un Acheteur pour une Enchère.
+ * Offre d'un Acheteur pour une Enchere.
  */
 public class Offre {
     private float somme;
@@ -9,10 +9,10 @@ public class Offre {
     private Acheteur acheteur;
 
     /**
-     * Crée une Offre.
+     * Cree une Offre.
      * 
-     * @param e        Enchère concernée par l'Offre.
-     * @param prix     Prix proposé de l'Offre.
+     * @param e        Enchere concernee par l'Offre.
+     * @param prix     Prix propose de l'Offre.
      * @param acheteur Acheteur proposant l'Offre.
      */
     public Offre(Enchere e, float prix, Acheteur acheteur) {
@@ -29,7 +29,7 @@ public class Offre {
     }
 
     /**
-     * Enchère concernée par l'Offre.
+     * Enchere concernee par l'Offre.
      */
     public Enchere getEnchere() {
         return enchere;
@@ -44,6 +44,6 @@ public class Offre {
 
     @Override
     public String toString() {
-        return acheteur.getAffichageMinimal() + " fait une offre de " + somme + "€ pour acheter " + enchere.getTitre();
+        return acheteur.getAffichageMinimal() + " fait une offre de " + somme + " euros pour acheter " + enchere.getTitre();
     }
 }

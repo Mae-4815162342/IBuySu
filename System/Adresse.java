@@ -1,7 +1,7 @@
 package System;
 
 /**
- * Une adresse géographique.
+ * Une adresse geographique.
  */
 public class Adresse {
     private String ville;
@@ -11,9 +11,9 @@ public class Adresse {
     private String nomRue;
 
     /**
-     * Crée une Adresse.
+     * Cree une Adresse.
      * 
-     * @param numRue Numéro de la rue.
+     * @param numRue Numero de la rue.
      * @param nomRue Nom de la rue.
      * @param codePostal Code postal.
      * @param ville Ville.
@@ -28,7 +28,7 @@ public class Adresse {
     }
 
     /**
-     * Vérifie que le format du code postal est valide.
+     * Verifie que le format du code postal est valide.
      * @param codePostal
      * @return
      */

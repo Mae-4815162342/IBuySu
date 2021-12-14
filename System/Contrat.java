@@ -11,11 +11,11 @@ public class Contrat {
     private boolean isConcluded;
 
     /**
-     * Crée un contrat Acheteur-Vendeur.
+     * Cree un contrat Acheteur-Vendeur.
      * 
      * @param acheteur Acheteur.
      * @param vendeur  Vendeur.
-     * @param produit  Produit en cours d'échange.
+     * @param produit  Produit en cours d'echange.
      * @param prix     Prix du produit.
      */
     public Contrat(Acheteur acheteur, Vendeur vendeur, Produit produit, float prix) {

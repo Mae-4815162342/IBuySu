@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Enchère.
+ * Enchere.
  */
 public class Enchere extends Produit {
     private int duree;
@@ -16,15 +16,15 @@ public class Enchere extends Produit {
     private List<Offre> offres = new ArrayList<Offre>();
 
     /**
-     * Crée une Enchère.
+     * Cree une Enchere.
      * 
-     * @param duree Durée de l'enchère.
-     * @param titre Titre de l'enchère.
-     * @param desc  Description de l'enchère.
-     * @param v     Vendeur de l'enchère.
-     * @param photo Photo de l'enchère.
-     * @param prix  Prix du produit de l'enchère.
-     * @param c     Catégorie du produit de l'enchère.
+     * @param duree Duree de l'enchere.
+     * @param titre Titre de l'enchere.
+     * @param desc  Description de l'enchere.
+     * @param v     Vendeur de l'enchere.
+     * @param photo Photo de l'enchere.
+     * @param prix  Prix du produit de l'enchere.
+     * @param c     Categorie du produit de l'enchere.
      */
     public Enchere(int duree, String titre, String desc, Vendeur v, String photo, float prix, Categorie c) {
         super(titre, desc, v, photo, prix, c);
@@ -34,16 +34,16 @@ public class Enchere extends Produit {
     }
 
     /**
-     * Crée une Enchère.
+     * Cree une Enchere.
      * 
-     * @param duree      Durée de l'enchère.
-     * @param titre      Titre de l'enchère.
-     * @param desc       Description de l'enchère.
-     * @param v          Vendeur de l'enchère.
-     * @param photo      Photo de l'enchère.
-     * @param prix       Prix du produit de l'enchère.
-     * @param c          Catégorie du produit de l'enchère.
-     * @param isSold     Si l'enchère a été conclue.
+     * @param duree      Duree de l'enchere.
+     * @param titre      Titre de l'enchere.
+     * @param desc       Description de l'enchere.
+     * @param v          Vendeur de l'enchere.
+     * @param photo      Photo de l'enchere.
+     * @param prix       Prix du produit de l'enchere.
+     * @param c          Categorie du produit de l'enchere.
+     * @param isSold     Si l'enchere a ete conclue.
      * @param isReceived
      */
     public Enchere(int duree, String titre, String desc, Vendeur v, String photo, float prix, Categorie c,
@@ -55,39 +55,39 @@ public class Enchere extends Produit {
     }
 
     /**
-     * Si l'enchère is est reçue.
+     * Si l'enchere is est recue.
      */
     public boolean isEstRecu() {
         return estRecu;
     }
 
     /**
-     * Détermine si l'enchère est reçue.
+     * Determine si l'enchere est recue.
      */
     public void setEstRecu(boolean estRecu) {
         this.estRecu = estRecu;
     }
 
     /**
-     * Si le produit de l'enchère is est vendu.
+     * Si le produit de l'enchere is est vendu.
      */
     public boolean isEstVendu() {
         return estVendu;
     }
 
     /**
-     * Détermine si le produit de l'enchère est vendu.
+     * Determine si le produit de l'enchere est vendu.
      */
     public void setEstVendu(boolean estVendu) {
         this.estVendu = estVendu;
     }
 
     /**
-     * Crée une Enchère à l'aide d'un formulaire prérempli par l'utilisateur.
+     * Cree une Enchere a l'aide d'un formulaire prerempli par l'utilisateur.
      * 
-     * @param formulaireRempli Formulaire prérempli par l'utilisateur.
-     * @param v                Vendeur de l'enchère.
-     * @param c                Catégorie du produit.
+     * @param formulaireRempli Formulaire prerempli par l'utilisateur.
+     * @param v                Vendeur de l'enchere.
+     * @param c                Categorie du produit.
      */
     public Enchere(String[] formulaireRempli, Vendeur v, Categorie c) {
         this(Integer.parseInt(formulaireRempli[0]), formulaireRempli[1], formulaireRempli[2], v, formulaireRempli[3],
@@ -97,7 +97,7 @@ public class Enchere extends Produit {
     /**
      * Ajoute une offre.
      * 
-     * @param offre Offre à ajouter.
+     * @param offre Offre a ajouter.
      */
     public void addOffre(Offre offre) {
         if (offre.getSomme() > this.meilleurPrix) {
@@ -108,7 +108,7 @@ public class Enchere extends Produit {
     }
 
     /**
-     * Durée de l'enchère.
+     * Duree de l'enchere.
      * 
      * @return
      */
@@ -118,9 +118,9 @@ public class Enchere extends Produit {
     }
 
     /**
-     * Détermine la durée de l'enchère.
+     * Determine la duree de l'enchere.
      * 
-     * @param value Nouvelle durée de l'enchère.
+     * @param value Nouvelle duree de l'enchere.
      */
     private void setDuree(final int value) {
         // Automatically generated method. Please do not modify this code.
@@ -129,11 +129,11 @@ public class Enchere extends Produit {
 
     @Override
     public String toString() {
-        String res = "Enchère (encore " + this.duree + " jours)\n";
+        String res = "Enchere (encore " + this.duree + " jours)\n";
         res += super.description + '\n' + super.photo + '\n';
-        res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + "€";
+        res += "Vendu par " + this.vendeur.getAffichageMinimal() + " a " + this.prix + " euros";
         res += PromptUtils.b(
-                PromptUtils.mag("(prix de départ des enchères)\nEnchère la plus haute : " + this.meilleurPrix + "€\n"));
+                PromptUtils.mag("(prix de depart des encheres)\nEnchere la plus haute : " + this.meilleurPrix + " euros\n"));
         res += PromptUtils.mag("Categorie : ") + categorie.getNom()
                 + PromptUtils.mag("\nMot-clefs : ");
         if (motClefs.size() == 0) {
@@ -147,13 +147,13 @@ public class Enchere extends Produit {
     }
 
     /**
-     * Formulaire permettant à l'utilisateur de saisir les informations d'une
-     * enchère.
+     * Formulaire permettant a l'utilisateur de saisir les informations d'une
+     * enchere.
      * 
      * @return
      */
     public static String[] getFormulaire() {
-        String[] res = { "durée", "titre", "description", "photo", "prix" };
+        String[] res = { "duree", "titre", "description", "photo", "prix" };
         return res;
     }
 }
