@@ -21,17 +21,18 @@ public abstract class Inscrit extends Utilisateur {
 
     /**
      * Crée un utilisateur inscrit.
-     * @param pseudo Pseudo de l'utilisateur inscrit.
-     * @param nom Nom de l'utilisateur inscrit.
-     * @param prenom Prénom de l'utilisateur inscrit.
-     * @param numTel Numéro de téléphone de l'utilisateur inscrit.
-     * @param mail Adresse mail de l'utilisateur inscrit.
-     * @param mdp Mot de passe de l'utilisateur inscrit.
-     * @param numRue Numéro de rue de l'utilisateur inscrit.
-     * @param nomRue Nom de rue de l'utilisateur inscrit.
+     * 
+     * @param pseudo     Pseudo de l'utilisateur inscrit.
+     * @param nom        Nom de l'utilisateur inscrit.
+     * @param prenom     Prénom de l'utilisateur inscrit.
+     * @param numTel     Numéro de téléphone de l'utilisateur inscrit.
+     * @param mail       Adresse mail de l'utilisateur inscrit.
+     * @param mdp        Mot de passe de l'utilisateur inscrit.
+     * @param numRue     Numéro de rue de l'utilisateur inscrit.
+     * @param nomRue     Nom de rue de l'utilisateur inscrit.
      * @param codePostal Code postal de l'utilisateur inscrit.
-     * @param ville Ville de l'utilisateur inscrit.
-     * @param pays Pays de l'utilisateur inscrit.
+     * @param ville      Ville de l'utilisateur inscrit.
+     * @param pays       Pays de l'utilisateur inscrit.
      */
     public Inscrit(String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
             String nomRue, int codePostal, String ville, String pays) {
@@ -47,21 +48,22 @@ public abstract class Inscrit extends Utilisateur {
 
     /**
      * Crée un utilisateur inscrit.
-     * @param id ID de l'utilisateur inscrit.
-     * @param pseudo Pseudo de l'utilisateur inscrit.
-     * @param nom Nom de l'utilisateur inscrit.
-     * @param prenom Prénom de l'utilisateur inscrit.
-     * @param numTel Numéro de téléphone de l'utilisateur inscrit.
-     * @param mail Adresse mail de l'utilisateur inscrit.
-     * @param mdp Mot de passe de l'utilisateur inscrit.
-     * @param numRue Numéro de rue de l'utilisateur inscrit.
-     * @param nomRue Nom de rue de l'utilisateur inscrit.
+     * 
+     * @param id         ID de l'utilisateur inscrit.
+     * @param pseudo     Pseudo de l'utilisateur inscrit.
+     * @param nom        Nom de l'utilisateur inscrit.
+     * @param prenom     Prénom de l'utilisateur inscrit.
+     * @param numTel     Numéro de téléphone de l'utilisateur inscrit.
+     * @param mail       Adresse mail de l'utilisateur inscrit.
+     * @param mdp        Mot de passe de l'utilisateur inscrit.
+     * @param numRue     Numéro de rue de l'utilisateur inscrit.
+     * @param nomRue     Nom de rue de l'utilisateur inscrit.
      * @param codePostal Code postal de l'utilisateur inscrit.
-     * @param ville Ville de l'utilisateur inscrit.
-     * @param pays Pays de l'utilisateur inscrit.
+     * @param ville      Ville de l'utilisateur inscrit.
+     * @param pays       Pays de l'utilisateur inscrit.
      */
     public Inscrit(int id, String pseudo, String nom, String prenom, int numTel, String mail, String mdp, int numRue,
-                   String nomRue, int codePostal, String ville, String pays) {
+            String nomRue, int codePostal, String ville, String pays) {
         this.pseudo = pseudo;
         this.id = id;
         this.nom = nom;
@@ -74,6 +76,7 @@ public abstract class Inscrit extends Utilisateur {
 
     /**
      * Vérifie que le mot de passe est bien celui de l'utilisateur inscrit.
+     * 
      * @param mdp Mot de passe à vérifier.
      * @return si le mot de passe est bien celui de l'utilisateur inscrit.
      */
@@ -85,12 +88,13 @@ public abstract class Inscrit extends Utilisateur {
      * Récupère le formulaire permettant à l'utilisateur de se connecter.
      */
     public static String[] getFormulaireConnexion() {
-        String[] res = {"mail", "mot de passe"};
+        String[] res = { "mail", "mot de passe" };
         return res;
     }
 
     /**
      * Ajoute un contrat.
+     * 
      * @param c Contrat à ajouter.
      */
     public void addContrat(Contrat c) {
@@ -112,9 +116,10 @@ public abstract class Inscrit extends Utilisateur {
 
     /**
      * Permet à l'utilisateur inscrit de créer une évaluation.
+     * 
      * @param titreProduit Titre du produit à évaluer.
-     * @param note Note de l'évaluation.
-     * @param description Description de l'évaluation.
+     * @param note         Note de l'évaluation.
+     * @param description  Description de l'évaluation.
      * @param destinataire Destinataire de l'évaluation.
      */
     public void creerEvaluation(String titreProduit, int note, String description, Inscrit destinataire) {
@@ -126,12 +131,13 @@ public abstract class Inscrit extends Utilisateur {
      * Récupère le menu d'un utilisateur inscrit.
      */
     public String[] getMenu() {
-        String[] menu = {"Recherche", "Déconnexion", "Quitter"};
+        String[] menu = { "Recherche", "Déconnexion", "Quitter" };
         return menu;
     }
 
     /**
-     * @return Les données publiques de l'utilisateur, c'est-à-dire son identifiant et son pseudo.
+     * @return Les données publiques de l'utilisateur, c'est-à-dire son identifiant
+     *         et son pseudo.
      */
     @Override
     public String getAffichageMinimal() {
@@ -139,7 +145,9 @@ public abstract class Inscrit extends Utilisateur {
     }
 
     /**
-     * Affichage complet, qui ne peut être vu que par l'inscrit lui-même (les coordonnées partagées lors des ventes sont gérées dans les sous-classes Acheteur et Vendeur)
+     * Affichage complet, qui ne peut être vu que par l'inscrit lui-même (les
+     * coordonnées partagées lors des ventes sont gérées dans les sous-classes
+     * Acheteur et Vendeur)
      * !!! Le mot de passe n'est JAMAIS affiché !!!
      */
     @Override
