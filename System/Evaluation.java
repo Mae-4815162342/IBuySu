@@ -2,6 +2,9 @@ package System;
 
 import IHM.PromptUtils;
 
+/**
+ * Évaluation d'un utilisateur.
+ */
 public class Evaluation {
     private int note;
     private String avis;
@@ -9,6 +12,15 @@ public class Evaluation {
     private Inscrit destinataire;
     private String titreProduit;
 
+    /**
+     * Crée une évaluation.
+     * 
+     * @param titreProduit Titre de l'évaluation.
+     * @param note         Note de l'évaluation.
+     * @param avis         Avis de l'évaluation.
+     * @param auteur       Auteur de l'évaluation.
+     * @param destinataire Destinataire de l'évaluation.
+     */
     public Evaluation(String titreProduit, int note, String avis, Inscrit auteur, Inscrit destinataire) {
         this.note = note;
         this.avis = avis;
@@ -16,6 +28,7 @@ public class Evaluation {
         this.destinataire = destinataire;
     }
 
+    @Override
     public String toString() {
         String res = PromptUtils.mag("Produit : ") + this.titreProduit + '\n';
         String roleAuteur = (auteur instanceof Acheteur) ? "(acheteur)" : "(vendeur)";
