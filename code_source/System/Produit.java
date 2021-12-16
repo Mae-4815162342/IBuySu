@@ -33,7 +33,7 @@ public class Produit {
      */
     public Produit(String titre, String desc, Vendeur v, String photo, float prix, Categorie c) {
         nbProd++;
-        this.id = nbProd;
+        this.id = nbProd + 1;
         this.titre = titre;
         this.description = desc;
         this.vendeur = v;
